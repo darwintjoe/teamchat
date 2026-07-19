@@ -1,0 +1,12 @@
+{
+  "name": "teamchat-infographic",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TeamChat architecture infographic (HTML -> PNG)",
+  "scripts": {
+    "render": "node render_png.js"
+  },
+  "dependencies": {
+    "playwright": "^1.61.1"
+  }
+}

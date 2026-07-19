@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TeamChat — Architecture at a Glance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  /* ===== Full-bleed canvas (1600 x 1100) ===== */
+  :root{
+    --bg:#F4F7FB;        /* page surround */
+    --canvas:#FDFEFF;    /* infographic bg */
+    --ink:#0F1E36;       /* primary text */
+    --muted:#5B6B85;     /* secondary text */
+    --line:#E2E8F2;      /* hairlines / borders */
+    --core:#1E40AF;      /* Convex / client blue */
+    --core-fill:#E8F0FE;
+    --action:#B45309;    /* Action amber */
+    --action-fill:#FEF3DC;
+    --disc:#0F766E;      /* Discussion teal */
+    --disc-fill:#D7F5EF;
+    --integ:#6D28D9;     /* Integration violet */
+    --integ-fill:#EFE9FC;
+    --byos:#047857;      /* external green */
+    --byos-fill:#DCF2E8;
+  }
+
+  @page { size: 1600px 1100px; margin: 0; }
+  *{ box-sizing:border-box; }
+  html,body{
+    margin:0; padding:0;
+    width:1600px;
+    background:var(--bg);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* Browser-preview adaptive scaling (does not affect page.pdf / screenshot) */
+  @media screen{
+    html{ height:auto; display:flex; justify-content:center; background:var(--bg); }
+    body{
+      transform-origin:top center;
+      scale:min(1, calc(100vw / 1600), calc(100vh / 1100));
+      margin:0 auto;
+      box-shadow:0 0 60px rgba(15,30,54,.18);
+    }
+  }
+
+  .canvas{
+    position:relative;
+    width:1600px;
+    height:1100px;
+    background:var(--canvas);
+    padding:26px 38px 22px;
+    display:flex; flex-direction:column; gap:13px;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(30,64,175,.045) 1px, transparent 0);
+    background-size:26px 26px;
+  }
+
+  /* ===== Header ===== */
+  .header{
+    display:flex; align-items:center; justify-content:space-between;
+    border-bottom:2px solid var(--ink);
+    padding-bottom:12px;
+  }
+  .title{ display:flex; flex-direction:column; gap:3px; }
+  .brand{
+    font-size:30px; font-weight:900; letter-spacing:-.5px;
+    line-height:1; color:var(--ink);
+  }
+  .brand .dot{ color:var(--core); }
+  .tagline{ font-size:13px; color:var(--muted); font-weight:500; }
+  .head-right{ display:flex; flex-direction:column; align-items:flex-end; gap:5px; }
+  .ver{
+    font-size:12px; font-weight:700; letter-spacing:1px; color:#fff;
+    background:var(--ink); padding:5px 12px; border-radius:20px;
+  }
+  .docref{ font-size:11px; color:var(--muted); letter-spacing:.5px; }
+
+  /* ===== Band primitives ===== */
+  .band{ display:flex; flex-direction:column; gap:7px; }
+  .kicker{
+    font-size:11px; font-weight:800; letter-spacing:1.6px;
+    text-transform:uppercase; color:var(--muted);
+    display:flex; align-items:center; gap:8px;
+  }
+  .kicker .num{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:18px; height:18px; border-radius:5px;
+    background:var(--ink); color:#fff; font-size:10px;
+  }
+
+  .panel{
+    background:#fff; border:1px solid var(--line); border-radius:12px;
+    padding:12px 16px; box-shadow:0 1px 0 rgba(15,30,54,.03);
+  }
+  .panel-title{ font-size:14px; font-weight:800; margin:0 0 2px; color:var(--ink); }
+  .panel-sub{ font-size:11.5px; color:var(--muted); margin:0; line-height:1.4; }
+
+  /* ===== Band 1: Topology ===== */
+  .topo{ display:flex; flex-direction:column; align-items:stretch; gap:0; }
+  .tier{ display:flex; gap:12px; align-items:stretch; }
+  .tier-lbl{
+    width:118px; flex:0 0 118px;
+    display:flex; flex-direction:column; justify-content:center;
+    background:var(--core-fill); border:1px solid #Cfe0FB; border-radius:11px;
+    padding:9px 12px;
+  }
+  .tier-lbl .t{ font-size:13px; font-weight:800; color:var(--core); letter-spacing:.3px; }
+  .tier-lbl .s{ font-size:10.5px; color:var(--muted); margin-top:2px; }
+  .tier-core .tier-lbl{ background:var(--ink); border-color:var(--ink); }
+  .tier-core .tier-lbl .t{ color:#fff; }
+  .tier-core .tier-lbl .s{ color:#AEC0DD; }
+  .tier-ext  .tier-lbl{ background:var(--byos-fill); border-color:#BFE6D4; }
+  .tier-ext  .tier-lbl .t{ color:var(--byos); }
+
+  .nodes{ flex:1; display:flex; gap:12px; }
+  .node{
+    flex:1; background:#fff; border:1px solid var(--line); border-radius:11px;
+    padding:11px 14px; display:flex; align-items:center; gap:11px;
+    min-width:0;
+  }
+  .node .ic{ font-size:24px; line-height:1; flex:0 0 auto; }
+  .node .nt{ font-size:13px; font-weight:800; color:var(--ink); line-height:1.15; }
+  .node .ns{ font-size:10.5px; color:var(--muted); line-height:1.3; margin-top:1px; }
+
+  .core-grid{ display:flex; gap:8px; flex:1; }
+  .core-cell{
+    flex:1; background:#0F2240; border-radius:9px; padding:9px 11px;
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .core-cell .h{ font-size:12.5px; font-weight:800; color:#fff; display:flex; align-items:center; gap:6px; }
+  .core-cell .d{ font-size:10px; color:#9FB2D4; margin-top:2px; line-height:1.3; }
+  .core-cell.acc{ background:#16315E; }
+  .core-cell .ic{ font-size:14px; }
+
+  .ext-node{ background:var(--byos-fill); border-color:#BFE6D4; }
+
+  .arrow{
+    height:22px; display:flex; justify-content:center; align-items:center;
+  }
+  .arrow svg{ display:block; }
+
+  /* ===== Band 2 + 3 grid ===== */
+  .grid2{ display:flex; gap:13px; }
+  .grid2 > .panel{ flex:1; min-width:0; }
+
+  /* Message modes */
+  .modes{ display:flex; gap:11px; }
+  .mode{
+    flex:1; border-radius:10px; padding:10px 12px; border:1px solid var(--line);
+    display:flex; flex-direction:column; gap:5px;
+  }
+  .mode.action{ background:var(--action-fill); border-color:#F4D58A; }
+  .mode.disc{ background:var(--disc-fill); border-color:#9DDBCF; }
+  .mode .mh{ display:flex; align-items:center; gap:8px; font-size:14px; font-weight:800; }
+  .mode.action .mh{ color:var(--action); }
+  .mode.disc .mh{ color:var(--disc); }
+  .mode .mh .ic{ font-size:18px; }
+  .mode ul{ margin:3px 0 0; padding-left:16px; }
+  .mode li{ font-size:11px; color:var(--ink); line-height:1.5; }
+  .mode li b{ font-weight:700; }
+
+  /* Flows */
+  .flows{ display:grid; grid-template-columns:repeat(5,1fr); gap:8px; }
+  .flow{
+    border:1px solid var(--line); border-radius:9px; padding:9px 9px 8px;
+    display:flex; flex-direction:column; gap:3px; background:#fff;
+  }
+  .flow .fid{
+    font-size:10px; font-weight:900; color:var(--core);
+    width:18px; height:18px; border-radius:5px; background:var(--core-fill);
+    display:inline-flex; align-items:center; justify-content:center;
+  }
+  .flow .ft{ font-size:11.5px; font-weight:800; color:var(--ink); line-height:1.2; }
+  .flow .fd{ font-size:10px; color:var(--muted); line-height:1.35; }
+  .flow .fhd{ display:flex; align-items:center; gap:6px; }
+
+  /* Data model chips */
+  .tables{ display:flex; flex-wrap:wrap; gap:7px; }
+  .chip{
+    background:#fff; border:1px solid var(--line); border-left:3px solid var(--core);
+    border-radius:7px; padding:6px 9px; min-width:96px;
+  }
+  .chip .cn{ font-size:12px; font-weight:800; color:var(--ink); }
+  .chip .cd{ font-size:9.5px; color:var(--muted); margin-top:1px; line-height:1.3; }
+  .chip.t-work{ border-left-color:var(--action); }
+  .chip.t-int{ border-left-color:var(--integ); }
+  .chip.t-rel{ border-left-color:var(--disc); }
+  .dm-note{ font-size:10px; color:var(--muted); margin:8px 0 0; line-height:1.4; }
+
+  /* Integration loop */
+  .loopwrap{ position:relative; padding:6px 4px 4px; }
+  .looprow{ display:flex; align-items:center; gap:6px; }
+  .lnode{
+    flex:1; border-radius:8px; padding:7px 8px; text-align:center;
+    border:1px solid var(--line); background:#fff; min-width:0;
+  }
+  .lnode .lnt{ font-size:11px; font-weight:800; color:var(--ink); line-height:1.15; display:flex; align-items:center; justify-content:center; gap:5px; }
+  .lnode .lnd{ font-size:9.5px; color:var(--muted); margin-top:1px; }
+  .lnode.l-erp{ background:var(--integ-fill); border-color:#D8C9F4; }
+  .lnode.l-erp .lnt{ color:var(--integ); }
+  .lnode.l-core{ background:var(--core-fill); border-color:#Cfe0FB; }
+  .lnode.l-core .lnt{ color:var(--core); }
+  .lnode.l-act{ background:var(--action-fill); border-color:#F4D58A; }
+  .lnode.l-act .lnt{ color:var(--action); }
+  .larrow{ font-size:16px; color:var(--muted); flex:0 0 auto; font-weight:700; }
+
+  .loopback{
+    display:flex; align-items:center; gap:8px; margin-top:7px;
+    background:#FBF7FF; border:1px dashed #C9B6F0; border-radius:8px; padding:6px 10px;
+  }
+  .loopback .lab{ font-size:9.5px; font-weight:800; color:var(--integ); letter-spacing:.5px; }
+  .loopback .txt{ font-size:10px; color:var(--ink); line-height:1.35; }
+  .loopback .codes{ font-family:Consolas,'Courier New',monospace; font-size:9.5px; color:var(--integ); font-weight:700; }
+
+  /* ===== Footer principles ===== */
+  .principles{
+    display:flex; gap:10px; margin-top:auto;
+    background:var(--ink); border-radius:12px; padding:11px 14px;
+  }
+  .pr{ flex:1; display:flex; align-items:flex-start; gap:9px; }
+  .pr .pi{
+    font-size:17px; flex:0 0 auto; margin-top:1px;
+  }
+  .pr .pt{ font-size:11.5px; font-weight:800; color:#fff; line-height:1.15; }
+  .pr .pd{ font-size:9.5px; color:#9FB2D4; line-height:1.35; margin-top:2px; }
+  .prsep{ width:1px; background:rgba(255,255,255,.12); }
+
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <!-- ================= HEADER ================= -->
+  <div class="header">
+    <div class="title">
+      <div class="brand">TeamChat<span class="dot">.</span></div>
+      <div class="tagline">Messaging for work — structured · accountable · workflow-driven</div>
+    </div>
+    <div class="head-right">
+      <div class="ver">PRD v1.1 · MVP + INTEGRATION</div>
+      <div class="docref">ARCHITECTURE OVERVIEW · JUN 2026</div>
+    </div>
+  </div>
+
+  <!-- ================= BAND 1 · TOPOLOGY ================= -->
+  <div class="band">
+    <div class="kicker"><span class="num">1</span>System Topology &mdash; three layers, one reactive core</div>
+    <div class="topo">
+      <!-- Client tier -->
+      <div class="tier tier-client">
+        <div class="tier-lbl">
+          <div class="t">CLIENT LAYER</div>
+          <div class="s">End users</div>
+        </div>
+        <div class="nodes">
+          <div class="node"><span class="ic">📱</span><div><div class="nt">Mobile App</div><div class="ns">React Native · iOS / Android</div></div></div>
+          <div class="node"><span class="ic">💻</span><div><div class="nt">Web / PWA</div><div class="ns">Next.js (React)</div></div></div>
+          <div class="node"><span class="ic">🔌</span><div><div class="nt">Embeddable Widget</div><div class="ns">Vanilla TS · host-app iframe</div></div></div>
+        </div>
+      </div>
+
+      <div class="arrow">
+        <svg width="20" height="22" viewBox="0 0 20 22"><line x1="10" y1="0" x2="10" y2="14" stroke="#5B6B85" stroke-width="2"/><path d="M4 12 L10 21 L16 12" fill="none" stroke="#5B6B85" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+
+      <!-- Convex core -->
+      <div class="tier tier-core">
+        <div class="tier-lbl">
+          <div class="t">CONVEX CORE</div>
+          <div class="s">Reactive engine</div>
+        </div>
+        <div class="core-grid">
+          <div class="core-cell"><div class="h"><span class="ic">🧠</span>Reactive DB</div><div class="d">ACID · auto-caching</div></div>
+          <div class="core-cell"><div class="h"><span class="ic">⚡</span>Real-time Sync</div><div class="d">WebSocket subscriptions</div></div>
+          <div class="core-cell"><div class="h"><span class="ic">🛠️</span>Server Fns</div><div class="d">Queries · Mutations · Actions</div></div>
+          <div class="core-cell acc"><div class="h"><span class="ic">🔐</span>Auth</div><div class="d">Email OTP · JWT sessions</div></div>
+          <div class="core-cell acc"><div class="h"><span class="ic">🌐</span>HTTP Actions</div><div class="d">Open API · webhooks</div></div>
+        </div>
+      </div>
+
+      <div class="arrow">
+        <svg width="20" height="22" viewBox="0 0 20 22"><line x1="10" y1="0" x2="10" y2="14" stroke="#5B6B85" stroke-width="2"/><path d="M4 12 L10 21 L16 12" fill="none" stroke="#5B6B85" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+
+      <!-- External tier -->
+      <div class="tier tier-ext">
+        <div class="tier-lbl">
+          <div class="t">EXTERNAL SERVICES</div>
+          <div class="s">OAuth2 · REST · HMAC</div>
+        </div>
+        <div class="nodes">
+          <div class="node ext-node"><span class="ic">📧</span><div><div class="nt">Email Provider</div><div class="ns">SendGrid / AWS SES · OTP</div></div></div>
+          <div class="node ext-node"><span class="ic">☁️</span><div><div class="nt">BYOS Storage</div><div class="ns">Google Drive · AWS S3</div></div></div>
+          <div class="node ext-node"><span class="ic">🏢</span><div><div class="nt">ERP / POS / CRM</div><div class="ns">Accurate · SellMore · SAP</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= BAND 2 · MODES + FLOWS ================= -->
+  <div class="grid2">
+    <div class="panel">
+      <div class="kicker"><span class="num">2</span>Message Modes &mdash; the core differentiator</div>
+      <div class="modes" style="margin-top:7px;">
+        <div class="mode action">
+          <div class="mh"><span class="ic">⚡</span>Action / Task · single-claim</div>
+          <ul>
+            <li><b>Telephone-extension rule:</b> first ⚡ Claim locks it</li>
+            <li>ACID transaction · others deactivate instantly</li>
+            <li>Forward-only handoff · full audit trail</li>
+          </ul>
+        </div>
+        <div class="mode disc">
+          <div class="mh"><span class="ic">💬</span>Discussion · broadcast</div>
+          <ul>
+            <li>No claiming · everyone participates</li>
+            <li>Threading in slide-out panel</li>
+            <li>Widget messages auto-lock to Action</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="kicker"><span class="num">3</span>Core Data Flows</div>
+      <div class="flows" style="margin-top:7px;">
+        <div class="flow"><div class="fhd"><span class="fid">A</span><span class="ft">Pub/Sub</span></div><div class="fd">1 write → N subscribers. No Redis.</div></div>
+        <div class="flow"><div class="fhd"><span class="fid">B</span><span class="ft">Claim</span></div><div class="fd">ACID check on claimedBy. Race-safe.</div></div>
+        <div class="flow"><div class="fhd"><span class="fid">C</span><span class="ft">Tree view</span></div><div class="fd">Materialised path LIKE /org/%.</div></div>
+        <div class="flow"><div class="fhd"><span class="fid">D</span><span class="ft">BYOS upload</span></div><div class="fd">Pre-signed URL · bytes bypass server.</div></div>
+        <div class="flow"><div class="fhd"><span class="fid">E</span><span class="ft">ERP loop</span></div><div class="fd">Trigger → claim → webhook → close.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= BAND 3 · DATA MODEL + INTEGRATION ================= -->
+  <div class="grid2">
+    <div class="panel">
+      <div class="kicker"><span class="num">4</span>Data Model &mdash; 8 tables (Convex)</div>
+      <div class="tables" style="margin-top:7px;">
+        <div class="chip"><div class="cn">users</div><div class="cd">email · BYOS · shadow flag</div></div>
+        <div class="chip t-rel"><div class="cn">connections</div><div class="cd">user1 ↔ user2 · status</div></div>
+        <div class="chip"><div class="cn">organizations</div><div class="cd">name · rootGroupId</div></div>
+        <div class="chip"><div class="cn">groups</div><div class="cd">tree · path · memberIds</div></div>
+        <div class="chip"><div class="cn">messages</div><div class="cd">topic · mode · externalRef</div></div>
+        <div class="chip t-work"><div class="cn">actionInbox</div><div class="cd">open → claimed → closed</div></div>
+        <div class="chip t-int"><div class="cn">apiKeys</div><div class="cd">SHA-256 · scopes</div></div>
+        <div class="chip t-int"><div class="cn">webhooks</div><div class="cd">events · HMAC secret</div></div>
+      </div>
+      <div class="dm-note">Indexed for scale: <b>messages</b> by group+time &amp; externalRef · <b>groups</b> by path &amp; parent · <b>actionInbox</b> by status+group.</div>
+    </div>
+
+    <div class="panel">
+      <div class="kicker"><span class="num">5</span>Open Integration Layer &mdash; ERP ↔ TeamChat loop</div>
+      <div class="loopwrap">
+        <div class="looprow">
+          <div class="lnode l-erp"><div class="lnt">🏢 ERP event</div><div class="lnd">new PO / ticket</div></div>
+          <span class="larrow">→</span>
+          <div class="lnode l-core"><div class="lnt">🌐 POST /messages</div><div class="lnd">API key · mode: action</div></div>
+          <span class="larrow">→</span>
+          <div class="lnode l-act"><div class="lnt">⚡ Agent claims</div><div class="lnd">first-claim locks</div></div>
+          <span class="larrow">→</span>
+          <div class="lnode l-int l-erp"><div class="lnt">📨 Webhook</div><div class="lnd">HMAC-signed POST</div></div>
+        </div>
+        <div class="loopback">
+          <span class="lab">⟲ CALLBACK</span>
+          <span class="txt">ERP stamps agent → marks in-progress. On <b>Done → closed</b>, fires <span class="codes">task.closed</span> → ERP record closed.</span>
+        </div>
+        <div class="dm-note" style="margin-top:6px;">Key <span class="codes" style="color:var(--integ);font-weight:700;">tc_live_…</span> · scopes enforced · <b>no message content</b> in webhook payloads (externalRef only).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= FOOTER · PRINCIPLES ================= -->
+  <div class="principles">
+    <div class="pr"><span class="pi">#</span><div><div class="pt">Pub/Sub Topics</div><div class="pd">Publish once · subscribers filter. Infinite scale.</div></div></div>
+    <div class="prsep"></div>
+    <div class="pr"><span class="pi">☁️</span><div><div class="pt">BYOS / SAL</div><div class="pd">Metadata on server · media in your cloud.</div></div></div>
+    <div class="prsep"></div>
+    <div class="pr"><span class="pi">🌳</span><div><div class="pt">Tree Hierarchy</div><div class="pd">Parent sees child · siblings isolated.</div></div></div>
+    <div class="prsep"></div>
+    <div class="pr"><span class="pi">🔌</span><div><div class="pt">Open Integration</div><div class="pd">API-first · never a closed system.</div></div></div>
+  </div>
+
+</div>
+</body>
+</html>

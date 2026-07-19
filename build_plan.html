@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TeamChat — Build Plan (Network Planning Chart)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F7FB; --canvas:#FDFEFF;
+    --ink:#0F1E36; --muted:#5B6B85; --line:#E2E8F2; --line2:#EEF2F8;
+    --infra:#475569;  --infra-f:#EEF2F7;
+    --auth:#0369A1;   --auth-f:#E0F2FE;
+    --core:#3730A3;   --core-f:#EDE9FE;
+    --action:#B45309; --action-f:#FEF3DC;
+    --byos:#047857;   --byos-f:#DCF2E8;
+    --widget:#0F766E; --widget-f:#D7F5EF;
+    --integ:#6D28D9;  --integ-f:#EFE9FC;
+    --mobile:#BE185D; --mobile-f:#FCE7F3;
+    --launch:#0F1E36; --launch-f:#E2E8F2;
+    --crit:#DC2626;   --crit-f:#FEE2E2;
+    --warn:#B45309;
+  }
+  @page { size: 1720px 1340px; margin: 0; }
+  *{ box-sizing:border-box; }
+  html,body{
+    margin:0; padding:0; width:1720px;
+    background:var(--bg);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink); -webkit-font-smoothing:antialiased;
+  }
+  @media screen{
+    html{ height:auto; display:flex; justify-content:center; background:var(--bg); }
+    body{ transform-origin:top center; scale:min(1, calc(100vw / 1720), calc(100vh / 1340)); margin:0 auto; box-shadow:0 0 60px rgba(15,30,54,.18); }
+  }
+  .canvas{
+    width:1720px; height:1340px; background:var(--canvas);
+    padding:24px 32px 20px; display:flex; flex-direction:column; gap:14px;
+  }
+  .mono{ font-family:'JetBrains Mono',Consolas,'Courier New',monospace; }
+
+  /* ===== Header ===== */
+  .head{ display:flex; align-items:flex-end; justify-content:space-between; border-bottom:2px solid var(--ink); padding-bottom:12px; }
+  .head h1{ margin:0; font-size:28px; font-weight:900; letter-spacing:-.4px; }
+  .head h1 .dot{ color:var(--integ); }
+  .head .sub{ font-size:13px; color:var(--muted); font-weight:500; margin-top:4px; max-width:760px; line-height:1.4; }
+  .head .meta{ text-align:right; }
+  .head .meta .v{ font-size:12px; font-weight:700; letter-spacing:1px; color:#fff; background:var(--ink); padding:5px 12px; border-radius:20px; display:inline-block; }
+  .head .meta .k{ font-size:11px; color:var(--muted); margin-top:6px; }
+
+  /* ===== Critical path callout ===== */
+  .toprow{ display:flex; gap:14px; }
+  .callout{
+    flex:1; background:#0F2240; color:#fff; border-radius:12px; padding:13px 18px;
+    display:flex; align-items:center; gap:14px;
+  }
+  .callout .ic{ font-size:26px; }
+  .callout .ct{ font-size:14px; font-weight:800; }
+  .callout .cs{ font-size:11.5px; color:#AEC0DD; margin-top:3px; line-height:1.45; }
+  .callout .cs b{ color:#FCA5A5; }
+  .chain{
+    flex:1.6; background:#fff; border:1px solid var(--line); border-radius:12px; padding:10px 14px;
+    display:flex; flex-direction:column; gap:8px;
+  }
+  .chain .lab{ font-size:10px; font-weight:800; letter-spacing:1.4px; color:var(--muted); text-transform:uppercase; }
+  .nodes{ display:flex; align-items:center; gap:4px; flex-wrap:wrap; }
+  .pn{ font-size:11px; font-weight:800; padding:5px 9px; border-radius:7px; background:var(--line2); color:var(--ink); white-space:nowrap; border:1px solid var(--line); }
+  .pn.crit{ background:var(--crit-f); border-color:#F5B5B5; color:var(--crit); }
+  .pn .star{ color:var(--crit); }
+  .pn.gate{ background:#FFF; border-style:dashed; border-color:var(--crit); }
+  .arrow{ color:var(--muted); font-weight:700; font-size:13px; }
+
+  /* ===== Gantt ===== */
+  .gantt{
+    background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px 14px 10px;
+    display:flex; flex-direction:column;
+  }
+  .gttl{ font-size:11px; font-weight:800; letter-spacing:1.4px; color:var(--muted); text-transform:uppercase; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;}
+  .legend{ display:flex; gap:10px; align-items:center; font-size:10.5px; color:var(--muted); text-transform:none; letter-spacing:0; font-weight:600; }
+  .legend .sw{ display:inline-flex; align-items:center; gap:5px; }
+  .legend i{ width:13px; height:13px; border-radius:3px; display:inline-block; border:1px solid rgba(0,0,0,.06); }
+  .legend .gsw{ width:13px; height:13px; border-radius:50%; background:#fff; border:2px solid var(--crit); }
+  .legend .csw{ width:18px; height:8px; border-radius:3px; background:#fff; border-left:4px solid var(--crit); }
+
+  .ggrid{ display:grid; grid-template-columns:240px repeat(12,1fr); position:relative; }
+  .ghead-l{ font-size:10px; font-weight:800; color:var(--muted); letter-spacing:.5px; padding:4px 0; }
+  .ghead-w{ font-size:10.5px; font-weight:800; color:var(--muted); text-align:center; padding:4px 0; border-left:1px dashed var(--line2); }
+  .ghead-w.first{ border-left:none; }
+
+  .grow{ display:contents; }
+  .glabel{
+    display:flex; flex-direction:column; justify-content:center; gap:1px;
+    padding:5px 8px 5px 0; border-top:1px solid var(--line2);
+  }
+  .glabel .row1{ display:flex; align-items:center; gap:7px; }
+  .pid{ font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:700; color:#fff; background:var(--ink); padding:2px 6px; border-radius:5px; }
+  .pid.crit{ background:var(--crit); }
+  .pname{ font-size:12.5px; font-weight:800; color:var(--ink); }
+  .pdeps{ font-size:9.5px; color:var(--muted); font-family:'JetBrains Mono',monospace; margin-left:2px; }
+  .pdeps b{ color:var(--crit); }
+  .gtrack{
+    grid-column:2 / span 12; position:relative; height:34px; margin:3px 0;
+    background-image:repeating-linear-gradient(to right, transparent 0, transparent calc(100%/12 - 1px), var(--line2) calc(100%/12 - 1px), var(--line2) calc(100%/12));
+    border-top:1px solid var(--line2);
+  }
+  .gbar{
+    position:absolute; top:4px; height:26px; border-radius:6px;
+    display:flex; align-items:center; padding:0 9px; gap:6px;
+    border:1px solid rgba(0,0,0,.05); overflow:hidden;
+  }
+  .gbar.crit{ border-left:4px solid var(--crit); }
+  .gbar .btxt{ font-size:10.5px; font-weight:700; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .gbar .gate{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:17px; height:17px; border-radius:50%; background:#fff; color:var(--crit);
+    font-size:11px; font-weight:900; border:1.5px solid var(--crit); flex:0 0 auto;
+  }
+  /* category fills */
+  .cat-infra{  background:var(--infra-f);  border-color:#CFD8E3; }
+  .cat-auth{   background:var(--auth-f);   border-color:#B6E1F4; }
+  .cat-core{   background:var(--core-f);   border-color:#D6CDF7; }
+  .cat-action{ background:var(--action-f); border-color:#F4D58A; }
+  .cat-byos{   background:var(--byos-f);   border-color:#BFE6D4; }
+  .cat-widget{ background:var(--widget-f); border-color:#9DDBCF; }
+  .cat-integ{  background:var(--integ-f);  border-color:#D8C9F4; }
+  .cat-mobile{ background:var(--mobile-f); border-color:#F4B6D2; }
+  .cat-launch{ background:var(--launch-f); border-color:#CBD5E6; }
+  .cat-action .btxt{ color:var(--action); }
+  .star{ color:var(--crit); font-weight:900; }
+
+  .today{ position:absolute; top:0; bottom:0; width:0; }
+
+  /* ===== Prep panel ===== */
+  .prep{ display:flex; gap:14px; }
+  .pcolumn{
+    flex:1; background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px 14px;
+    display:flex; flex-direction:column; gap:9px;
+  }
+  .pcolumn.now{ border-color:#F5B5B5; background:#FFFBFB; }
+  .pcol-head{ display:flex; align-items:center; gap:8px; padding-bottom:8px; border-bottom:1px solid var(--line2); }
+  .pcol-head .badge{ font-size:16px; }
+  .pcol-head .tt{ font-size:13px; font-weight:800; }
+  .pcol-head .dd{ font-size:10px; color:var(--muted); margin-left:auto; font-family:'JetBrains Mono',monospace; font-weight:700; }
+  .pitem{ display:flex; gap:9px; align-items:flex-start; }
+  .pitem .pic{ font-size:15px; line-height:1.3; flex:0 0 auto; }
+  .pitem .pb{ flex:1; }
+  .pitem .pt{ font-size:12px; font-weight:800; color:var(--ink); line-height:1.25; }
+  .pitem .pd{ font-size:10.5px; color:var(--muted); line-height:1.4; margin-top:2px; }
+  .pitem .gates{ margin-top:4px; display:flex; gap:4px; flex-wrap:wrap; }
+  .pitem .gchip{ font-family:'JetBrains Mono',monospace; font-size:9px; font-weight:700; padding:2px 6px; border-radius:4px; background:var(--line2); color:var(--muted); }
+  .pitem .why{ font-size:10px; color:var(--action); margin-top:3px; line-height:1.35; }
+  .pcolumn.now .pitem .gchip{ background:var(--crit-f); color:var(--crit); }
+
+  .foot{ font-size:10.5px; color:var(--muted); text-align:center; margin-top:auto; padding-top:4px; }
+  .foot b{ color:var(--ink); }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <!-- HEADER -->
+  <div class="head">
+    <div>
+      <h1>TeamChat<span class="dot">.</span> &mdash; Build Plan</h1>
+      <div class="sub">Network planning chart: 13 phases over 12 weeks, dependency order, critical path highlighted. Red-gated items are <b>where I stop until you deliver</b> &mdash; start them in Week&nbsp;1 to stay off the critical path.</div>
+    </div>
+    <div class="meta">
+      <span class="v">NETWORK PLAN · v1</span>
+      <div class="k">PRD v1.1 · MVP + Integration · ~12 weeks</div>
+    </div>
+  </div>
+
+  <!-- TOP ROW: callout + critical path chain -->
+  <div class="toprow">
+    <div class="callout">
+      <span class="ic">🧭</span>
+      <div>
+        <div class="ct">The critical path is your credentials, not the code.</div>
+        <div class="cs">Three external sign-offs have multi-day lead times: <b>SendGrid/SES sender verification</b>, <b>Apple/Google developer accounts</b>, and <b>BYOS OAuth consent screens</b>. They gate Auth, Mobile and Media. Order them Week&nbsp;1 &mdash; I'll be scaffolding in parallel.</div>
+      </div>
+    </div>
+    <div class="chain">
+      <div class="lab">Critical path spine (code) &nbsp;·&nbsp; ★ = the differentiator</div>
+      <div class="nodes">
+        <span class="pn crit">P0 Scaffold</span><span class="arrow">→</span>
+        <span class="pn crit">P1 Auth</span><span class="arrow">→</span>
+        <span class="pn crit">P4 Messaging</span><span class="arrow">→</span>
+        <span class="pn crit">P5 <span class="star">★</span> Action Inbox</span><span class="arrow">→</span>
+        <span class="pn crit">P8 Open API</span><span class="arrow">→</span>
+        <span class="pn crit">P11 Hardening</span><span class="arrow">→</span>
+        <span class="pn crit">P12 Launch</span>
+      </div>
+      <div class="lab" style="color:var(--crit);">True critical path (your gates): P1&nbsp;SendGrid · P6&nbsp;OAuth · P10&nbsp;Apple/Google · P8&nbsp;ERP sandbox</div>
+    </div>
+  </div>
+
+  <!-- GANTT -->
+  <div class="gantt">
+    <div class="gttl">
+      <span>Gantt timeline — phases × weeks (dependency order)</span>
+      <span class="legend">
+        <span class="sw"><span class="csw"></span>Critical path</span>
+        <span class="sw"><span class="gsw"></span>⚠ gated on you</span>
+        <span class="sw"><i style="background:var(--action-f);border-color:#F4D58A"></i>Action Inbox ★</span>
+        <span class="sw"><i style="background:var(--byos-f);border-color:#BFE6D4"></i>BYOS</span>
+        <span class="sw"><i style="background:var(--integ-f);border-color:#D8C9F4"></i>Integration</span>
+        <span class="sw"><i style="background:var(--mobile-f);border-color:#F4B6D2"></i>Mobile</span>
+      </span>
+    </div>
+
+    <div class="ggrid">
+      <!-- week header -->
+      <div class="ghead-l">PHASE / DEPENDENCY</div>
+      <div class="ghead-w first">W1</div><div class="ghead-w">W2</div><div class="ghead-w">W3</div><div class="ghead-w">W4</div><div class="ghead-w">W5</div><div class="ghead-w">W6</div>
+      <div class="ghead-w">W7</div><div class="ghead-w">W8</div><div class="ghead-w">W9</div><div class="ghead-w">W10</div><div class="ghead-w">W11</div><div class="ghead-w">W12</div>
+
+      <!-- P0 -->
+      <div class="glabel"><div class="row1"><span class="pid crit">P0</span><span class="pname">Scaffold &amp; repo</span></div><span class="pdeps">start &mdash; no deps</span></div>
+      <div class="gtrack"><div class="gbar cat-infra crit" style="left:0%;width:8.33%;"><span class="btxt">Convex + Next.js + monorepo</span></div></div>
+
+      <!-- P1 -->
+      <div class="glabel"><div class="row1"><span class="pid crit">P1</span><span class="pname">Auth &amp; identity</span></div><span class="pdeps"><b>◀ P0</b> · needs SendGrid + domain</span></div>
+      <div class="gtrack"><div class="gbar cat-auth crit" style="left:0%;width:16.67%;"><span class="gate">⚠</span><span class="btxt">Email OTP · sessions · PIN</span></div></div>
+
+      <!-- P2 -->
+      <div class="glabel"><div class="row1"><span class="pid">P2</span><span class="pname">Data model &amp; schema</span></div><span class="pdeps">◀ P0 · needs sample org chart</span></div>
+      <div class="gtrack"><div class="gbar cat-core" style="left:4.17%;width:12.5%;"><span class="gate">⚠</span><span class="btxt">8 tables · indexes</span></div></div>
+
+      <!-- P6 (BYOS, parallel, gated on OAuth) -->
+      <div class="glabel"><div class="row1"><span class="pid">P6</span><span class="pname">BYOS / media (SAL)</span></div><span class="pdeps">◀ P1 · needs OAuth creds</span></div>
+      <div class="gtrack"><div class="gbar cat-byos" style="left:20.83%;width:16.67%;"><span class="gate">⚠</span><span class="btxt">Pre-signed upload · Drive/S3</span></div></div>
+
+      <!-- P3 -->
+      <div class="glabel"><div class="row1"><span class="pid">P3</span><span class="pname">Groups &amp; tree</span></div><span class="pdeps">◀ P2</span></div>
+      <div class="gtrack"><div class="gbar cat-core" style="left:16.67%;width:12.5%;"><span class="btxt">Hierarchy · materialised path</span></div></div>
+
+      <!-- P10 Mobile (long, parallel, gated on accounts) -->
+      <div class="glabel"><div class="row1"><span class="pid">P10</span><span class="pname">Mobile (React Native)</span></div><span class="pdeps">◀ P4 · needs Apple/Google accts</span></div>
+      <div class="gtrack"><div class="gbar cat-mobile" style="left:41.67%;width:29.17%;"><span class="gate">⚠</span><span class="btxt">iOS + Android · shares logic with web</span></div></div>
+
+      <!-- P4 -->
+      <div class="glabel"><div class="row1"><span class="pid crit">P4</span><span class="pname">Messaging core</span></div><span class="pdeps"><b>◀ P1, P3</b> · needs retention policy</span></div>
+      <div class="gtrack"><div class="gbar cat-core crit" style="left:25%;width:20.83%;"><span class="gate">⚠</span><span class="btxt">Pub/Sub · realtime · threads · edit/delete</span></div></div>
+
+      <!-- P5 Action Inbox (the star) -->
+      <div class="glabel"><div class="row1"><span class="pid crit">P5</span><span class="pname"><span class="star">★</span> Action Inbox + claim</span></div><span class="pdeps"><b>◀ P4</b> · needs escalation rules</span></div>
+      <div class="gtrack"><div class="gbar cat-action crit" style="left:45.83%;width:16.67%;"><span class="gate">⚠</span><span class="btxt">Single-claim (ACID) · forward · close</span></div></div>
+
+      <!-- P7 Widget -->
+      <div class="glabel"><div class="row1"><span class="pid">P7</span><span class="pname">Embeddable Widget SDK</span></div><span class="pdeps">◀ P4, P6 · needs host app + brand</span></div>
+      <div class="gtrack"><div class="gbar cat-widget" style="left:45.83%;width:16.67%;"><span class="gate">⚠</span><span class="btxt">Shadow accounts · iframe/Shadow DOM</span></div></div>
+
+      <!-- P8 Open API -->
+      <div class="glabel"><div class="row1"><span class="pid crit">P8</span><span class="pname">Open Integration Layer</span></div><span class="pdeps"><b>◀ P5</b> · needs ERP sandbox</span></div>
+      <div class="gtrack"><div class="gbar cat-integ crit" style="left:62.5%;width:20.83%;"><span class="gate">⚠</span><span class="btxt">API keys · REST · HMAC webhooks</span></div></div>
+
+      <!-- P9 Admin -->
+      <div class="glabel"><div class="row1"><span class="pid">P9</span><span class="pname">Admin dashboard</span></div><span class="pdeps">◀ P8 · needs admin roles</span></div>
+      <div class="gtrack"><div class="gbar cat-core" style="left:66.67%;width:16.67%;"><span class="gate">⚠</span><span class="btxt">Key mgmt · org tree · users</span></div></div>
+
+      <!-- P11 Hardening -->
+      <div class="glabel"><div class="row1"><span class="pid crit">P11</span><span class="pname">Hardening &amp; security</span></div><span class="pdeps"><b>◀ P5, P7, P8, P10</b> · needs sign-off</span></div>
+      <div class="gtrack"><div class="gbar cat-launch crit" style="left:75%;width:12.5%;"><span class="gate">⚠</span><span class="btxt">Rate-limit · audit · test</span></div></div>
+
+      <!-- P12 Launch -->
+      <div class="glabel"><div class="row1"><span class="pid crit">P12</span><span class="pname">Deploy &amp; launch</span></div><span class="pdeps"><b>◀ P11</b> · needs prod domain + DNS</span></div>
+      <div class="gtrack"><div class="gbar cat-launch crit" style="left:87.5%;width:8.33%;"><span class="gate">⚠</span><span class="btxt">Go-live</span></div></div>
+    </div>
+  </div>
+
+  <!-- PREP PANEL: what I need from you -->
+  <div class="prep">
+    <!-- START NOW -->
+    <div class="pcolumn now">
+      <div class="pcol-head">
+        <span class="badge">🔴</span><span class="tt">Start now (Week 1)</span><span class="dd">LONG LEAD</span>
+      </div>
+      <div class="pitem">
+        <span class="pic">📧</span><div class="pb">
+          <div class="pt">SendGrid OR AWS SES account + API key</div>
+          <div class="pd">Create account, verify the sender domain. Add SPF / DKIM / DMARC DNS records.</div>
+          <div class="why">Propagation = 1–3 days. Blocks all login (OTP).</div>
+          <div class="gates"><span class="gchip">gates P1</span></div>
+        </div>
+      </div>
+      <div class="pitem">
+        <span class="pic">🌐</span><div class="pb">
+          <div class="pt">Domain name + DNS control</div>
+          <div class="pd">e.g. teamchat.app — I need DNS access for sender verification, web hosting, and the API base URL.</div>
+          <div class="gates"><span class="gchip">gates P1</span><span class="gchip">gates P12</span></div>
+        </div>
+      </div>
+      <div class="pitem">
+        <span class="pic">🍎</span><div class="pb">
+          <div class="pt">Apple Developer ($99/yr) + Google Play ($25)</div>
+          <div class="pd">Both accounts in your name/org. Apple enrollment review can take several days.</div>
+          <div class="why">Longest single lead time. Order today.</div>
+          <div class="gates"><span class="gchip">gates P10</span></div>
+        </div>
+      </div>
+      <div class="pitem">
+        <span class="pic">☁️</span><div class="pb">
+          <div class="pt">BYOS OAuth credentials</div>
+          <div class="pd">Google Cloud project (Drive API + OAuth consent screen) and AWS account (S3 bucket + IAM). Media upload can't ship without these.</div>
+          <div class="gates"><span class="gchip">gates P6</span></div>
+        </div>
+      </div>
+      <div class="pitem">
+        <span class="pic">⚙️</span><div class="pb">
+          <div class="pt">Convex Cloud account (hosting)</div>
+          <div class="pd">Sign up at convex.dev; share the project with me so I can push schema/functions.</div>
+          <div class="gates"><span class="gchip">gates P0</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BEFORE WEEK 4 -->
+    <div class="pcolumn">
+      <div class="pcol-head">
+        <span class="badge">🟡</span><span class="tt">Before Week 4</span><span class="dd">DECISIONS</span>
+      </div>
+      <div class="pitem">
+        <span class="pic">🏢</span><div class="pb">
+          <div class="pt">Pick the first ERP + give sandbox access</div>
+          <div class="pd">Accurate / SellMore / SAP? I need a test environment + sample records (e.g. a PO) to build the trigger against.</div>
+          <div class="gates"><span class="gchip">gates P8</span></div>
+        </div>
+      </div>
+      <div class="pitem">
+        <span class="pic">🔌</span><div class="pb">
+          <div class="pt">A sample host app + brand assets</div>
+          <div class="pd">The app the widget embeds into (URL / repo), plus logo + brand colours for white-labelling. Lets me build &amp; test the SDK against real embedding.</div>
+          <div class="gates"><span class="gchip">gates P7</span></div>
+        </div>
+      </div>
+      <div class="pitem">
+        <span class="pic">🌳</span><div class="pb">
+          <div class="pt">A real org chart to model the tree</div>
+          <div class="pd">Your actual franchise / outlet hierarchy (names anonymised fine). I'll seed it so the tree visibility rules are tested against reality, not toy data.</div>
+          <div class="gates"><span class="gchip">gates P3</span></div>
+        </div>
+      </div>
+      <div class="pitem">
+        <span class="pic">📋</span><div class="pb">
+          <div class="pt">Message retention &amp; media policy</div>
+          <div class="pd">How long are messages kept? Which file types/sizes allowed? Any compliance needs (data residency, audit export)?</div>
+          <div class="gates"><span class="gchip">gates P4</span></div>
+        </div>
+      </div>
+      <div class="pitem">
+        <span class="pic">⚡</span><div class="pb">
+          <div class="pt">Task escalation / re-assign rules</div>
+          <div class="pd">What happens to an unclaimed Action after N hours? Who can force-reassign? These define the Action Inbox workflow.</div>
+          <div class="gates"><span class="gchip">gates P5</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JUST IN TIME -->
+    <div class="pcolumn">
+      <div class="pcol-head">
+        <span class="badge">🟢</span><span class="tt">Just-in-time (Week 9+)</span><span class="dd">LAUNCH</span>
+      </div>
+      <div class="pitem">
+        <span class="pic">📨</span><div class="pb">
+          <div class="pt">ERP webhook endpoint URL (your side)</div>
+          <div class="pd">The URL TeamChat will POST <span class="mono">task.claimed / task.closed</span> events to. Needed for the full integration loop test.</div>
+          <div class="gates"><span class="gchip">gates P8 test</span></div>
+        </div>
+      </div>
+      <div class="pitem">
+        <span class="pic">🔑</span><div class="pb">
+          <div class="pt">Push-notification keys</div>
+          <div class="pd">Apple APNs key + Firebase (FCM) project. Required before mobile can notify in the background.</div>
+          <div class="gates"><span class="gchip">gates P10</span></div>
+        </div>
+      </div>
+      <div class="pitem">
+        <span class="pic">👥</span><div class="pb">
+          <div class="pt">Admin roles &amp; who the admins are</div>
+          <div class="pd">Who can create/revoke API keys? Who can close flags org-wide? Drives the admin dashboard permissions.</div>
+          <div class="gates"><span class="gchip">gates P9</span></div>
+        </div>
+      </div>
+      <div class="pitem">
+        <span class="pic">🛡️</span><div class="pb">
+          <div class="pt">Security sign-off + compliance scope</div>
+          <div class="pd">Any penetration-test requirements, data-residency constraints, or GDPR/privacy review the launch must pass.</div>
+          <div class="gates"><span class="gchip">gates P11</span></div>
+        </div>
+      </div>
+      <div class="pitem">
+        <span class="pic">🚀</span><div class="pb">
+          <div class="pt">Production go-live: domain + date</div>
+          <div class="pd">Final DNS cutover access and the target launch date. I'll work backwards from this for the freeze window.</div>
+          <div class="gates"><span class="gchip">gates P12</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    Bars are dependency-ordered, not strictly sequential &mdash; parallel tracks (BYOS, Mobile, Widget) run alongside the spine. <b>Red ⚠ = blocked on you.</b> If every 🔴 item is ordered in Week&nbsp;1, the plan holds to 12 weeks; each missed gate pushes the spine right by its delay.
+  </div>
+
+</div>
+</body>
+</html>
