@@ -1,0 +1,10 @@
+runAt: 2026-10-20T05:40:02.312Z
+deployment: https://adventurous-squirrel-356.convex.cloud
+org: org_q0rvnwxsyhvn
+alice: usr_eaf14id0e003
+bob: usr_5febpihk9trx
+carol: usr_g2p8ql8equot
+aliceTokenIssued: true
+bobTokenIssued: true
+passed: 14
+failed: 0

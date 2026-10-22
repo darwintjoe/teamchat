@@ -1,0 +1,27 @@
+{
+  "name": "teamchat-app",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "convex dev",
+    "deploy": "convex deploy",
+    "deploy:prod": "node scripts/deploy-prod.mjs",
+    "guard:prod": "node scripts/guard-prod.mjs",
+    "typecheck": "tsc --noEmit",
+    "widget:build": "node widget/build.mjs",
+    "widget:typecheck": "tsc --noEmit -p widget/tsconfig.json",
+    "widget:test": "node widget/test/lifecycle.test.mjs"
+  },
+  "dependencies": {
+    "@convex-dev/auth": "0.0.96",
+    "@convex-dev/rate-limiter": "0.4.2",
+    "aws4fetch": "1.0.20",
+    "convex": "1.47.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "s3rver": "^3.7.1",
+    "typescript": "5.9.3"
+  }
+}

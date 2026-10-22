@@ -1,0 +1,12 @@
+﻿
+> teamchat-app@0.0.0 widget:test
+> node widget/test/lifecycle.test.mjs
+
+PASS  no subscription until the panel is open and visible
+PASS  hide tears the subscription down and show restores it
+PASS  close tears down and cannot leak a listener
+PASS  a throwing unsubscribe is swallowed and teardown stays idempotent
+PASS  postMessage parsing rejects shapes it does not understand
+PASS  origin allowlist is exact after normalisation
+
+6 lifecycle/protocol checks passed

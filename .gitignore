@@ -4,3 +4,11 @@ Thumbs.db
 *.log
 .env
 .env.local
+
+# Local demo/test state and key material
+app/.storage/
+app/.widget-demo/
+app/mobile/dist-action/
+backups/
+*.pem
+*.jwk

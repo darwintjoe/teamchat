@@ -1,0 +1,17 @@
+Cost model verification — 2026-10-22T00:50:34.099Z
+deployment: https://benevolent-crocodile-386.convex.cloud
+run id:     mvitqsp03287
+
+cloud: https://benevolent-crocodile-386.convex.cloud
+run:   mvitqsp03287
+
+PASS  Appendix A lever-1 baseline projects $18/org/month — $18.00/org · 180000 messages/month
+PASS  the 70% alert is driven by projected spend, not org count — 33 = 69.4% ok · 34 = 71.2% warning · 50 = over
+PASS  onboarding refuses a candidate that would cross the $1,000 ceiling — 1000 users / 5000-member group refused
+PASS  onboarding admits a small candidate and returns its projection — $0/month candidate · total $100
+PASS  a measured daily rollup writes one org/day row with cost fields — 2026-10-22 · 1 message(s) · 1 sender(s) · $0/month (tiny test org)
+PASS  the platform alert and admin tile label the projection an estimate — platform $100 (10%) · tile 1 day(s)
+PASS  there is no per-message counter and no hot per-group cost document — daily rollup + index by_org_day; no counter table
+cleanup org_37wukx8ca0rd: removed=true rows=9
+
+checks: 7 passed, 0 failed

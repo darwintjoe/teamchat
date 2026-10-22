@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TeamChat — Build Spec &amp; 4-Week Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EDF0F7;
+    --canvas:#FCFCFE;
+    --ink:#0D1226;
+    --muted:#5B6479;
+    --line:#E1E5F0;
+
+    /* AUDIENCE 03 — DEVELOPER · indigo */
+    --accent:#3730A3;
+    --accent-2:#6366F1;
+    --accent-ink:#272178;
+    --accent-fill:#E8E7FB;
+    --accent-soft:#F4F4FE;
+    --mono:'JetBrains Mono',monospace;
+  }
+
+  @page { size: 1240px 1754px; margin: 0; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html,body{
+    width:1240px; background:var(--bg);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink); -webkit-font-smoothing:antialiased;
+  }
+  @media screen{
+    html{ height:auto; display:flex; justify-content:center; }
+    body{ transform-origin:top center; scale:min(1, calc(100vw / 1240)); box-shadow:0 0 60px rgba(13,18,38,.18); }
+  }
+
+  .canvas{
+    position:relative; width:1240px; height:1754px; overflow:hidden;
+    background:var(--canvas);
+    padding:0 56px 40px;
+    display:flex; flex-direction:column;
+    background-image:radial-gradient(circle at 1px 1px, rgba(55,48,163,.055) 1px, transparent 0);
+    background-size:26px 26px;
+  }
+
+  .topbar{ height:9px; margin:0 -56px 32px; background:linear-gradient(90deg,#3730A3,#6366F1 62%,#A5B4FC); }
+
+  .head{ display:flex; justify-content:space-between; align-items:flex-start; gap:24px; margin-bottom:18px; }
+  .eyebrow{ font-size:12px; font-weight:800; letter-spacing:.19em; text-transform:uppercase; color:var(--accent); margin-bottom:11px; }
+  .setmark{
+    font-family:var(--mono); font-size:11.5px; font-weight:600; letter-spacing:.1em;
+    color:var(--accent); background:var(--accent-fill); border:1px solid #C7C4F2;
+    padding:7px 11px; border-radius:5px; white-space:nowrap;
+  }
+  h1{ font-size:62px; line-height:.94; font-weight:900; letter-spacing:-.045em; color:var(--ink); }
+  .question{ margin-top:14px; font-size:22px; line-height:1.3; font-weight:500; color:var(--muted); letter-spacing:-.012em; max-width:900px; }
+  .question b{ color:var(--ink); font-weight:700; }
+
+  .stack{
+    margin-top:18px; display:flex; flex-wrap:wrap; gap:7px;
+  }
+  .chip{
+    font-family:var(--mono); font-size:12px; font-weight:600; padding:6px 11px; border-radius:5px;
+    background:#fff; border:1px solid var(--line); color:var(--accent-ink);
+  }
+  .chip.k{ background:var(--accent); color:#fff; border-color:var(--accent); }
+
+  .body{ flex:1; display:flex; flex-direction:column; gap:15px; padding-top:20px; }
+
+  .block{ display:flex; flex-direction:column; gap:7px; }
+  .btitle{ display:flex; align-items:center; gap:10px; }
+  .bnum{
+    font-family:var(--mono); font-size:10.5px; font-weight:600; color:var(--accent);
+    background:var(--accent-fill); width:21px; height:21px; border-radius:4px;
+    display:flex; align-items:center; justify-content:center; flex:none;
+  }
+  .btitle h2{ font-size:19.5px; font-weight:800; letter-spacing:-.022em; }
+
+  /* ---- 4 week plan ---- */
+  .weeks{ display:flex; gap:9px; }
+  .wk{
+    flex:1; background:#fff; border:1px solid var(--line); border-radius:9px; overflow:hidden;
+    display:flex; flex-direction:column;
+  }
+  .wk .wh{ padding:9px 12px; background:var(--accent-soft); border-bottom:1px solid var(--line); }
+  .wk .wn{ font-family:var(--mono); font-size:9.5px; font-weight:700; letter-spacing:.1em; color:var(--accent); text-transform:uppercase; }
+  .wk .wt{ font-size:14.5px; font-weight:800; color:var(--ink); line-height:1.22; margin-top:2px; letter-spacing:-.015em; }
+  .wk .wb{ padding:10px 12px 11px; display:flex; flex-direction:column; gap:6px; flex:1; }
+  .wk li{ list-style:none; font-size:13px; line-height:1.38; color:var(--muted); padding-left:11px; position:relative; }
+  .wk li::before{ content:"▸"; position:absolute; left:0; color:var(--accent-2); font-size:9px; top:1px; }
+  .wk li b{ color:var(--ink); font-weight:700; }
+  .wk .wd{ margin-top:auto; font-family:var(--mono); font-size:10px; color:#8A93A8; padding-top:8px; border-top:1px dashed var(--line); }
+
+  .wk.w2{ border-color:#C7C4F2; box-shadow:0 0 0 2px rgba(99,102,241,.13); }
+
+  /* ---- two-col ---- */
+  .cols{ display:flex; gap:13px; }
+  .col{ flex:1; }
+
+  /* ---- constraints ---- */
+  .locks{ display:flex; flex-direction:column; gap:5px; }
+  .lock{ display:flex; gap:9px; font-size:12.4px; line-height:1.35; color:var(--muted); }
+  .lock .lk{ font-family:var(--mono); font-size:8.5px; font-weight:700; letter-spacing:.08em; color:#fff; background:var(--accent); padding:2px 5px; border-radius:3px; height:15px; flex:none; margin-top:1px; }
+  .lock b{ color:var(--ink); font-weight:700; }
+  .lock code{ font-family:var(--mono); font-size:11px; background:#F0F1F8; padding:1px 4px; border-radius:3px; color:var(--accent-ink); }
+
+  /* ---- schema grid ---- */
+  .tables{ display:grid; grid-template-columns:repeat(4,1fr); gap:5px; }
+  .tb{ font-family:var(--mono); font-size:10.4px; padding:5px 7px; border-radius:4px; background:#fff; border:1px solid var(--line); color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .tb.on{ background:var(--accent-fill); border-color:#C7C4F2; color:var(--accent-ink); font-weight:600; }
+
+  /* ---- state machine ---- */
+  .sm{ display:flex; align-items:center; gap:0; }
+  .st{ flex:none; font-family:var(--mono); font-size:12.5px; font-weight:700; padding:7px 13px; border-radius:6px; background:var(--accent-fill); color:var(--accent-ink); border:1px solid #C7C4F2; }
+  .st.term{ background:#F1F2F7; color:#6B7387; border-color:var(--line); }
+  .sa{ flex:1; text-align:center; font-family:var(--mono); font-size:9.5px; color:var(--accent); position:relative; }
+  .sa span{ display:block; font-size:8.5px; color:#98A0B5; }
+  .sml{ margin-top:6px; font-size:12px; line-height:1.4; color:var(--muted); }
+  .sml code{ font-family:var(--mono); font-size:11px; background:#F0F1F8; padding:1px 4px; border-radius:3px; color:var(--accent-ink); }
+  .sml b{ color:var(--ink); font-weight:700; }
+
+  /* ---- gates ---- */
+  .gates{ display:flex; flex-direction:column; gap:4px; }
+  .gate{ display:flex; align-items:center; gap:9px; font-size:12.3px; line-height:1.3; }
+  .gate .gi{ font-family:var(--mono); font-size:10px; font-weight:700; color:#fff; background:#B45309; padding:2px 6px; border-radius:3px; flex:none; width:27px; text-align:center; }
+  .gate .gt{ color:var(--muted); }
+  .gate .gt b{ color:var(--ink); font-weight:700; }
+
+  /* ---- api ---- */
+  .api{ font-family:var(--mono); font-size:11px; line-height:1.55; color:var(--muted); background:#fff; border:1px solid var(--line); border-radius:8px; padding:10px 13px; }
+  .api .m{ color:#0F766E; font-weight:700; }
+  .api .p{ color:var(--accent-ink); font-weight:600; }
+
+  /* ---- traps ---- */
+  .risks{ display:flex; gap:9px; }
+  .risk{ flex:1; background:#fff; border:1px solid var(--line); border-top:3px solid #C2410C; border-radius:0 0 7px 7px; padding:9px 11px; }
+  .risk .rn{ font-family:var(--mono); font-size:9px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:#C2410C; margin-bottom:3px; }
+  .risk .rt{ font-size:12.5px; font-weight:800; line-height:1.28; color:var(--ink); letter-spacing:-.012em; }
+  .risk .rx{ font-size:11.3px; line-height:1.36; color:var(--muted); margin-top:4px; }
+
+  .foot{
+    margin-top:auto; padding-top:14px; border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:12px; color:var(--muted);
+  }
+  .foot .fl{ display:flex; align-items:center; gap:10px; font-weight:700; color:var(--ink); letter-spacing:-.01em; }
+  .dot{ width:7px; height:7px; border-radius:50%; background:var(--accent); }
+  .foot .fr{ font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <div class="topbar"></div>
+
+  <div class="head">
+    <div>
+      <div class="eyebrow">For the build team</div>
+      <h1>Spec &amp; four weeks.</h1>
+    </div>
+    <div class="setmark">03 / 03 &nbsp;·&nbsp; DEVELOPER</div>
+  </div>
+
+  <div class="question">
+    Ship a chat app that feels like WhatsApp in <b>week one</b>, then earn the difference.
+  </div>
+
+  <div class="stack">
+    <span class="chip k">React Native</span>
+    <span class="chip k">Next.js</span>
+    <span class="chip k">Vanilla TS + Convex client</span>
+    <span class="chip k">Convex</span>
+    <span class="chip k">TypeScript end-to-end</span>
+    <span class="chip">Convex Auth (beta, pinned)</span>
+    <span class="chip">SendGrid / SES</span>
+    <span class="chip">S3-compatible BYOS</span>
+    <span class="chip">Vercel</span>
+  </div>
+
+  <div class="body">
+
+    <div class="block">
+      <div class="btitle"><span class="bnum">1</span><h2>Four weeks, four shippable states</h2></div>
+      <div class="weeks">
+
+        <div class="wk">
+          <div class="wh"><div class="wn">Week 1</div><div class="wt">Chat that already feels normal</div></div>
+          <div class="wb">
+            <li><b>1:1</b> direct message</li>
+            <li><b>1 → group</b> post</li>
+            <li><b>group → group</b> forward into another group you belong to</li>
+            <li>Threads, edit, soft delete, attachments</li>
+            <li>Realtime via Convex subscriptions</li>
+            <li>Email OTP sign-in</li>
+            <div class="wd">NO hierarchy yet. Groups are flat.</div>
+          </div>
+        </div>
+
+        <div class="wk w2">
+          <div class="wh"><div class="wn">Week 2</div><div class="wt">Embed into someone else's app</div></div>
+          <div class="wb">
+            <li>Widget SDK: iframe / Shadow DOM</li>
+            <li>Token exchange → <b>shadow account</b></li>
+            <li>Identity by <code>hostAppId + externalUserId</code>, <b>never email</b></li>
+            <li>Darwin chats Accurate CS inside Accurate</li>
+            <li>Same thread continues in TeamChat app</li>
+            <li>CS sees <code>/accurate/darwin</code> as a contact</li>
+            <div class="wd">Widget messages are FORCED to Action mode.</div>
+          </div>
+        </div>
+
+        <div class="wk">
+          <div class="wh"><div class="wn">Week 3</div><div class="wt">Hierarchy</div></div>
+          <div class="wb">
+            <li><code>groups.path</code> — materialised ancestor chain</li>
+            <li>Parent sees children; child never sees parent</li>
+            <li>Siblings isolated</li>
+            <li>Ancestor-manager authority, no claiming</li>
+            <li>Org-wide rollup queries</li>
+            <li><b>Migration:</b> backfill <code>path</code> on flat groups</li>
+            <div class="wd">Reparenting stays DISABLED. Paths immutable.</div>
+          </div>
+        </div>
+
+        <div class="wk">
+          <div class="wh"><div class="wn">Week 4</div><div class="wt">Tasks &amp; accountability</div></div>
+          <div class="wb">
+            <li>Action Inbox + claim lock</li>
+            <li>Full state machine + audit events</li>
+            <li>Forward / reassign with actor trail</li>
+            <li>Separation of duties, <code>selfClosed</code></li>
+            <li>Widget reply reopens <code>done</code></li>
+            <li>Open API + HMAC webhooks</li>
+            <div class="wd">Everything before this still works unchanged.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="cols">
+      <div class="col block">
+        <div class="btitle"><span class="bnum">2</span><h2>Locked constraints</h2></div>
+        <div class="locks">
+          <div class="lock"><span class="lk">LOCK</span><div><b>One message = one write.</b> Fan-out is N query re-runs, never N inserts.</div></div>
+          <div class="lock"><span class="lk">LOCK</span><div><b>No hot per-group document.</b> Nothing scoped to a group may be written per message — no counters. Rate limits use the transactional limiter keyed by group.</div></div>
+          <div class="lock"><span class="lk">LOCK</span><div><b>Metadata / bytes split.</b> The server never proxies media.</div></div>
+          <div class="lock"><span class="lk">LOCK</span><div><b>Tree-only for groups.</b> DMs are a named exception — outside every rollup, org-switchable.</div></div>
+          <div class="lock"><span class="lk">LOCK</span><div><b>No <code>createdAt</code> on messages.</b> ERP can backdate it. Order by <code>_creationTime</code>.</div></div>
+        </div>
+      </div>
+
+      <div class="col block">
+        <div class="btitle"><span class="bnum">3</span><h2>Gates — run in this order</h2></div>
+        <div class="gates">
+          <div class="gate"><span class="gi">S1</span><span class="gt"><b>Union-variant indexing</b> on first deploy. 4 variant-only fields on <code>groups</code>. Fails → flatten to optional fields. <b>Blocks every schema decision.</b></span></div>
+          <div class="gate"><span class="gi">S6</span><span class="gt"><b>Region latency</b>, p50 + p95 from Jakarta. Region cannot be changed after creation.</span></div>
+          <div class="gate"><span class="gi">S2</span><span class="gt"><b>Insert under load</b>, no per-group counter. Proves the lock.</span></div>
+          <div class="gate"><span class="gi">S3</span><span class="gt"><b>Widget exchange</b> through <code>ConvexCredentials</code>.</span></div>
+          <div class="gate"><span class="gi">S5</span><span class="gt"><b>10k sessions / 256 queries</b> at burst. The one failure money can't fix in budget.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cols">
+      <div class="col block">
+        <div class="btitle"><span class="bnum">4</span><h2>State machine — terminal, no shortcuts</h2></div>
+        <div class="sm">
+          <span class="st">open</span>
+          <span class="sa">claim<span>member</span></span>
+          <span class="st">claimed</span>
+          <span class="sa">done<span>claimant</span></span>
+          <span class="st">done</span>
+          <span class="sa">close<span>closer</span></span>
+          <span class="st term">closed</span>
+        </div>
+        <div class="sml">
+          <code>archived</code> = withdrawn, not completed. <b>No <code>closed → archived</code>.</b> Hiding a closed
+          task sets <code>actionInbox.archivedAt</code> and leaves <code>status</code> alone. <code>reopened.reason</code> ∈
+          <code>sender_review</code> | <code>customer_reply</code>. <code>forwarded</code> carries actor / from / to —
+          <code>actorId == fromUserId</code> means self-forward, otherwise it is a reassignment.
+        </div>
+      </div>
+
+      <div class="col block">
+        <div class="btitle"><span class="bnum">5</span><h2>API surface</h2></div>
+        <div class="api">
+          <div><span class="m">POST</span> <span class="p">/v1/groups</span> &nbsp;<span class="m">POST</span> <span class="p">/v1/users</span></div>
+          <div><span class="m">POST</span> <span class="p">/v1/messages</span> &nbsp;<span class="m">GET</span> <span class="p">/v1/messages/{publicId}</span></div>
+          <div><span class="m">GET</span> <span class="p">/v1/groups?externalRef=</span> &nbsp;<span class="m">GET</span> <span class="p">/v1/users?externalRef=</span></div>
+          <div style="margin-top:6px;color:#98A0B5;">500 req/min per key · Phase 1 mandatory · 90-day rotation</div>
+          <div style="color:#98A0B5;">idempotency key → stored status + body · webhook payload = snapshot, never a ref</div>
+          <div style="color:#98A0B5;">no message content in webhooks — enforced by validator</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="btitle"><span class="bnum">6</span><h2>Schema — 21 tables, build order marked</h2></div>
+      <div class="tables">
+        <span class="tb on">users</span><span class="tb on">organizations</span><span class="tb on">orgMembers</span><span class="tb on">groups</span>
+        <span class="tb on">memberships</span><span class="tb on">messages</span><span class="tb on">connections</span><span class="tb">externalIdentities</span>
+        <span class="tb">hostApps</span><span class="tb">hostAppKeys</span><span class="tb">usedTokenIds</span><span class="tb">groupActivity</span>
+        <span class="tb">actionInbox</span><span class="tb">actionEvents</span><span class="tb">storageConfigs</span><span class="tb">byosCredentials</span>
+        <span class="tb">apiKeys</span><span class="tb">webhooks</span><span class="tb">webhookSecrets</span><span class="tb">webhookDeliveries</span>
+        <span class="tb">idempotencyKeys</span><span class="tb" style="border:none;background:none;"></span><span class="tb" style="border:none;background:none;"></span><span class="tb" style="border:none;background:none;"></span>
+      </div>
+      <div class="sml" style="margin-top:2px;">
+        <b>Indigo</b> = week 1–3. The rest lands with widget, tasks and API. Open items: <b>O5</b> auth wrapper ·
+        <b>O6</b> Drive merchant validation · <b>O9</b> unread — two documents, never a <code>take(100)</code> scan.
+      </div>
+    </div>
+
+    <div class="cols">
+      <div class="col block">
+        <div class="btitle"><span class="bnum">7</span><h2>One message, end to end</h2></div>
+        <div class="api" style="font-size:11.5px; line-height:1.7;">
+          <div><span class="m">1</span> client calls <span class="p">messages.send</span> — one mutation</div>
+          <div><span class="m">2</span> <b style="color:#0D1226;">one insert</b> into <code style="font-family:var(--mono);">messages</code> · no counter, no group doc write</div>
+          <div><span class="m">3</span> Convex invalidates every subscriber of that group's feed</div>
+          <div><span class="m">4</span> each live viewer re-reads <b style="color:#0D1226;">one bounded page</b> (≤15 docs)</div>
+          <div><span class="m">5</span> sender's <code style="font-family:var(--mono);">memberships.lastReadAt</code> advances in the same mutation</div>
+          <div><span class="m">6</span> webhook fan-out is a <b style="color:#0D1226;">scheduled action</b>, never inline</div>
+        </div>
+      </div>
+
+      <div class="col block">
+        <div class="btitle"><span class="bnum">8</span><h2>After week 4</h2></div>
+        <div class="locks">
+          <div class="lock"><span class="lk" style="background:#6B7387;">W5</span><div><b>BYOS upload.</b> Pre-signed PUT to the org's bucket; the server never touches the bytes.</div></div>
+          <div class="lock"><span class="lk" style="background:#6B7387;">W6</span><div><b>Rate limiting + idempotency.</b> 500 req/min per key, transactional limiter, stored response bodies.</div></div>
+          <div class="lock"><span class="lk" style="background:#6B7387;">W7</span><div><b>Hardening.</b> Retention sweep, index prune, per-org usage rollups, the onboarding cost gate.</div></div>
+          <div class="lock"><span class="lk" style="background:#6B7387;">W8</span><div><b>Instrumentation.</b> Measure real messages/user/day and peak viewers, then recalibrate the cost model.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="btitle"><span class="bnum">9</span><h2>Traps that will cost you a week each</h2></div>
+      <div class="risks">
+        <div class="risk">
+          <div class="rn">Trap 01</div>
+          <div class="rt">Don't index a variant-only field</div>
+          <div class="rx">S1 decides this. Build <b>byosCredentials</b> first — it's the cheap probe.</div>
+        </div>
+        <div class="risk">
+          <div class="rn">Trap 02</div>
+          <div class="rt">Never add a per-group counter</div>
+          <div class="rx">It looks like the obvious way to do unread and rate caps. It breaks write concurrency under load.</div>
+        </div>
+        <div class="risk">
+          <div class="rn">Trap 03</div>
+          <div class="rt">Widget identity is never email</div>
+          <div class="rx">Resolve by <b>hostAppId + externalUserId</b>. Email is mutable and unverifiable from the host.</div>
+        </div>
+        <div class="risk">
+          <div class="rn">Trap 04</div>
+          <div class="rt">Region is permanent</div>
+          <div class="rx">Set at deployment creation. Changing it later means export, import, and a new project.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="foot">
+    <div class="fl"><span class="dot"></span>Chat first, accountability second &nbsp;·&nbsp; each week ships alone</div>
+    <div class="fr">TEAMCHAT v1.3 · 19 OCT 2026</div>
+  </div>
+
+</div>
+</body>
+</html>

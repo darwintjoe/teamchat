@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TeamChat — Another chat app?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F1EC;
+    --canvas:#FFFDFA;
+    --ink:#141018;
+    --muted:#6B6273;
+    --line:#E8E0D4;
+
+    /* AUDIENCE 01 — CUSTOMER · amber */
+    --accent:#B45309;
+    --accent-2:#F59E0B;
+    --accent-ink:#7C2D12;
+    --accent-fill:#FEF3DC;
+    --accent-soft:#FFF9ED;
+  }
+
+  @page { size: 1240px 1754px; margin: 0; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html,body{
+    width:1240px; background:var(--bg);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink); -webkit-font-smoothing:antialiased;
+  }
+  @media screen{
+    html{ height:auto; display:flex; justify-content:center; }
+    body{ transform-origin:top center; scale:min(1, calc(100vw / 1240)); box-shadow:0 0 60px rgba(20,16,24,.18); }
+  }
+
+  .canvas{
+    position:relative; width:1240px; height:1754px; overflow:hidden;
+    background:var(--canvas);
+    padding:0 62px 44px;
+    display:flex; flex-direction:column;
+    background-image:radial-gradient(circle at 1px 1px, rgba(180,83,9,.055) 1px, transparent 0);
+    background-size:26px 26px;
+  }
+
+  /* ---- shared skeleton ---- */
+  .topbar{ height:9px; margin:0 -62px 40px; background:linear-gradient(90deg,var(--accent),var(--accent-2) 62%,#FBBF24); }
+
+  .head{ display:flex; justify-content:space-between; align-items:flex-start; gap:24px; margin-bottom:26px; }
+  .eyebrow{
+    font-size:12.5px; font-weight:800; letter-spacing:.19em; text-transform:uppercase;
+    color:var(--accent); margin-bottom:14px;
+  }
+  .setmark{
+    font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:600; letter-spacing:.1em;
+    color:var(--accent); background:var(--accent-fill); border:1px solid #F3D9A8;
+    padding:7px 11px; border-radius:5px; white-space:nowrap;
+  }
+  h1{ font-size:80px; line-height:.94; font-weight:900; letter-spacing:-.045em; color:var(--ink); }
+  .question{
+    margin-top:18px; font-size:26px; line-height:1.28; font-weight:500; color:var(--muted);
+    letter-spacing:-.012em; max-width:960px;
+  }
+  .question b{ color:var(--ink); font-weight:700; }
+
+  .answer{
+    margin-top:24px; background:var(--accent-fill); border-left:7px solid var(--accent);
+    padding:23px 28px; border-radius:0 8px 8px 0;
+    font-size:29px; line-height:1.32; font-weight:600; letter-spacing:-.017em; color:var(--accent-ink);
+  }
+  .answer b{ font-weight:900; color:#5C1F05; }
+
+  .body{ flex:1; display:flex; flex-direction:column; gap:22px; padding-top:28px; }
+
+  .block{ display:flex; flex-direction:column; gap:9px; }
+  .btitle{ display:flex; align-items:center; gap:11px; }
+  .bnum{
+    font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600; color:var(--accent);
+    background:var(--accent-fill); width:23px; height:23px; border-radius:4px;
+    display:flex; align-items:center; justify-content:center; flex:none;
+  }
+  .btitle h2{ font-size:23px; font-weight:800; letter-spacing:-.022em; }
+  .copy{ font-size:17.5px; line-height:1.52; color:var(--muted); max-width:1050px; }
+  .copy b{ color:var(--ink); font-weight:700; }
+
+  /* ---- mock chat ---- */
+  .problem-row{ display:flex; gap:26px; align-items:stretch; }
+  .problem-row .copy{ flex:1; padding-top:4px; }
+  .mock{
+    width:420px; flex:none; background:#fff; border:1px solid var(--line); border-radius:12px;
+    padding:16px 16px 13px; display:flex; flex-direction:column; gap:8px;
+    box-shadow:0 3px 14px rgba(20,16,24,.05);
+  }
+  .bub{ font-size:13px; line-height:1.4; padding:9px 12px; border-radius:11px; max-width:88%; }
+  .bub.them{ background:#F1EEE9; color:#3B3444; align-self:flex-start; border-bottom-left-radius:3px; }
+  .bub.me{ background:var(--accent-fill); color:var(--accent-ink); align-self:flex-end; border-bottom-right-radius:3px; }
+  .bub.lost{ background:#FCE8E8; color:#8C1D1D; align-self:flex-start; border-bottom-left-radius:3px; border:1px dashed #E9A9A9; }
+  .mocktag{
+    margin-top:4px; padding-top:10px; border-top:1px solid var(--line);
+    font-size:11.5px; font-weight:700; letter-spacing:.03em; color:#A33A3A; text-align:center;
+  }
+
+  /* ---- claim card ---- */
+  .claim-wrap{ display:flex; gap:22px; align-items:center; }
+  .claimcard{
+    flex:1; background:#fff; border:1px solid var(--line); border-radius:12px; padding:17px 19px;
+    box-shadow:0 3px 14px rgba(20,16,24,.05); position:relative;
+  }
+  .claimcard::before{ content:""; position:absolute; left:0; top:14px; bottom:14px; width:5px; background:var(--accent); border-radius:0 4px 4px 0; }
+  .cc-head{ font-size:10.5px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:7px; padding-left:9px; }
+  .cc-body{ font-size:17.5px; font-weight:600; line-height:1.35; color:var(--ink); padding-left:9px; margin-bottom:13px; }
+  .cc-btns{ display:flex; gap:9px; padding-left:9px; }
+  .btn{ font-size:13px; font-weight:700; padding:8px 15px; border-radius:7px; }
+  .btn.live{ background:var(--accent); color:#fff; box-shadow:0 2px 8px rgba(180,83,9,.28); }
+  .btn.dead{ background:#EFECE7; color:#9C94A3; text-decoration:line-through; }
+  .claim-note{ width:300px; flex:none; font-size:15px; line-height:1.5; color:var(--muted); }
+  .claim-note b{ color:var(--ink); font-weight:800; }
+
+  /* ---- trail ---- */
+  .trail{ display:flex; align-items:center; gap:0; }
+  .step{
+    flex:1; background:#fff; border:1px solid var(--line); border-radius:9px; padding:12px 12px 11px; text-align:center;
+  }
+  .step .s1{ font-size:10px; font-weight:800; letter-spacing:.11em; text-transform:uppercase; color:var(--accent); margin-bottom:5px; }
+  .step .s2{ font-size:14.5px; font-weight:700; color:var(--ink); }
+  .step .s3{ font-size:11.5px; color:var(--muted); margin-top:2px; }
+  .arrow{ flex:none; width:26px; text-align:center; color:#C9BFAF; font-size:15px; font-weight:800; }
+
+  /* ---- two kinds ---- */
+  .kinds{ display:flex; gap:17px; }
+  .kind{ flex:1; border-radius:10px; padding:15px 18px; border:1px solid var(--line); background:#fff; }
+  .kind.action{ border-left:6px solid var(--accent); background:var(--accent-soft); }
+  .kind.disc{ border-left:6px solid #8A8095; }
+  .kind .kt{ font-size:11px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; margin-bottom:5px; }
+  .kind.action .kt{ color:var(--accent); }
+  .kind.disc .kt{ color:#6B6273; }
+  .kind .kd{ font-size:16px; font-weight:700; color:var(--ink); margin-bottom:3px; }
+  .kind .kx{ font-size:14px; line-height:1.42; color:var(--muted); }
+
+  /* ---- objections ---- */
+  .objections{ display:flex; gap:14px; }
+  .obj{ flex:1; background:#fff; border:1px solid var(--line); border-radius:9px; padding:14px 15px; }
+  .obj .q{ font-size:14.5px; font-weight:800; color:var(--ink); line-height:1.3; margin-bottom:7px; }
+  .obj .q::before{ content:"“"; color:var(--accent); font-size:20px; line-height:0; }
+  .obj .a{ font-size:13.5px; line-height:1.45; color:var(--muted); }
+  .obj .a b{ color:var(--accent-ink); font-weight:700; }
+
+  /* ---- files ---- */
+  .files{ display:flex; align-items:center; gap:20px; background:var(--accent-soft); border:1px solid #F3E2C4; border-radius:10px; padding:16px 22px; }
+  .files .fi{ font-size:26px; flex:none; }
+  .files .ft{ font-size:15.5px; line-height:1.45; color:var(--accent-ink); }
+  .files .ft b{ font-weight:800; color:#5C1F05; }
+
+  /* ---- footer ---- */
+  .foot{
+    margin-top:auto; padding-top:18px; border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:12.5px; color:var(--muted);
+  }
+  .foot .fl{ display:flex; align-items:center; gap:10px; font-weight:700; color:var(--ink); letter-spacing:-.01em; }
+  .dot{ width:7px; height:7px; border-radius:50%; background:var(--accent); }
+  .foot .fr{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.06em; }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <div class="topbar"></div>
+
+  <div class="head">
+    <div>
+      <div class="eyebrow">For business owners &amp; their teams</div>
+      <h1>Another<br>chat app?</h1>
+    </div>
+    <div class="setmark">01 / 03 &nbsp;·&nbsp; CUSTOMER</div>
+  </div>
+
+  <div class="question">
+    What is TeamChat — and <b>why does the world need a fourth one?</b>
+  </div>
+
+  <div class="answer">
+    WhatsApp remembers <b>what was said</b>.<br>
+    TeamChat remembers <b>who has to do it</b>.
+  </div>
+
+  <div class="body">
+
+    <div class="block">
+      <div class="btitle"><span class="bnum">1</span><h2>The problem you already have</h2></div>
+      <div class="problem-row">
+        <div class="copy">
+          In a group chat, a request looks <b>exactly like a joke</b>. It scrolls away. Three days later
+          it is still nobody's job — and nobody can prove who dropped it. You cannot search for
+          "who was supposed to do this". There is no such search.
+        </div>
+        <div class="mock">
+          <div class="bub them">Budi, did you send outlet 7's invoice?</div>
+          <div class="bub me">Yes pak, in the group earlier</div>
+          <div class="bub lost">Which group? I don't see it.</div>
+          <div class="mocktag">3 days later — still nobody's job</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="btitle"><span class="bnum">2</span><h2>One button changes everything</h2></div>
+      <div class="claim-wrap">
+        <div class="claimcard">
+          <div class="cc-head">Action &nbsp;·&nbsp; from Head Office</div>
+          <div class="cc-body">Send outlet 7's invoice before Friday close.</div>
+          <div class="cc-btns">
+            <span class="btn live">⚡ Claim Task</span>
+            <span class="btn dead">Claimed by Rina</span>
+          </div>
+        </div>
+        <div class="claim-note">
+          The first person to tap <b>Claim</b> takes the job. Everyone else's button goes grey
+          <b>instantly</b> — like grabbing a ringing phone.
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="btitle"><span class="bnum">3</span><h2>Then it leaves a trail</h2></div>
+      <div class="trail">
+        <div class="step"><div class="s1">Sent</div><div class="s2">Head Office</div><div class="s3">Mon 09:12</div></div>
+        <div class="arrow">›</div>
+        <div class="step"><div class="s1">Claimed</div><div class="s2">Rina</div><div class="s3">Mon 09:15</div></div>
+        <div class="arrow">›</div>
+        <div class="step"><div class="s1">Forwarded</div><div class="s2">Budi</div><div class="s3">Mon 11:40</div></div>
+        <div class="arrow">›</div>
+        <div class="step"><div class="s1">Done</div><div class="s2">Budi</div><div class="s3">Tue 08:02</div></div>
+        <div class="arrow">›</div>
+        <div class="step"><div class="s1">Closed</div><div class="s2">Rina</div><div class="s3">Tue 08:30</div></div>
+      </div>
+      <div class="copy" style="margin-top:3px;">
+        Every step carries a name and a time. Once a task is claimed, <b>nobody can edit or delete it</b>.
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="btitle"><span class="bnum">4</span><h2>Two kinds of message</h2></div>
+      <div class="kinds">
+        <div class="kind action">
+          <div class="kt">Action</div>
+          <div class="kd">A job with an owner</div>
+          <div class="kx">Support tickets, assignments, urgent jobs. Someone must claim it.</div>
+        </div>
+        <div class="kind disc">
+          <div class="kt">Discussion</div>
+          <div class="kd">Normal chat</div>
+          <div class="kx">Questions, announcements, opinions. Nobody owns it.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="btitle"><span class="bnum">5</span><h2>Where you already work</h2></div>
+      <div class="kinds">
+        <div class="kind action" style="border-left-color:#B45309;">
+          <div class="kt">The app</div>
+          <div class="kd">Android &amp; iPhone</div>
+          <div class="kx">Same as any chat app you already know. Free from the Play Store and App Store.</div>
+        </div>
+        <div class="kind" style="border-left-color:#0F766E;">
+          <div class="kt" style="color:#0F766E;">Inside another app</div>
+          <div class="kd">Chat without leaving</div>
+          <div class="kx">A support button inside the software you already use. Same conversation, no new login.</div>
+        </div>
+        <div class="kind" style="border-left-color:#6D28D9;">
+          <div class="kt" style="color:#6D28D9;">Your own website</div>
+          <div class="kd">Customers reach you</div>
+          <div class="kx">A complaint arrives as a task with an owner — not as a DM someone forgets.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="btitle"><span class="bnum">6</span><h2>“But…” — answered</h2></div>
+      <div class="objections">
+        <div class="obj">
+          <div class="q">My staff can't learn a new app.</div>
+          <div class="a">It looks like WhatsApp. <b>One new button.</b> That is the whole learning curve.</div>
+        </div>
+        <div class="obj">
+          <div class="q">We already use WhatsApp groups.</div>
+          <div class="a">Keep them. Use TeamChat for <b>work that must not get lost</b>.</div>
+        </div>
+        <div class="obj">
+          <div class="q">We're too small for this.</div>
+          <div class="a">Working alone? Close your own task. It is recorded as <b>self-closed</b>.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="files">
+      <div class="fi">🗂️</div>
+      <div class="ft">
+        <b>Your photos stay yours.</b> Files go into <b>your own cloud storage</b> — not ours.
+        Staff leave, the evidence stays with the business.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="foot">
+    <div class="fl"><span class="dot"></span>Free &nbsp;·&nbsp; Android &amp; iPhone &nbsp;·&nbsp; works inside apps you already use</div>
+    <div class="fr">TEAMCHAT v1.3 · 19 OCT 2026</div>
+  </div>
+
+</div>
+</body>
+</html>

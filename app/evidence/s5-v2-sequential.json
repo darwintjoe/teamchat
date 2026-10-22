@@ -1,0 +1,150 @@
+{
+  "ranAt": "2026-10-20T04:56:12.931Z",
+  "scenario": "sequential",
+  "deployment": "https://adventurous-squirrel-356.convex.cloud",
+  "region": "aws-us-east-1",
+  "orgPublicId": "org_ddn7u9h5g44s",
+  "parameters": {
+    "sessions": 10000,
+    "workers": 4,
+    "queries": 256,
+    "actions": 512,
+    "actionUsers": 8
+  },
+  "sessionRamp": {
+    "requested": 10000,
+    "attempted": 10000,
+    "connected": 8057,
+    "shortfall": 1943,
+    "rampSeconds": 188.1,
+    "perWorker": [
+      {
+        "worker": 0,
+        "attempted": 2500,
+        "connected": 1957,
+        "rampSeconds": 185.7,
+        "rssMb": 435,
+        "stopped": false,
+        "capped": null,
+        "failures": 543,
+        "failuresByClass": {
+          "timeout": 543
+        }
+      },
+      {
+        "worker": 1,
+        "attempted": 2500,
+        "connected": 2001,
+        "rampSeconds": 184.8,
+        "rssMb": 435,
+        "stopped": false,
+        "capped": null,
+        "failures": 499,
+        "failuresByClass": {
+          "timeout": 499
+        }
+      },
+      {
+        "worker": 2,
+        "attempted": 2500,
+        "connected": 2001,
+        "rampSeconds": 188.1,
+        "rssMb": 457,
+        "stopped": false,
+        "capped": null,
+        "failures": 499,
+        "failuresByClass": {
+          "timeout": 499
+        }
+      },
+      {
+        "worker": 3,
+        "attempted": 2500,
+        "connected": 2098,
+        "rampSeconds": 166.3,
+        "rssMb": 469,
+        "stopped": false,
+        "capped": null,
+        "failures": 402,
+        "failuresByClass": {
+          "timeout": 402
+        }
+      }
+    ]
+  },
+  "curve": null,
+  "combined": null,
+  "sequential": {
+    "query": {
+      "concurrency": 1,
+      "calls": 256,
+      "errors": 0,
+      "wallMs": 74639.8,
+      "n": 256,
+      "p50": 274.97,
+      "p95": 342.02,
+      "p99": 753.72,
+      "max": 801.6
+    },
+    "action": {
+      "concurrency": 1,
+      "calls": 512,
+      "errors": 0,
+      "wallMs": 165518.8,
+      "n": 512,
+      "p50": 308.62,
+      "p95": 388.5,
+      "p99": 572.86,
+      "max": 881.98
+    },
+    "fanout": {
+      "desiredViewers": 4000,
+      "subscribedViewers": 4000,
+      "connectedSessions": 8057,
+      "subscribeSeconds": 2.2,
+      "expected": 4000,
+      "received": 4000,
+      "missing": 0,
+      "coverage": 1,
+      "n": 4000,
+      "p50": 10058.16,
+      "p95": 19191.64,
+      "p99": 19864.72,
+      "max": 20142.76
+    },
+    "totalWallMs": 263002.9
+  },
+  "fanout40": null,
+  "failures": {
+    "total": 1943,
+    "byClass": {
+      "ramp:timeout": 1943
+    },
+    "samples": [
+      {
+        "stage": "ramp",
+        "class": "timeout",
+        "message": "session did not receive its first result in 20000 ms (hasEverConnected=false)",
+        "hasEverConnected": false,
+        "disconnects": [],
+        "worker": 0
+      },
+      {
+        "stage": "ramp",
+        "class": "timeout",
+        "message": "session did not receive its first result in 20000 ms (hasEverConnected=false)",
+        "hasEverConnected": false,
+        "disconnects": [],
+        "worker": 0
+      },
+      {
+        "stage": "ramp",
+        "class": "timeout",
+        "message": "session did not receive its first result in 20000 ms (hasEverConnected=false)",
+        "hasEverConnected": false,
+        "disconnects": [],
+        "worker": 0
+      }
+    ]
+  }
+}

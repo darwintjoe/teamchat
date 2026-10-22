@@ -1,0 +1,54 @@
+TeamChat Action mode + Action Inbox — UI smoke evidence
+========================================================
+
+Date:    2026-10-20
+Backend: https://adventurous-squirrel-356.convex.cloud
+Web:     http://localhost:3000 (Next.js 16.4, Chromium via the agent browser)
+Mobile:  Expo web export served at http://[::1]:4174 (Expo SDK 58)
+
+Web flow
+--------
+- Signed in as action.verify.alice and opened the Action Inbox from the sidebar.
+- The inbox rendered:
+    * heading "Action Inbox";
+    * rollup selector with the org root and its descendants;
+    * helper text "own group + descendants · DMs excluded from the rollup";
+    * filters "All live", "Open", "Claimed", "Done", "Closed", and "Review queue";
+    * live counts for open / claimed / done / closed;
+    * the three required lists: "Rollup", "My tasks", and "Tasks I raised".
+- The composer showed "Discussion" and "Action". Selecting Action revealed the flag-type
+  selector (Task, Approval, Support ticket, Inventory alert) and the hint "Creates one task in
+  the Action Inbox. First claim locks it."
+- Sent an Action + Approval message with text "UI smoke approval 1792512068195" in Workers.
+  Exactly one task card appeared: task_4yq5efr24rgt, status Open, flag "approval".
+- Claimed that task. The card changed to "Claimed", showed "claimed by action.verify.alice",
+  removed the claim button, and exposed "Mark done".
+- Marked it done. The card changed to "Done — needs review". The "Review queue" filter
+  showed the same task, proving the manager queue is the rollup filtered to done.
+- Attempted to close it as the claimant while another eligible closer existed. The server
+  refused with: "Another eligible closer exists; separation of duties requires them to close
+  this task". The card remained done. This is the expected refusal path.
+- Opened the Audit panel. It rendered the chronological typed events for the task.
+- The sidebar connection chip showed "LIVE" and "reconnect: jittered exponential 1s → 16s".
+- Browser console contained only the expected Convex server error from the refused close; there
+  were no uncaught client errors.
+
+Mobile flow (Expo web target)
+-----------------------------
+- Built the web export with `npx expo export --platform web --output-dir dist-action` and served
+  it at http://[::1]:4174.
+- Signed in, opened Workers, and saw the live message page with Action task cards.
+- The composer rendered the "Discussion" / "Action" toggle and the flag-type control.
+- task_wgzgjycjlmvt showed Open and exposed "⚡ Claim task".
+- Tapping claim opened the confirmation fallback (React Native Web's Alert.alert is a no-op, so
+  web uses window.confirm). Confirming changed the card to Claimed by action.verify.alice.
+- Tapping "Mark done" changed it to "DONE · REVIEW"; the claim/done controls disappeared.
+- Existing cards rendered Closed, Claimed, Archived, and Done states with claimed-by/closed-by
+  metadata. The console was clean.
+
+Scope of this smoke
+-------------------
+- The mobile target was Expo web, not a native binary. Native claim/done behaviour was not
+  launched; the same component and mutations are used on native.
+- Backend rule coverage is in evidence/action-inbox.txt (26/26). This file records the
+  user-visible web/mobile flow only.

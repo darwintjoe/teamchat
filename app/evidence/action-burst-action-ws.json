@@ -1,0 +1,17 @@
+{
+  "ranAt": "2026-10-20T18:09:30.315Z",
+  "label": "action-ws",
+  "mode": "action",
+  "deployment": "https://adventurous-squirrel-356.convex.cloud",
+  "actions": 512,
+  "users": 8,
+  "calls": 512,
+  "errors": 0,
+  "firstError": null,
+  "wallMs": 2890.31,
+  "n": 512,
+  "p50": 1566.37,
+  "p95": 2697.6,
+  "p99": 2785.93,
+  "max": 2831.02
+}

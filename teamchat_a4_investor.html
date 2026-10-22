@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>TeamChat — Show Me the Money</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EDF2F1;
+    --canvas:#FBFDFC;
+    --ink:#07211F;
+    --muted:#5A6F6C;
+    --line:#DDE8E5;
+
+    /* AUDIENCE 02 — INVESTOR · teal */
+    --accent:#0F766E;
+    --accent-2:#14B8A6;
+    --accent-ink:#0A3F3A;
+    --accent-fill:#DCF5F0;
+    --accent-soft:#F0FAF8;
+  }
+
+  @page { size: 1240px 1754px; margin: 0; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  html,body{
+    width:1240px; background:var(--bg);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink); -webkit-font-smoothing:antialiased;
+  }
+  @media screen{
+    html{ height:auto; display:flex; justify-content:center; }
+    body{ transform-origin:top center; scale:min(1, calc(100vw / 1240)); box-shadow:0 0 60px rgba(7,33,31,.18); }
+  }
+
+  .canvas{
+    position:relative; width:1240px; height:1754px; overflow:hidden;
+    background:var(--canvas);
+    padding:0 62px 44px;
+    display:flex; flex-direction:column;
+    background-image:radial-gradient(circle at 1px 1px, rgba(15,118,110,.06) 1px, transparent 0);
+    background-size:26px 26px;
+  }
+
+  .topbar{ height:9px; margin:0 -62px 40px; background:linear-gradient(90deg,#0F766E,#14B8A6 62%,#5EEAD4); }
+
+  .head{ display:flex; justify-content:space-between; align-items:flex-start; gap:24px; margin-bottom:26px; }
+  .eyebrow{ font-size:12.5px; font-weight:800; letter-spacing:.19em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; }
+  .setmark{
+    font-family:'JetBrains Mono',monospace; font-size:11.5px; font-weight:600; letter-spacing:.1em;
+    color:var(--accent); background:var(--accent-fill); border:1px solid #A7E3D9;
+    padding:7px 11px; border-radius:5px; white-space:nowrap;
+  }
+  h1{ font-size:80px; line-height:.94; font-weight:900; letter-spacing:-.045em; color:var(--ink); }
+  .question{ margin-top:18px; font-size:26px; line-height:1.28; font-weight:500; color:var(--muted); letter-spacing:-.012em; max-width:960px; }
+  .question b{ color:var(--ink); font-weight:700; }
+
+  .answer{
+    margin-top:24px; background:var(--accent-fill); border-left:7px solid var(--accent);
+    padding:23px 28px; border-radius:0 8px 8px 0;
+    font-size:28px; line-height:1.34; font-weight:600; letter-spacing:-.017em; color:var(--accent-ink);
+  }
+  .answer b{ font-weight:900; color:#05302C; }
+
+  .body{ flex:1; display:flex; flex-direction:column; gap:20px; padding-top:26px; }
+
+  .block{ display:flex; flex-direction:column; gap:9px; }
+  .btitle{ display:flex; align-items:center; gap:11px; }
+  .bnum{
+    font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600; color:var(--accent);
+    background:var(--accent-fill); width:23px; height:23px; border-radius:4px;
+    display:flex; align-items:center; justify-content:center; flex:none;
+  }
+  .btitle h2{ font-size:23px; font-weight:800; letter-spacing:-.022em; }
+  .copy{ font-size:17.5px; line-height:1.5; color:var(--muted); max-width:1060px; }
+  .copy b{ color:var(--ink); font-weight:700; }
+
+  /* stat strip */
+  .stats{ display:flex; gap:13px; }
+  .stat{ flex:1; background:#fff; border:1px solid var(--line); border-radius:10px; padding:14px 16px 13px; }
+  .stat .v{ font-size:31px; font-weight:900; letter-spacing:-.035em; color:var(--accent); line-height:1; }
+  .stat .v small{ font-size:15px; font-weight:700; letter-spacing:-.01em; }
+  .stat .l{ font-size:12px; line-height:1.35; color:var(--muted); margin-top:7px; font-weight:600; }
+  .stat.hl{ background:var(--accent-soft); border-color:#B9E7DF; }
+
+  /* market split */
+  .split{ display:flex; gap:16px; }
+  .half{ flex:1; border-radius:10px; padding:15px 18px; border:1px solid var(--line); background:#fff; }
+  .half.narrow{ border-left:6px solid #9AA9A6; }
+  .half.wide{ border-left:6px solid var(--accent); background:var(--accent-soft); }
+  .half .hk{ font-size:10.5px; font-weight:800; letter-spacing:.13em; text-transform:uppercase; margin-bottom:5px; }
+  .half.narrow .hk{ color:#6B7C79; }
+  .half.wide .hk{ color:var(--accent); }
+  .half .hd{ font-size:17px; font-weight:800; color:var(--ink); margin-bottom:4px; letter-spacing:-.015em; }
+  .half .hx{ font-size:14px; line-height:1.42; color:var(--muted); }
+  .half .hx b{ color:var(--ink); font-weight:700; }
+
+  /* cost table */
+  .tbl{ width:100%; border-collapse:collapse; background:#fff; border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+  .tbl th{
+    font-size:10.5px; font-weight:800; letter-spacing:.11em; text-transform:uppercase; color:var(--accent);
+    text-align:left; padding:11px 16px; background:var(--accent-soft); border-bottom:1px solid var(--line);
+  }
+  .tbl th.r, .tbl td.r{ text-align:right; }
+  .tbl td{ font-size:14.5px; padding:10px 16px; border-bottom:1px solid #EEF4F2; color:var(--muted); }
+  .tbl tr:last-child td{ border-bottom:none; }
+  .tbl td.k{ font-weight:700; color:var(--ink); }
+  .tbl td.v{ font-family:'JetBrains Mono',monospace; font-size:13.5px; font-weight:600; color:var(--accent); }
+  .tbl tr.sum td{ background:var(--accent-soft); font-weight:700; color:var(--ink); }
+  .tbl tr.sum td.v{ color:var(--accent-ink); }
+
+  /* revenue layers */
+  .layers{ display:flex; flex-direction:column; gap:9px; }
+  .layer{ display:flex; align-items:center; gap:15px; background:#fff; border:1px solid var(--line); border-radius:9px; padding:13px 17px; }
+  .layer .ln{ font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:600; color:#fff; background:var(--accent); width:22px; height:22px; border-radius:4px; display:flex; align-items:center; justify-content:center; flex:none; }
+  .layer .lt{ font-size:15.5px; font-weight:800; color:var(--ink); width:190px; flex:none; letter-spacing:-.012em; }
+  .layer .lx{ font-size:14px; line-height:1.42; color:var(--muted); }
+  .layer .lx b{ color:var(--accent-ink); font-weight:700; }
+  .layer.now{ border-left:6px solid var(--accent); background:var(--accent-soft); }
+
+  /* risk */
+  .risks{ display:flex; gap:12px; }
+  .risk{ flex:1; background:#fff; border:1px solid var(--line); border-top:4px solid #C2410C; border-radius:0 0 9px 9px; padding:13px 15px; }
+  .risk .rn{ font-size:10.5px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#C2410C; margin-bottom:5px; }
+  .risk .rt{ font-size:14px; font-weight:700; line-height:1.35; color:var(--ink); }
+  .risk .rx{ font-size:12.5px; line-height:1.4; color:var(--muted); margin-top:4px; }
+
+  .foot{
+    margin-top:auto; padding-top:18px; border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:12.5px; color:var(--muted);
+  }
+  .foot .fl{ display:flex; align-items:center; gap:10px; font-weight:700; color:var(--ink); letter-spacing:-.01em; }
+  .dot{ width:7px; height:7px; border-radius:50%; background:var(--accent); }
+  .foot .fr{ font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.06em; }
+</style>
+</head>
+<body>
+<div class="canvas">
+
+  <div class="topbar"></div>
+
+  <div class="head">
+    <div>
+      <div class="eyebrow">For investors &amp; partners</div>
+      <h1>Show me<br>the money.</h1>
+    </div>
+    <div class="setmark">02 / 03 &nbsp;·&nbsp; INVESTOR</div>
+  </div>
+
+  <div class="question">
+    You are giving it away. <b>Where is the business?</b>
+  </div>
+
+  <div class="answer">
+    WhatsApp was <b>free for two billion people</b>. Meta paid <b>$19 billion</b> for it.<br>
+    Free was never the weakness — <b>free was the distribution engine.</b>
+  </div>
+
+  <div class="body">
+
+    <div class="stats">
+      <div class="stat"><div class="v">$0</div><div class="l">Price in Phase 1. Deliberate, not a gap.</div></div>
+      <div class="stat"><div class="v">≈$3–26</div><div class="l">Infra cost per org per month, depending on design</div></div>
+      <div class="stat hl"><div class="v">330</div><div class="l">Orgs funded by a $1,000/month budget, best design</div></div>
+      <div class="stat"><div class="v">1,000<small>+ staff</small></div><div class="l">Where the paid Enterprise tier begins</div></div>
+    </div>
+
+    <div class="block">
+      <div class="btitle"><span class="bnum">1</span><h2>This is not a niche feature</h2></div>
+      <div class="split">
+        <div class="half narrow">
+          <div class="hk">Beachhead</div>
+          <div class="hd">Franchise chains</div>
+          <div class="hx">Accurate and SellMore are the <b>first distribution</b>, not the ceiling. Head office provisions the whole outlet tree in one API call.</div>
+        </div>
+        <div class="half wide">
+          <div class="hk">Actual market</div>
+          <div class="hd">Anyone with a boss</div>
+          <div class="hx">Every organisation that has ever lost a task in a group chat. <b>Messaging is already where work happens</b> — nobody owns the accountability layer on top of it.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="btitle"><span class="bnum">2</span><h2>The cost of free is small and it is known</h2></div>
+      <table class="tbl">
+        <tr><th>Design choice</th><th class="r">Cost / org / month</th><th class="r">Orgs per $900</th></tr>
+        <tr><td class="k">Baseline — 50-message page, live list</td><td class="r v">≈ $26</td><td class="r v">37</td></tr>
+        <tr><td class="k">Shorter live page (15 messages)</td><td class="r v">≈ $18</td><td class="r v">50</td></tr>
+        <tr><td class="k">+ non-reactive list</td><td class="r v">≈ $6</td><td class="r v">150</td></tr>
+        <tr class="sum"><td>+ announcement-style large groups</td><td class="r v">≈ $3</td><td class="r v">330</td></tr>
+      </table>
+      <div class="copy" style="font-size:14.5px;">
+        Every row is a <b>product decision with a price attached</b> — the cost model is a dial, not a forecast.
+        At 1,000 orgs the ceiling is <b>≈$3–6k/month</b>; at 10,000, <b>≈$30–60k/month</b>. Franchise-first
+        sequencing ramps that gradually instead of all at once.
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="btitle"><span class="bnum">3</span><h2>Three ways this becomes a business</h2></div>
+      <div class="layers">
+        <div class="layer now">
+          <div class="ln">1</div>
+          <div class="lt">Enterprise</div>
+          <div class="lx">Orgs above <b>~1,000 staff</b> — the ones with budget and compliance needs. Self-hosted, paid, available as soon as they appear. The largest org can never set the cost of the smallest.</div>
+        </div>
+        <div class="layer">
+          <div class="ln">2</div>
+          <div class="lt">The embed layer</div>
+          <div class="lx">Any business app that wants in-app chat plus tasks. Accurate is customer one, not the market. <b>Every ERP, POS and field-service tool</b> needs this and none of them should build it.</div>
+        </div>
+        <div class="layer">
+          <div class="ln">3</div>
+          <div class="lt">The accountability graph</div>
+          <div class="lx">Who claims, who closes, how fast, who drops. <b>No chat app has this data</b>, because no chat app has a task state. It is the asset that makes layers 1 and 2 defensible.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="btitle"><span class="bnum">4</span><h2>What has to be true</h2></div>
+      <div class="risks">
+        <div class="risk">
+          <div class="rn">Risk 01</div>
+          <div class="rt">Head offices mandate, not suggest</div>
+          <div class="rx">Top-down provisioning only works if the franchisor enforces it.</div>
+        </div>
+        <div class="risk">
+          <div class="rn">Risk 02</div>
+          <div class="rt">Concurrency, not cash, is the wall</div>
+          <div class="rx">10,000 sessions per deployment. A shift-start burst reaches 96% of it.</div>
+        </div>
+        <div class="risk">
+          <div class="rn">Risk 03</div>
+          <div class="rt">Free must not mean forgettable</div>
+          <div class="rx">The task button has to become a habit, not a feature people admire.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="btitle"><span class="bnum">5</span><h2>What is already true</h2></div>
+      <div class="split">
+        <div class="half wide">
+          <div class="hk">Built</div>
+          <div class="hd">The hard part is done</div>
+          <div class="hx">Schema, task state machine, audit trail, widget identity and open API are <b>specified and signed off</b>. Four weeks to a working product; the cost model is already run.</div>
+        </div>
+        <div class="half narrow">
+          <div class="hk">Not claimed</div>
+          <div class="hd">No revenue projection here</div>
+          <div class="hx">This page shows <b>cost and structure</b>, not a forecast. ARPA, CAC and conversion belong in the model, and that model needs <b>real customer data</b> — not placeholder inputs.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="foot">
+    <div class="fl"><span class="dot"></span>Free to start &nbsp;·&nbsp; paid at enterprise scale &nbsp;·&nbsp; the world is the market</div>
+    <div class="fr">TEAMCHAT v1.3 · 19 OCT 2026</div>
+  </div>
+
+</div>
+</body>
+</html>

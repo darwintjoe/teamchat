@@ -1,0 +1,21 @@
+CR-16 compile-guard evidence
+============================
+
+Command (with BUILD_CHANNEL temporarily set to "production" in convex/auth/buildFlags.ts,
+DEMO_OTP_ECHO left true):
+
+    npm run typecheck
+
+Output:
+
+    > teamchat-app@0.0.0 typecheck
+    > tsc --noEmit
+
+    convex/auth/buildFlags.ts(26,41): error TS2344: Type 'false' does not satisfy the constraint 'true'.
+
+i.e. a production-flagged build refuses to compile while the echoed-OTP demo stub is enabled.
+Flag reverted to BUILD_CHANNEL = "demo" immediately after; `npm run typecheck` is clean again.
+
+A second, runtime refusal exists for a deployment marked production via the environment
+(`TEAMCHAT_BUILD_CHANNEL=production`): `assertAuthBuildSafe()` throws from the auth paths
+(see convex/auth/buildFlags.ts, called in convex/auth.ts and the OTP provider).

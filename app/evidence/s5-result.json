@@ -1,0 +1,58 @@
+{
+  "ranAt": "2026-10-19T19:28:15.376Z",
+  "deployment": "https://adventurous-squirrel-356.convex.cloud",
+  "region": "aws-us-east-1",
+  "classTarget": {
+    "sessions": 10000,
+    "queries": 256,
+    "actions": 512
+  },
+  "sessions": {
+    "requested": 10000,
+    "connected": 7841,
+    "failures": 159,
+    "stoppedReason": "batch had 159/250 failures",
+    "rampSeconds": 181.2,
+    "rssMb": 1403
+  },
+  "queries": {
+    "concurrency": 256,
+    "calls": 256,
+    "errors": 0,
+    "firstError": null,
+    "n": 256,
+    "p50": 343.38,
+    "p95": 367.71,
+    "p99": 371.68,
+    "max": 371.94
+  },
+  "actions": {
+    "concurrency": 512,
+    "users": 64,
+    "calls": 512,
+    "errors": 0,
+    "firstError": null,
+    "n": 512,
+    "p50": 1477.91,
+    "p95": 1694.71,
+    "p99": 1751.29,
+    "max": 1754.81
+  },
+  "fanout": {
+    "subscribers": 7841,
+    "received": 7841,
+    "timedOut": false,
+    "coverage": 1,
+    "n": 7841,
+    "p50": 20307.77,
+    "p95": 37726.46,
+    "p99": 39258.64,
+    "max": 40018.09
+  },
+  "notes": [
+    "Sessions are authenticated WebSocket clients each holding one live subscription on the same group.",
+    "Query burst uses one-shot queries (not cached subscriptions); actions are messages.send to a group with no live subscribers.",
+    "Fan-out is one message to the group all sessions watch; latency is send-response to subscription callback.",
+    "The dev deployment's class limits are not exposed to the CLI; a hard stop in the ramp is a deployment limit, not a client bug."
+  ]
+}

@@ -1,0 +1,201 @@
+{
+  "ranAt": "2026-10-22T02:33:38.779Z",
+  "scenario": "curve200",
+  "deployment": "https://benevolent-crocodile-386.convex.cloud",
+  "production": "true",
+  "region": "aws-us-east-1",
+  "orgPublicId": "org_sftgcfkvi4pg",
+  "parameters": {
+    "sessions": 300,
+    "workers": 4,
+    "queries": 256,
+    "actions": 512,
+    "actionUsers": 8
+  },
+  "sessionRamp": {
+    "requested": 300,
+    "attempted": 300,
+    "connected": 300,
+    "shortfall": 0,
+    "rampSeconds": 2.8,
+    "perWorker": [
+      {
+        "worker": 0,
+        "pid": 11476,
+        "attempted": 75,
+        "connected": 75,
+        "rampSeconds": 2.4,
+        "rssMb": 80,
+        "stopped": false,
+        "capped": null,
+        "failures": 0,
+        "failuresByClass": {},
+        "counters": {
+          "wsAttempts": 75,
+          "wsOpens": 75,
+          "wsReconnects": 0,
+          "wsCloseEvents": 0,
+          "wsErrors": 0,
+          "closeCodes": {},
+          "socketErrorCodes": {},
+          "rampClassification": {},
+          "subscriptionClassification": {}
+        }
+      },
+      {
+        "worker": 1,
+        "pid": 10332,
+        "attempted": 75,
+        "connected": 75,
+        "rampSeconds": 2.8,
+        "rssMb": 80,
+        "stopped": false,
+        "capped": null,
+        "failures": 0,
+        "failuresByClass": {},
+        "counters": {
+          "wsAttempts": 75,
+          "wsOpens": 75,
+          "wsReconnects": 0,
+          "wsCloseEvents": 0,
+          "wsErrors": 0,
+          "closeCodes": {},
+          "socketErrorCodes": {},
+          "rampClassification": {},
+          "subscriptionClassification": {}
+        }
+      },
+      {
+        "worker": 2,
+        "pid": 5052,
+        "attempted": 75,
+        "connected": 75,
+        "rampSeconds": 2.4,
+        "rssMb": 80,
+        "stopped": false,
+        "capped": null,
+        "failures": 0,
+        "failuresByClass": {},
+        "counters": {
+          "wsAttempts": 75,
+          "wsOpens": 75,
+          "wsReconnects": 0,
+          "wsCloseEvents": 0,
+          "wsErrors": 0,
+          "closeCodes": {},
+          "socketErrorCodes": {},
+          "rampClassification": {},
+          "subscriptionClassification": {}
+        }
+      },
+      {
+        "worker": 3,
+        "pid": 1112,
+        "attempted": 75,
+        "connected": 75,
+        "rampSeconds": 2.4,
+        "rssMb": 79,
+        "stopped": false,
+        "capped": null,
+        "failures": 0,
+        "failuresByClass": {},
+        "counters": {
+          "wsAttempts": 75,
+          "wsOpens": 75,
+          "wsReconnects": 0,
+          "wsCloseEvents": 0,
+          "wsErrors": 0,
+          "closeCodes": {},
+          "socketErrorCodes": {},
+          "rampClassification": {},
+          "subscriptionClassification": {}
+        }
+      }
+    ]
+  },
+  "sockets": {
+    "os": "win32",
+    "dynamicPortRange": {
+      "raw": "Protocol tcp Dynamic Port Range\r\n---------------------------------\r\nStart Port      : 49152\r\nNumber of Ports : 16384",
+      "start": 49152,
+      "end": 65535,
+      "count": 16384
+    },
+    "samples": [
+      {
+        "at": 1792636414591,
+        "elapsedMs": 0,
+        "perPid": {
+          "1112": {
+            "established": 0,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 0
+          },
+          "5052": {
+            "established": 0,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 0
+          },
+          "10332": {
+            "established": 0,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 0
+          },
+          "11476": {
+            "established": 0,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 0
+          }
+        },
+        "host": {
+          "established": 78,
+          "timeWait": 403,
+          "closeWait": 0,
+          "synSent": 0
+        },
+        "localPortsUsed": 85,
+        "ephemeralPortsInUse": 72,
+        "ephemeralUtilization": 0.0044
+      }
+    ],
+    "peak": {
+      "established": 78,
+      "timeWait": 403,
+      "ephemeralPortsInUse": 72,
+      "perPidEstablished": {
+        "1112": 0,
+        "5052": 0,
+        "10332": 0,
+        "11476": 0
+      }
+    }
+  },
+  "curve": {
+    "requestedViewers": 200,
+    "assignedViewers": 200,
+    "subscribedViewers": 200,
+    "connectedSessions": 300,
+    "subscribeSeconds": 0.8,
+    "expected": 200,
+    "received": 200,
+    "missing": 0,
+    "coverage": 1,
+    "n": 200,
+    "p50": 49.16,
+    "p95": 65.45,
+    "p99": 67.48,
+    "max": 68.74
+  },
+  "combined": null,
+  "sequential": null,
+  "fanout40": null,
+  "failures": {
+    "total": 0,
+    "byClass": {},
+    "samples": []
+  }
+}

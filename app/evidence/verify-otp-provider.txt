@@ -1,0 +1,18 @@
+OTP provider verification — 2026-10-21T04:51:13.550Z
+deployment: https://adventurous-squirrel-356.convex.cloud
+site:       https://adventurous-squirrel-356.convex.site
+run id:     mvhmwsqe7165
+provider:   mock (TEAMCHAT_OTP_PROVIDER=mock on the dev deployment)
+
+cloud: https://adventurous-squirrel-356.convex.cloud
+site:  https://adventurous-squirrel-356.convex.site
+run:   mvhmwsqe7165
+
+PASS  the deployed build reports the demo/echo surface (dev only) — channel=demo
+PASS  an OTP request reaches the provider and records a code — otp-provider+mvhmwsqe7165@demo.teamchat.test · 32-character code
+PASS  the code lifetime is exactly 3 minutes — 179.999s from issue to expiry
+PASS  a wrong code is refused — invalid code rejected
+PASS  the correct code verifies and returns a session — tokens issued; code consumed
+PASS  the 4th code request for one email in 10 minutes is refused — 3 allowed, 4th refused by otpRequestByEmail
+
+checks: 6 passed, 0 failed

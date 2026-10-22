@@ -1,0 +1,8 @@
+restart: port 4310 is held by PID 11460
+restart: port 4311 is held by PID 11460
+restart: 4310 and 4311 are free; starting the demo server
+widget demo:  http://localhost:4310
+host app:     hap_vov1g39s97o7
+convex:       https://adventurous-squirrel-356.convex.cloud
+build first:  npm run widget:build
+widget frame: http://localhost:4311 (cross-origin from the host)

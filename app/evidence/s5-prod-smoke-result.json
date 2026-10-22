@@ -1,0 +1,609 @@
+{
+  "ranAt": "2026-10-21T05:09:25.701Z",
+  "deployment": "https://benevolent-crocodile-386.convex.cloud",
+  "production": true,
+  "region": "aws-us-east-1",
+  "orgPublicId": "org_jm3nxq4rb9yf",
+  "parameters": {
+    "sessions": 120,
+    "workers": 4,
+    "queries": 20,
+    "actions": 20,
+    "actionUsers": 8,
+    "rampBatch": 100,
+    "rampTimeoutMs": 30000,
+    "curve": [
+      50
+    ],
+    "fanoutGroups": 40,
+    "viewersPerGroup": 200
+  },
+  "sessionRamp": {
+    "requested": 120,
+    "attempted": 120,
+    "connected": 120,
+    "shortfall": 0,
+    "rampSeconds": 3.3,
+    "budgetExceeded": false,
+    "perWorker": [
+      {
+        "worker": 0,
+        "attempted": 30,
+        "connected": 30,
+        "rampSeconds": 3.2,
+        "rssMb": 65,
+        "stopped": false,
+        "capped": null,
+        "failures": 0,
+        "failuresByClass": {}
+      },
+      {
+        "worker": 1,
+        "attempted": 30,
+        "connected": 30,
+        "rampSeconds": 3.3,
+        "rssMb": 65,
+        "stopped": false,
+        "capped": null,
+        "failures": 0,
+        "failuresByClass": {}
+      },
+      {
+        "worker": 2,
+        "attempted": 30,
+        "connected": 30,
+        "rampSeconds": 2.5,
+        "rssMb": 64,
+        "stopped": false,
+        "capped": null,
+        "failures": 0,
+        "failuresByClass": {}
+      },
+      {
+        "worker": 3,
+        "attempted": 30,
+        "connected": 30,
+        "rampSeconds": 3.3,
+        "rssMb": 65,
+        "stopped": false,
+        "capped": null,
+        "failures": 0,
+        "failuresByClass": {}
+      }
+    ]
+  },
+  "curve": [
+    {
+      "requestedViewers": 50,
+      "assignedViewers": 50,
+      "subscribedViewers": 50,
+      "connectedSessions": 120,
+      "subscribeSeconds": 0.8,
+      "received": 50,
+      "missing": 0,
+      "coverage": 1,
+      "n": 50,
+      "p50": 331.78,
+      "p95": 350.93,
+      "p99": 352.07,
+      "max": 352.07
+    }
+  ],
+  "combined": {
+    "targetEpoch": 1792559357539.6218,
+    "query": {
+      "concurrency": 20,
+      "calls": 20,
+      "errors": 0,
+      "startDebtMs": {
+        "n": 20,
+        "p50": 26.08,
+        "p95": 26.99,
+        "p99": 27.19,
+        "max": 27.19
+      },
+      "n": 20,
+      "p50": 376.7,
+      "p95": 407.92,
+      "p99": 408.52,
+      "max": 408.52
+    },
+    "action": {
+      "concurrency": 20,
+      "users": 8,
+      "startedAtEpoch": 1792559354540.5454,
+      "n": 20,
+      "p50": 478.86,
+      "p95": 533.57,
+      "p99": 533.59,
+      "max": 533.59,
+      "errors": 0
+    },
+    "fanout": {
+      "desiredViewers": 50,
+      "subscribedViewers": 50,
+      "received": 50,
+      "missing": 0,
+      "coverage": 1,
+      "sendReturnDebtMs": 18.55,
+      "n": 50,
+      "p50": 478.31,
+      "p95": 487.43,
+      "p99": 488.11,
+      "max": 488.11
+    }
+  },
+  "fanout40": {
+    "groups": 40,
+    "viewersRequested": 8000,
+    "viewersSubscribed": 120,
+    "messagesSent": 40,
+    "startDebtMs": {
+      "n": 40,
+      "p50": 14.14,
+      "p95": 14.93,
+      "p99": 15.02,
+      "max": 15.02
+    },
+    "n": 120,
+    "p50": 336.26,
+    "p95": 352.37,
+    "p99": 353.79,
+    "max": 354.26,
+    "perGroup": [
+      {
+        "key": "fanout-00",
+        "expected": 120,
+        "received": 120,
+        "missing": 0,
+        "n": 120,
+        "p50": 336.26,
+        "p95": 352.37,
+        "p99": 353.79,
+        "max": 354.26
+      },
+      {
+        "key": "fanout-01",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-02",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-03",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-04",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-05",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-06",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-07",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-08",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-09",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-10",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-11",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-12",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-13",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-14",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-15",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-16",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-17",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-18",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-19",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-20",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-21",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-22",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-23",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-24",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-25",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-26",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-27",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-28",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-29",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-30",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-31",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-32",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-33",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-34",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-35",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-36",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-37",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-38",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      },
+      {
+        "key": "fanout-39",
+        "expected": 0,
+        "received": 0,
+        "missing": 0,
+        "n": 0,
+        "p50": null,
+        "p95": null,
+        "p99": null,
+        "max": null
+      }
+    ]
+  },
+  "failures": {
+    "total": 0,
+    "byClass": {},
+    "samples": []
+  },
+  "notes": [
+    "Sessions are separate OS generator processes; each session is an authenticated Convex WebSocket client with a live messages.listLive subscription.",
+    "Curve viewers are exact subscription sets; curve groups are separate so one fan-out cannot trigger another size.",
+    "T0 is immediately after the send mutation returns; T1 is the subscription callback in the worker process. Both processes share one clock.",
+    "The combined burst starts 256 one-shot queries, 512 messages.send mutations across the action-user pool, and the 8k-viewer fan-out at one target epoch.",
+    "The 40-group phase sends one message per group (40 inserts) to 8,000 distinct viewers; no per-recipient writes.",
+    "Failures are classified as ramp, subscription, query, action, fanout, fanout40, or worker, then grouped by class."
+  ]
+}

@@ -1,0 +1,65 @@
+TeamChat mobile client — smoke-test evidence
+===========================================
+
+Client: app/mobile (Expo SDK 58 / React Native 0.88 / React 19.3)
+Date:   2026-10-20
+Host:   Expo web export served at http://localhost:4173 (Chromium via the agent browser)
+
+Build / static checks
+---------------------
+1. TypeScript
+
+       cd app/mobile
+       npx tsc --noEmit
+
+   Result: exit 0, no output (clean). See evidence/typecheck-mobile.txt.
+
+2. Expo Doctor
+
+       npx expo-doctor
+
+   Result: "Running 20 checks on your project... 20/20 checks passed. No issues detected!"
+   See evidence/expo-doctor.txt.
+
+3. Android bundle (Metro, production export)
+
+       npx expo export --platform android --output-dir .export-android-test
+
+   Result:
+       Android Bundled 20674ms index.ts (735 modules)
+       _expo/static/js/android/index-*.hbc (2.1MB)
+   See evidence/expo-export-android.txt.
+   The export directory was deleted after the check; no native binary was installed.
+
+Runtime flow verified in the browser (Expo web target)
+------------------------------------------------------
+- Demo banner visible: "Demo build — not authentication. One-time codes are shown on screen..."
+- Email OTP sign-in: request code, read echoed code, submit, land on the flat conversation list.
+- Conversation list: group paths shown as /org_.../grp_..., DM shown as "DM · <name>", unread
+  dots visible.
+- Open group: newest 15 messages from the live subscription, group path header, "Load older
+  messages" control, composer.
+- Send text: message appears in the live page; the unread dot clears when the conversation opens.
+- Local PIN: set PIN, lock, wrong PIN refused, correct PIN unlocks. The screen states that the
+  PIN is a local UI gate only and is not authentication.
+- Sign out and reload: the signed-out screen still offers "Read cached messages".
+- Offline cache (100-message cap, after reload):
+    * Seeded 108 new messages into one group through the API (6 concurrent send workers; 12
+      OptimisticConcurrencyControl failures under that artificial concurrency, 108 committed).
+    * Opened the conversation and pressed "Load older messages" 5 times; cache length reached 100.
+    * Signed out, reloaded the page, chose "Read cached messages".
+    * Result: "100 of the newest 100 messages · cached 10/20/2026, 3:16:03 AM", rendered with no
+      authenticated Convex session. This proves the merge/slice cap and persistence across a
+      reload.
+- Remote live delivery was also observed earlier: a message sent from the web client appeared in
+  the open mobile conversation.
+
+What is NOT verified
+--------------------
+- No Android emulator, iOS simulator, or physical device is installed, so the native binary was
+  not launched. Photo picking (expo-image-picker) therefore could not be driven; the web target
+  cannot open the native picker. The attachment path itself is verified end-to-end on web and in
+  the backend checks (T6*).
+- OS biometric prompt (expo-local-authentication) was not exercised; web always reports
+  biometric-unavailable, and the PIN fallback was exercised.
+- The mobile web target is a local smoke-test aid only, not a shipping client.

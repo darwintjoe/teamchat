@@ -1,0 +1,6 @@
+runAt: 2026-10-21T04:45:15.464Z
+mode: compile
+compile exit: 2
+convex/auth/buildFlags.cr16-proof.ts(30,41): error TS2344: Type 'false' does not satisfy the constraint 'true'.
+CR-16 compile-time refusal observed: YES
+passed: 1

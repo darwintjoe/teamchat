@@ -1,0 +1,52 @@
+{
+  "expo": {
+    "name": "TeamChat",
+    "slug": "teamchat-v0",
+    "version": "0.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "teamchat",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#0b0f14",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "test.teamchat.v0",
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "TeamChat attaches photos from your library to group messages.",
+        "NSFaceIDUsageDescription": "TeamChat uses Face ID for the local unlock stub."
+      }
+    },
+    "android": {
+      "package": "test.teamchat.v0",
+      "adaptiveIcon": {
+        "backgroundColor": "#0b0f14",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "permissions": ["USE_BIOMETRIC", "USE_FINGERPRINT"]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-secure-store",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "TeamChat attaches photos from your library to group messages."
+        }
+      ],
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "TeamChat uses Face ID for the local unlock stub."
+        }
+      ]
+    ],
+    "extra": {
+      "demoBuild": true
+    }
+  }
+}

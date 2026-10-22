@@ -1,0 +1,18 @@
+node_modules/
+.env.local
+.env.*.local
+convex/_generated/
+
+# Local dev services and their data
+.storage/
+.s3data/
+.minio/
+
+# Build output / caches
+web/.next/
+widget/dist/
+.widget-demo/
+*.tsbuildinfo
+mobile/.expo/
+mobile/dist/
+mobile/.export-*/

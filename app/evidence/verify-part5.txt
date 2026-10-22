@@ -1,0 +1,48 @@
+Part 5 verification — 2026-10-21T04:01:24.343Z
+deployment: https://adventurous-squirrel-356.convex.cloud
+site:       https://adventurous-squirrel-356.convex.site
+run id:     mvhl1yga
+
+deployment: https://adventurous-squirrel-356.convex.cloud
+site:       https://adventurous-squirrel-356.convex.site
+run id:     mvhl1yga
+
+PASS  API key format is tc_live_ + 32 alphanumerics — key_58tl92avc9cx tc_live_Wh3S…
+PASS  API key stores SHA-256 only and never returns it — hash-index lookup, metadata-only list
+PASS  API key expires 90 days after creation — 90.00 days
+PASS  Bearer auth: missing/unknown key is 401, scope mismatch is 403 — 401 missing/unknown · 403 scope
+PASS  Revoked key is 401 and indistinguishable from unknown — same 401 body
+PASS  Expired key is enforced on every request — stored expiresAt checked at auth
+PASS  Rotation revokes the old key immediately and returns a new one — key_koqyizsyakaq → key_v4gpuo0bzmew
+PASS  lastUsedAt is written at most once per key per 60s — lastUsedAt pinned at 1792555082818
+PASS  Per-org API limit is configurable only above the 500 floor — 499 rejected, 750 stored
+PASS  Idempotency-Key is required on every write — 400 idempotency_key_required
+PASS  POST /v1/messages creates an api-origin message and returns only public ids — msg_zh2qp78el1e3
+PASS  Idempotent replay returns the original response byte-identically — same status and bytes
+PASS  Reusing a key with a different body is 409 — 409 idempotency_conflict
+PASS  Action mode creates exactly one task in the same mutation — msg_nawvo21h8cxu → one open task
+PASS  API writes run as the one-per-org bot service user — usr_3okbrm04wxmk accountState=bot
+PASS  GET /v1/messages/{publicId} returns content, no _id, scope-gated — msg_nawvo21h8cxu
+PASS  GET /v1/tasks resolves by org-scoped externalRef and reported claim state — open → claimed by usr_vrxk0ljiy2gc
+PASS  POST /v1/users/provision creates org members and is idempotent by externalRef — usr_w5b8bc53venk provisioned + orgMembers row
+PASS  POST /v1/groups creates a direct child and rejects nesting — grp_jhatt36fwpmb direct child; nested rejected
+PASS  Per-group send cap trips before the per-key cap — tripped at 60 sends with group_rate_limited
+PASS  Per-key limit is 500/min and returns a stable 429 — 502 allowed, then 429 rate_limited
+PASS  Webhook registration rejects http, loopback, private and metadata URLs — 5 URL classes refused
+PASS  Webhook secret is returned once and stored encrypted, never listable — whk_1689koc2y5qm ciphertext LAzv5krpXeedTc08…
+PASS  message.created delivery row is inserted with a content-free snapshot — snapshot message.created attempts=1
+PASS  task.claimed payload carries claimedBy identity, no content — usr_vrxk0ljiy2gc
+PASS  Delivery re-resolves DNS and rejects a private address on every attempt — attempt 1 failed before any socket
+PASS  Retries follow 10s / 60s / 300s and dead-letter after 3 retries — 10s / 60s / 300s → dead
+PASS  A failing webhook never rolls back or delays the task transition — status=done, delivery=dead
+PASS  Payload is HMAC-signed over the raw body and redirects are never followed — sha256 HMAC, 3xx fails, https.request
+PASS  No limiter counter documents exist in the schema — component-backed limits only
+PASS  GET /widget/shell sets frame-ancestors from the stored allowlist and no X-Frame-Options — frame-ancestors https://host-mvhl1yga.example
+PASS  Unknown and inactive hosts are the same 404 with no allowlist leak — identical 404 body, no origins
+PASS  Demo host points at the shell route; direct index.html is not used — demo page → /widget/shell?host=…
+PASS  Origin in the exchange is advisory; CSP is the enforcement point — identity_not_shadow distinct from replayed; CSP header enforced
+PASS  No API response contains an internal Convex id — 615 responses scanned
+PASS  Every API error is the stable {error:{code,message}} shape — 539 error responses
+PASS  Webhook admin list exposes last-used deliveries and no secret — 4 recent deliveries
+
+checks: 37 passed, 0 failed

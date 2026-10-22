@@ -1,0 +1,2175 @@
+{
+  "ranAt": "2026-10-22T02:55:19.995Z",
+  "scenario": "curve2000",
+  "deployment": "https://benevolent-crocodile-386.convex.cloud",
+  "production": "true",
+  "region": "aws-us-east-1",
+  "orgPublicId": "org_68mqg908xz3b",
+  "parameters": {
+    "sessions": 10000,
+    "workers": 6,
+    "queries": 256,
+    "actions": 512,
+    "actionUsers": 8
+  },
+  "sessionRamp": {
+    "requested": 10000,
+    "attempted": 10000,
+    "connected": 8030,
+    "shortfall": 1970,
+    "rampSeconds": 350.3,
+    "perWorker": [
+      {
+        "worker": 0,
+        "pid": 14460,
+        "attempted": 1667,
+        "connected": 1363,
+        "rampSeconds": 300.8,
+        "rssMb": 375,
+        "stopped": false,
+        "capped": null,
+        "failures": 304,
+        "failuresByClass": {
+          "server_close": 304
+        },
+        "counters": {
+          "wsAttempts": 2841,
+          "wsOpens": 1371,
+          "wsReconnects": 1,
+          "wsCloseEvents": 1480,
+          "wsErrors": 1473,
+          "closeCodes": {
+            "1005": 7,
+            "1006": 1473
+          },
+          "socketErrorCodes": {},
+          "rampClassification": {
+            "server_close": 304
+          },
+          "subscriptionClassification": {}
+        }
+      },
+      {
+        "worker": 1,
+        "pid": 10520,
+        "attempted": 1667,
+        "connected": 1341,
+        "rampSeconds": 303,
+        "rssMb": 370,
+        "stopped": false,
+        "capped": null,
+        "failures": 326,
+        "failuresByClass": {
+          "server_close": 326
+        },
+        "counters": {
+          "wsAttempts": 2889,
+          "wsOpens": 1353,
+          "wsReconnects": 1,
+          "wsCloseEvents": 1550,
+          "wsErrors": 1539,
+          "closeCodes": {
+            "1005": 11,
+            "1006": 1539
+          },
+          "socketErrorCodes": {},
+          "rampClassification": {
+            "server_close": 326
+          },
+          "subscriptionClassification": {}
+        }
+      },
+      {
+        "worker": 2,
+        "pid": 10824,
+        "attempted": 1667,
+        "connected": 1405,
+        "rampSeconds": 301.6,
+        "rssMb": 333,
+        "stopped": false,
+        "capped": null,
+        "failures": 262,
+        "failuresByClass": {
+          "server_close": 262
+        },
+        "counters": {
+          "wsAttempts": 2668,
+          "wsOpens": 1406,
+          "wsReconnects": 0,
+          "wsCloseEvents": 1265,
+          "wsErrors": 1264,
+          "closeCodes": {
+            "1005": 1,
+            "1006": 1264
+          },
+          "socketErrorCodes": {},
+          "rampClassification": {
+            "server_close": 262
+          },
+          "subscriptionClassification": {}
+        }
+      },
+      {
+        "worker": 3,
+        "pid": 15124,
+        "attempted": 1667,
+        "connected": 1318,
+        "rampSeconds": 350.3,
+        "rssMb": 316,
+        "stopped": false,
+        "capped": null,
+        "failures": 349,
+        "failuresByClass": {
+          "server_close": 349
+        },
+        "counters": {
+          "wsAttempts": 2894,
+          "wsOpens": 1319,
+          "wsReconnects": 1,
+          "wsCloseEvents": 1576,
+          "wsErrors": 1576,
+          "closeCodes": {
+            "1006": 1576
+          },
+          "socketErrorCodes": {},
+          "rampClassification": {
+            "server_close": 349
+          },
+          "subscriptionClassification": {}
+        }
+      },
+      {
+        "worker": 4,
+        "pid": 14964,
+        "attempted": 1666,
+        "connected": 1312,
+        "rampSeconds": 349.7,
+        "rssMb": 319,
+        "stopped": false,
+        "capped": null,
+        "failures": 354,
+        "failuresByClass": {
+          "server_close": 354
+        },
+        "counters": {
+          "wsAttempts": 3003,
+          "wsOpens": 1314,
+          "wsReconnects": 0,
+          "wsCloseEvents": 1691,
+          "wsErrors": 1689,
+          "closeCodes": {
+            "1005": 2,
+            "1006": 1689
+          },
+          "socketErrorCodes": {},
+          "rampClassification": {
+            "server_close": 354
+          },
+          "subscriptionClassification": {}
+        }
+      },
+      {
+        "worker": 5,
+        "pid": 10356,
+        "attempted": 1666,
+        "connected": 1291,
+        "rampSeconds": 348.8,
+        "rssMb": 335,
+        "stopped": false,
+        "capped": null,
+        "failures": 375,
+        "failuresByClass": {
+          "server_close": 375
+        },
+        "counters": {
+          "wsAttempts": 3055,
+          "wsOpens": 1295,
+          "wsReconnects": 1,
+          "wsCloseEvents": 1767,
+          "wsErrors": 1764,
+          "closeCodes": {
+            "1005": 3,
+            "1006": 1764
+          },
+          "socketErrorCodes": {},
+          "rampClassification": {
+            "server_close": 375
+          },
+          "subscriptionClassification": {}
+        }
+      }
+    ]
+  },
+  "sockets": {
+    "os": "win32",
+    "dynamicPortRange": {
+      "raw": "Protocol tcp Dynamic Port Range\r\n---------------------------------\r\nStart Port      : 49152\r\nNumber of Ports : 16384",
+      "start": 49152,
+      "end": 65535,
+      "count": 16384
+    },
+    "samples": [
+      {
+        "at": 1792637328565,
+        "elapsedMs": 0,
+        "perPid": {
+          "10356": {
+            "established": 0,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 0
+          },
+          "10520": {
+            "established": 0,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 0
+          },
+          "10824": {
+            "established": 0,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 0
+          },
+          "14460": {
+            "established": 0,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 0
+          },
+          "14964": {
+            "established": 0,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 0
+          },
+          "15124": {
+            "established": 0,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 0
+          }
+        },
+        "host": {
+          "established": 74,
+          "timeWait": 284,
+          "closeWait": 2,
+          "synSent": 0
+        },
+        "localPortsUsed": 216,
+        "ephemeralPortsInUse": 203,
+        "ephemeralUtilization": 0.0124
+      },
+      {
+        "at": 1792637338678,
+        "elapsedMs": 10113,
+        "perPid": {
+          "10356": {
+            "established": 300,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 300
+          },
+          "10520": {
+            "established": 300,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 300
+          },
+          "10824": {
+            "established": 300,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 300
+          },
+          "14460": {
+            "established": 300,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 300
+          },
+          "14964": {
+            "established": 300,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 300
+          },
+          "15124": {
+            "established": 300,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 300
+          }
+        },
+        "host": {
+          "established": 1874,
+          "timeWait": 416,
+          "closeWait": 2,
+          "synSent": 0
+        },
+        "localPortsUsed": 2149,
+        "ephemeralPortsInUse": 2136,
+        "ephemeralUtilization": 0.1304
+      },
+      {
+        "at": 1792637349888,
+        "elapsedMs": 21323,
+        "perPid": {
+          "10356": {
+            "established": 600,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 600
+          },
+          "10520": {
+            "established": 600,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 600
+          },
+          "10824": {
+            "established": 600,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 600
+          },
+          "14460": {
+            "established": 600,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 600
+          },
+          "14964": {
+            "established": 600,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 600
+          },
+          "15124": {
+            "established": 600,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 600
+          }
+        },
+        "host": {
+          "established": 3676,
+          "timeWait": 653,
+          "closeWait": 0,
+          "synSent": 0
+        },
+        "localPortsUsed": 4185,
+        "ephemeralPortsInUse": 4172,
+        "ephemeralUtilization": 0.2546
+      },
+      {
+        "at": 1792637361979,
+        "elapsedMs": 33414,
+        "perPid": {
+          "10356": {
+            "established": 900,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 900
+          },
+          "10520": {
+            "established": 900,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 900
+          },
+          "10824": {
+            "established": 900,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 900
+          },
+          "14460": {
+            "established": 900,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 900
+          },
+          "14964": {
+            "established": 900,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 900
+          },
+          "15124": {
+            "established": 900,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 900
+          }
+        },
+        "host": {
+          "established": 5477,
+          "timeWait": 814,
+          "closeWait": 0,
+          "synSent": 0
+        },
+        "localPortsUsed": 6147,
+        "ephemeralPortsInUse": 6134,
+        "ephemeralUtilization": 0.3744
+      },
+      {
+        "at": 1792637374652,
+        "elapsedMs": 46087,
+        "perPid": {
+          "10356": {
+            "established": 1128,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1200
+          },
+          "10520": {
+            "established": 1198,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1200
+          },
+          "10824": {
+            "established": 1227,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1300
+          },
+          "14460": {
+            "established": 1207,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1300
+          },
+          "14964": {
+            "established": 1171,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1200
+          },
+          "15124": {
+            "established": 1106,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1200
+          }
+        },
+        "host": {
+          "established": 7114,
+          "timeWait": 921,
+          "closeWait": 0,
+          "synSent": 363
+        },
+        "localPortsUsed": 8257,
+        "ephemeralPortsInUse": 8244,
+        "ephemeralUtilization": 0.5032
+      },
+      {
+        "at": 1792637385590,
+        "elapsedMs": 57025,
+        "perPid": {
+          "10356": {
+            "established": 1144,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1200
+          },
+          "10520": {
+            "established": 1207,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1300
+          },
+          "10824": {
+            "established": 1248,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1299
+          },
+          "14460": {
+            "established": 1211,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1292
+          },
+          "14964": {
+            "established": 1178,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1200
+          },
+          "15124": {
+            "established": 1140,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1200
+          }
+        },
+        "host": {
+          "established": 7201,
+          "timeWait": 921,
+          "closeWait": 1,
+          "synSent": 363
+        },
+        "localPortsUsed": 8349,
+        "ephemeralPortsInUse": 8336,
+        "ephemeralUtilization": 0.5088
+      },
+      {
+        "at": 1792637397102,
+        "elapsedMs": 68537,
+        "perPid": {
+          "10356": {
+            "established": 1148,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1200
+          },
+          "10520": {
+            "established": 1215,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1300
+          },
+          "10824": {
+            "established": 1257,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1267
+          },
+          "14460": {
+            "established": 1217,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1236
+          },
+          "14964": {
+            "established": 1179,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1200
+          },
+          "15124": {
+            "established": 1145,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1200
+          }
+        },
+        "host": {
+          "established": 7234,
+          "timeWait": 921,
+          "closeWait": 1,
+          "synSent": 242
+        },
+        "localPortsUsed": 8261,
+        "ephemeralPortsInUse": 8248,
+        "ephemeralUtilization": 0.5034
+      },
+      {
+        "at": 1792637407759,
+        "elapsedMs": 79194,
+        "perPid": {
+          "10356": {
+            "established": 1151,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1153
+          },
+          "10520": {
+            "established": 1220,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1300
+          },
+          "10824": {
+            "established": 1258,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1286
+          },
+          "14460": {
+            "established": 1218,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1272
+          },
+          "14964": {
+            "established": 1181,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1181
+          },
+          "15124": {
+            "established": 1147,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1150
+          }
+        },
+        "host": {
+          "established": 7252,
+          "timeWait": 918,
+          "closeWait": 1,
+          "synSent": 167
+        },
+        "localPortsUsed": 8200,
+        "ephemeralPortsInUse": 8187,
+        "ephemeralUtilization": 0.4997
+      },
+      {
+        "at": 1792637418429,
+        "elapsedMs": 89864,
+        "perPid": {
+          "10356": {
+            "established": 1153,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1197
+          },
+          "10520": {
+            "established": 1237,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1300
+          },
+          "10824": {
+            "established": 1269,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1300
+          },
+          "14460": {
+            "established": 1226,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1300
+          },
+          "14964": {
+            "established": 1182,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1200
+          },
+          "15124": {
+            "established": 1150,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1196
+          }
+        },
+        "host": {
+          "established": 7290,
+          "timeWait": 926,
+          "closeWait": 1,
+          "synSent": 276
+        },
+        "localPortsUsed": 8351,
+        "ephemeralPortsInUse": 8338,
+        "ephemeralUtilization": 0.5089
+      },
+      {
+        "at": 1792637429078,
+        "elapsedMs": 100513,
+        "perPid": {
+          "10356": {
+            "established": 1187,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1253
+          },
+          "10520": {
+            "established": 1250,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1337
+          },
+          "10824": {
+            "established": 1290,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1369
+          },
+          "14460": {
+            "established": 1233,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1326
+          },
+          "14964": {
+            "established": 1186,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1282
+          },
+          "15124": {
+            "established": 1214,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1250
+          }
+        },
+        "host": {
+          "established": 7433,
+          "timeWait": 927,
+          "closeWait": 1,
+          "synSent": 457
+        },
+        "localPortsUsed": 8676,
+        "ephemeralPortsInUse": 8663,
+        "ephemeralUtilization": 0.5287
+      },
+      {
+        "at": 1792637439611,
+        "elapsedMs": 111046,
+        "perPid": {
+          "10356": {
+            "established": 1196,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1253
+          },
+          "10520": {
+            "established": 1253,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1337
+          },
+          "10824": {
+            "established": 1300,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1369
+          },
+          "14460": {
+            "established": 1239,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1326
+          },
+          "14964": {
+            "established": 1192,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1282
+          },
+          "15124": {
+            "established": 1218,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1250
+          }
+        },
+        "host": {
+          "established": 7468,
+          "timeWait": 931,
+          "closeWait": 0,
+          "synSent": 419
+        },
+        "localPortsUsed": 8671,
+        "ephemeralPortsInUse": 8658,
+        "ephemeralUtilization": 0.5284
+      },
+      {
+        "at": 1792637450405,
+        "elapsedMs": 121840,
+        "perPid": {
+          "10356": {
+            "established": 1201,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1253
+          },
+          "10520": {
+            "established": 1256,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1271
+          },
+          "10824": {
+            "established": 1307,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1369
+          },
+          "14460": {
+            "established": 1249,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1323
+          },
+          "14964": {
+            "established": 1199,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1282
+          },
+          "15124": {
+            "established": 1222,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1250
+          }
+        },
+        "host": {
+          "established": 7504,
+          "timeWait": 887,
+          "closeWait": 0,
+          "synSent": 314
+        },
+        "localPortsUsed": 8558,
+        "ephemeralPortsInUse": 8545,
+        "ephemeralUtilization": 0.5215
+      },
+      {
+        "at": 1792637461528,
+        "elapsedMs": 132963,
+        "perPid": {
+          "10356": {
+            "established": 1219,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1243
+          },
+          "10520": {
+            "established": 1277,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1297
+          },
+          "10824": {
+            "established": 1311,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1318
+          },
+          "14460": {
+            "established": 1257,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1261
+          },
+          "14964": {
+            "established": 1228,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1254
+          },
+          "15124": {
+            "established": 1233,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1243
+          }
+        },
+        "host": {
+          "established": 7595,
+          "timeWait": 730,
+          "closeWait": 0,
+          "synSent": 91
+        },
+        "localPortsUsed": 8269,
+        "ephemeralPortsInUse": 8256,
+        "ephemeralUtilization": 0.5039
+      },
+      {
+        "at": 1792637472606,
+        "elapsedMs": 144041,
+        "perPid": {
+          "10356": {
+            "established": 1236,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1236
+          },
+          "10520": {
+            "established": 1288,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1337
+          },
+          "10824": {
+            "established": 1322,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1356
+          },
+          "14460": {
+            "established": 1287,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1313
+          },
+          "14964": {
+            "established": 1254,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1259
+          },
+          "15124": {
+            "established": 1237,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1241
+          }
+        },
+        "host": {
+          "established": 7695,
+          "timeWait": 444,
+          "closeWait": 0,
+          "synSent": 118
+        },
+        "localPortsUsed": 8108,
+        "ephemeralPortsInUse": 8095,
+        "ephemeralUtilization": 0.4941
+      },
+      {
+        "at": 1792637484015,
+        "elapsedMs": 155450,
+        "perPid": {
+          "10356": {
+            "established": 1242,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1242
+          },
+          "10520": {
+            "established": 1289,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1383
+          },
+          "10824": {
+            "established": 1327,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1421
+          },
+          "14460": {
+            "established": 1294,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1384
+          },
+          "14964": {
+            "established": 1264,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1354
+          },
+          "15124": {
+            "established": 1248,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1337
+          }
+        },
+        "host": {
+          "established": 7734,
+          "timeWait": 288,
+          "closeWait": 0,
+          "synSent": 457
+        },
+        "localPortsUsed": 8296,
+        "ephemeralPortsInUse": 8283,
+        "ephemeralUtilization": 0.5056
+      },
+      {
+        "at": 1792637494630,
+        "elapsedMs": 166065,
+        "perPid": {
+          "10356": {
+            "established": 1251,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1283
+          },
+          "10520": {
+            "established": 1300,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1383
+          },
+          "10824": {
+            "established": 1382,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1421
+          },
+          "14460": {
+            "established": 1337,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1384
+          },
+          "14964": {
+            "established": 1283,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1354
+          },
+          "15124": {
+            "established": 1293,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1337
+          }
+        },
+        "host": {
+          "established": 7915,
+          "timeWait": 203,
+          "closeWait": 0,
+          "synSent": 316
+        },
+        "localPortsUsed": 8253,
+        "ephemeralPortsInUse": 8240,
+        "ephemeralUtilization": 0.5029
+      },
+      {
+        "at": 1792637505328,
+        "elapsedMs": 176763,
+        "perPid": {
+          "10356": {
+            "established": 1263,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1336
+          },
+          "10520": {
+            "established": 1308,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1383
+          },
+          "10824": {
+            "established": 1384,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1421
+          },
+          "14460": {
+            "established": 1342,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1384
+          },
+          "14964": {
+            "established": 1288,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1354
+          },
+          "15124": {
+            "established": 1295,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1337
+          }
+        },
+        "host": {
+          "established": 7949,
+          "timeWait": 203,
+          "closeWait": 0,
+          "synSent": 335
+        },
+        "localPortsUsed": 8305,
+        "ephemeralPortsInUse": 8292,
+        "ephemeralUtilization": 0.5061
+      },
+      {
+        "at": 1792637516025,
+        "elapsedMs": 187460,
+        "perPid": {
+          "10356": {
+            "established": 1270,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1336
+          },
+          "10520": {
+            "established": 1319,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1345
+          },
+          "10824": {
+            "established": 1386,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1412
+          },
+          "14460": {
+            "established": 1345,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1380
+          },
+          "14964": {
+            "established": 1293,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1354
+          },
+          "15124": {
+            "established": 1300,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1337
+          }
+        },
+        "host": {
+          "established": 7979,
+          "timeWait": 202,
+          "closeWait": 1,
+          "synSent": 251
+        },
+        "localPortsUsed": 8251,
+        "ephemeralPortsInUse": 8238,
+        "ephemeralUtilization": 0.5028
+      },
+      {
+        "at": 1792637527154,
+        "elapsedMs": 198589,
+        "perPid": {
+          "10356": {
+            "established": 1270,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1370
+          },
+          "10520": {
+            "established": 1322,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1352
+          },
+          "10824": {
+            "established": 1389,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1390
+          },
+          "14460": {
+            "established": 1346,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1346
+          },
+          "14964": {
+            "established": 1294,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1393
+          },
+          "15124": {
+            "established": 1301,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1401
+          }
+        },
+        "host": {
+          "established": 7992,
+          "timeWait": 201,
+          "closeWait": 0,
+          "synSent": 330
+        },
+        "localPortsUsed": 8341,
+        "ephemeralPortsInUse": 8328,
+        "ephemeralUtilization": 0.5083
+      },
+      {
+        "at": 1792637538301,
+        "elapsedMs": 209736,
+        "perPid": {
+          "10356": {
+            "established": 1274,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1372
+          },
+          "10520": {
+            "established": 1323,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1424
+          },
+          "10824": {
+            "established": 1395,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1397
+          },
+          "14460": {
+            "established": 1347,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1371
+          },
+          "14964": {
+            "established": 1295,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1393
+          },
+          "15124": {
+            "established": 1303,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1402
+          }
+        },
+        "host": {
+          "established": 8002,
+          "timeWait": 199,
+          "closeWait": 3,
+          "synSent": 422
+        },
+        "localPortsUsed": 8447,
+        "ephemeralPortsInUse": 8434,
+        "ephemeralUtilization": 0.5148
+      },
+      {
+        "at": 1792637549591,
+        "elapsedMs": 221026,
+        "perPid": {
+          "10356": {
+            "established": 1276,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1371
+          },
+          "10520": {
+            "established": 1328,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1423
+          },
+          "10824": {
+            "established": 1398,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1411
+          },
+          "14460": {
+            "established": 1351,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1353
+          },
+          "14964": {
+            "established": 1296,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1383
+          },
+          "15124": {
+            "established": 1305,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1354
+          }
+        },
+        "host": {
+          "established": 8023,
+          "timeWait": 200,
+          "closeWait": 1,
+          "synSent": 341
+        },
+        "localPortsUsed": 8377,
+        "ephemeralPortsInUse": 8364,
+        "ephemeralUtilization": 0.5105
+      },
+      {
+        "at": 1792637561651,
+        "elapsedMs": 233086,
+        "perPid": {
+          "10356": {
+            "established": 1278,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1321
+          },
+          "10520": {
+            "established": 1329,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1420
+          },
+          "10824": {
+            "established": 1396,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1437
+          },
+          "14460": {
+            "established": 1352,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1368
+          },
+          "14964": {
+            "established": 1302,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1310
+          },
+          "15124": {
+            "established": 1306,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1313
+          }
+        },
+        "host": {
+          "established": 8030,
+          "timeWait": 198,
+          "closeWait": 2,
+          "synSent": 206
+        },
+        "localPortsUsed": 8249,
+        "ephemeralPortsInUse": 8236,
+        "ephemeralUtilization": 0.5027
+      },
+      {
+        "at": 1792637572892,
+        "elapsedMs": 244327,
+        "perPid": {
+          "10356": {
+            "established": 1279,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1318
+          },
+          "10520": {
+            "established": 1335,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1421
+          },
+          "10824": {
+            "established": 1398,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1489
+          },
+          "14460": {
+            "established": 1356,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1443
+          },
+          "14964": {
+            "established": 1303,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1364
+          },
+          "15124": {
+            "established": 1307,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1390
+          }
+        },
+        "host": {
+          "established": 8037,
+          "timeWait": 196,
+          "closeWait": 2,
+          "synSent": 447
+        },
+        "localPortsUsed": 8501,
+        "ephemeralPortsInUse": 8488,
+        "ephemeralUtilization": 0.5181
+      },
+      {
+        "at": 1792637583502,
+        "elapsedMs": 254937,
+        "perPid": {
+          "10356": {
+            "established": 1279,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1380
+          },
+          "10520": {
+            "established": 1335,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1404
+          },
+          "10824": {
+            "established": 1398,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1466
+          },
+          "14460": {
+            "established": 1357,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1424
+          },
+          "14964": {
+            "established": 1303,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1403
+          },
+          "15124": {
+            "established": 1308,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1408
+          }
+        },
+        "host": {
+          "established": 8041,
+          "timeWait": 194,
+          "closeWait": 1,
+          "synSent": 505
+        },
+        "localPortsUsed": 8561,
+        "ephemeralPortsInUse": 8548,
+        "ephemeralUtilization": 0.5217
+      },
+      {
+        "at": 1792637594187,
+        "elapsedMs": 265622,
+        "perPid": {
+          "10356": {
+            "established": 1282,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1379
+          },
+          "10520": {
+            "established": 1335,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1404
+          },
+          "10824": {
+            "established": 1400,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1467
+          },
+          "14460": {
+            "established": 1357,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1426
+          },
+          "14964": {
+            "established": 1303,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1403
+          },
+          "15124": {
+            "established": 1309,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1407
+          }
+        },
+        "host": {
+          "established": 8047,
+          "timeWait": 191,
+          "closeWait": 1,
+          "synSent": 500
+        },
+        "localPortsUsed": 8559,
+        "ephemeralPortsInUse": 8546,
+        "ephemeralUtilization": 0.5216
+      },
+      {
+        "at": 1792637604799,
+        "elapsedMs": 276234,
+        "perPid": {
+          "10356": {
+            "established": 1287,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1379
+          },
+          "10520": {
+            "established": 1335,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1389
+          },
+          "10824": {
+            "established": 1400,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1464
+          },
+          "14460": {
+            "established": 1360,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1422
+          },
+          "14964": {
+            "established": 1309,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1403
+          },
+          "15124": {
+            "established": 1314,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1407
+          }
+        },
+        "host": {
+          "established": 8066,
+          "timeWait": 190,
+          "closeWait": 1,
+          "synSent": 459
+        },
+        "localPortsUsed": 8535,
+        "ephemeralPortsInUse": 8522,
+        "ephemeralUtilization": 0.5201
+      },
+      {
+        "at": 1792637615543,
+        "elapsedMs": 286978,
+        "perPid": {
+          "10356": {
+            "established": 1287,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1378
+          },
+          "10520": {
+            "established": 1337,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1344
+          },
+          "10824": {
+            "established": 1401,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1414
+          },
+          "14460": {
+            "established": 1361,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1375
+          },
+          "14964": {
+            "established": 1309,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1374
+          },
+          "15124": {
+            "established": 1315,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1366
+          }
+        },
+        "host": {
+          "established": 8069,
+          "timeWait": 197,
+          "closeWait": 2,
+          "synSent": 241
+        },
+        "localPortsUsed": 8322,
+        "ephemeralPortsInUse": 8309,
+        "ephemeralUtilization": 0.5071
+      },
+      {
+        "at": 1792637626317,
+        "elapsedMs": 297752,
+        "perPid": {
+          "10356": {
+            "established": 1287,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1289
+          },
+          "10520": {
+            "established": 1338,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1398
+          },
+          "10824": {
+            "established": 1401,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1445
+          },
+          "14460": {
+            "established": 1361,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1397
+          },
+          "14964": {
+            "established": 1309,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1325
+          },
+          "15124": {
+            "established": 1316,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1338
+          }
+        },
+        "host": {
+          "established": 8071,
+          "timeWait": 199,
+          "closeWait": 2,
+          "synSent": 180
+        },
+        "localPortsUsed": 8263,
+        "ephemeralPortsInUse": 8250,
+        "ephemeralUtilization": 0.5035
+      },
+      {
+        "at": 1792637637195,
+        "elapsedMs": 308630,
+        "perPid": {
+          "10356": {
+            "established": 1286,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1356
+          },
+          "10520": {
+            "established": 1338,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1341
+          },
+          "10824": {
+            "established": 1401,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1405
+          },
+          "14460": {
+            "established": 1361,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1361
+          },
+          "14964": {
+            "established": 1308,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1374
+          },
+          "15124": {
+            "established": 1316,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1383
+          }
+        },
+        "host": {
+          "established": 8069,
+          "timeWait": 199,
+          "closeWait": 2,
+          "synSent": 210
+        },
+        "localPortsUsed": 8291,
+        "ephemeralPortsInUse": 8278,
+        "ephemeralUtilization": 0.5052
+      },
+      {
+        "at": 1792637647843,
+        "elapsedMs": 319278,
+        "perPid": {
+          "10356": {
+            "established": 1287,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1355
+          },
+          "10520": {
+            "established": 1337,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1338
+          },
+          "10824": {
+            "established": 1399,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1402
+          },
+          "14460": {
+            "established": 1361,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1363
+          },
+          "14964": {
+            "established": 1308,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1375
+          },
+          "15124": {
+            "established": 1318,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1383
+          }
+        },
+        "host": {
+          "established": 8069,
+          "timeWait": 187,
+          "closeWait": 2,
+          "synSent": 206
+        },
+        "localPortsUsed": 8285,
+        "ephemeralPortsInUse": 8272,
+        "ephemeralUtilization": 0.5049
+      },
+      {
+        "at": 1792637658639,
+        "elapsedMs": 330074,
+        "perPid": {
+          "10356": {
+            "established": 1286,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1353
+          },
+          "10520": {
+            "established": 1336,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1338
+          },
+          "10824": {
+            "established": 1399,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1403
+          },
+          "14460": {
+            "established": 1361,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1361
+          },
+          "14964": {
+            "established": 1311,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1375
+          },
+          "15124": {
+            "established": 1318,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1383
+          }
+        },
+        "host": {
+          "established": 8069,
+          "timeWait": 192,
+          "closeWait": 3,
+          "synSent": 202
+        },
+        "localPortsUsed": 8282,
+        "ephemeralPortsInUse": 8269,
+        "ephemeralUtilization": 0.5047
+      },
+      {
+        "at": 1792637671265,
+        "elapsedMs": 342700,
+        "perPid": {
+          "10356": {
+            "established": 1286,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1353
+          },
+          "10520": {
+            "established": 1336,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1339
+          },
+          "10824": {
+            "established": 1399,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1401
+          },
+          "14460": {
+            "established": 1361,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1361
+          },
+          "14964": {
+            "established": 1313,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1374
+          },
+          "15124": {
+            "established": 1318,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1383
+          }
+        },
+        "host": {
+          "established": 8073,
+          "timeWait": 193,
+          "closeWait": 2,
+          "synSent": 198
+        },
+        "localPortsUsed": 8280,
+        "ephemeralPortsInUse": 8267,
+        "ephemeralUtilization": 0.5046
+      },
+      {
+        "at": 1792637682649,
+        "elapsedMs": 354084,
+        "perPid": {
+          "10356": {
+            "established": 1286,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1290
+          },
+          "10520": {
+            "established": 1336,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1339
+          },
+          "10824": {
+            "established": 1399,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1402
+          },
+          "14460": {
+            "established": 1361,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1363
+          },
+          "14964": {
+            "established": 1311,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1312
+          },
+          "15124": {
+            "established": 1318,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1318
+          }
+        },
+        "host": {
+          "established": 8071,
+          "timeWait": 189,
+          "closeWait": 2,
+          "synSent": 13
+        },
+        "localPortsUsed": 8095,
+        "ephemeralPortsInUse": 8082,
+        "ephemeralUtilization": 0.4933
+      },
+      {
+        "at": 1792637693373,
+        "elapsedMs": 364808,
+        "perPid": {
+          "10356": {
+            "established": 1286,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1286
+          },
+          "10520": {
+            "established": 1336,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1336
+          },
+          "10824": {
+            "established": 1399,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1399
+          },
+          "14460": {
+            "established": 1361,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1361
+          },
+          "14964": {
+            "established": 1311,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1311
+          },
+          "15124": {
+            "established": 1318,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1318
+          }
+        },
+        "host": {
+          "established": 8076,
+          "timeWait": 188,
+          "closeWait": 3,
+          "synSent": 0
+        },
+        "localPortsUsed": 8084,
+        "ephemeralPortsInUse": 8071,
+        "ephemeralUtilization": 0.4926
+      },
+      {
+        "at": 1792637703907,
+        "elapsedMs": 375342,
+        "perPid": {
+          "10356": {
+            "established": 1286,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1286
+          },
+          "10520": {
+            "established": 1336,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1336
+          },
+          "10824": {
+            "established": 1399,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1399
+          },
+          "14460": {
+            "established": 1361,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1361
+          },
+          "14964": {
+            "established": 1311,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1311
+          },
+          "15124": {
+            "established": 1318,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1318
+          }
+        },
+        "host": {
+          "established": 8066,
+          "timeWait": 202,
+          "closeWait": 2,
+          "synSent": 0
+        },
+        "localPortsUsed": 8078,
+        "ephemeralPortsInUse": 8065,
+        "ephemeralUtilization": 0.4922
+      },
+      {
+        "at": 1792637714506,
+        "elapsedMs": 385941,
+        "perPid": {
+          "10356": {
+            "established": 1285,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1285
+          },
+          "10520": {
+            "established": 1336,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1336
+          },
+          "10824": {
+            "established": 1399,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1399
+          },
+          "14460": {
+            "established": 1361,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1361
+          },
+          "14964": {
+            "established": 1311,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1311
+          },
+          "15124": {
+            "established": 1318,
+            "timeWait": 0,
+            "closeWait": 0,
+            "bound": 1318
+          }
+        },
+        "host": {
+          "established": 8069,
+          "timeWait": 202,
+          "closeWait": 2,
+          "synSent": 0
+        },
+        "localPortsUsed": 8079,
+        "ephemeralPortsInUse": 8066,
+        "ephemeralUtilization": 0.4923
+      }
+    ],
+    "peak": {
+      "established": 8076,
+      "timeWait": 931,
+      "ephemeralPortsInUse": 8663,
+      "perPidEstablished": {
+        "10356": 1287,
+        "10520": 1338,
+        "10824": 1401,
+        "14460": 1361,
+        "14964": 1313,
+        "15124": 1318
+      }
+    }
+  },
+  "curve": {
+    "requestedViewers": 2000,
+    "assignedViewers": 1999,
+    "subscribedViewers": 1999,
+    "connectedSessions": 8009,
+    "subscribeSeconds": 30.6,
+    "expected": 1999,
+    "received": 1999,
+    "missing": 0,
+    "coverage": 1,
+    "n": 1999,
+    "p50": 5281.14,
+    "p95": 9603.74,
+    "p99": 9945.31,
+    "max": 10029.88
+  },
+  "combined": null,
+  "sequential": null,
+  "fanout40": null,
+  "failures": {
+    "total": 1971,
+    "byClass": {
+      "ramp:server_close": 1970,
+      "subscription:server_close": 1
+    },
+    "samples": [
+      {
+        "stage": "ramp",
+        "class": "server_close",
+        "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+        "diagnostics": {
+          "hasEverConnected": false,
+          "isWebSocketConnected": false,
+          "connectionCount": 0,
+          "connectionRetries": 3,
+          "wsAttempts": 4,
+          "wsOpens": 0,
+          "wsCloseCount": 3,
+          "lastCloseCode": 1006,
+          "lastCloseReason": "",
+          "lastCloseWasClean": false,
+          "lastSocketErrorCode": null,
+          "lastSocketErrorMessage": "",
+          "serverDisconnects": []
+        },
+        "worker": 0
+      },
+      {
+        "stage": "ramp",
+        "class": "server_close",
+        "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+        "diagnostics": {
+          "hasEverConnected": false,
+          "isWebSocketConnected": false,
+          "connectionCount": 0,
+          "connectionRetries": 3,
+          "wsAttempts": 4,
+          "wsOpens": 0,
+          "wsCloseCount": 3,
+          "lastCloseCode": 1006,
+          "lastCloseReason": "",
+          "lastCloseWasClean": false,
+          "lastSocketErrorCode": null,
+          "lastSocketErrorMessage": "",
+          "serverDisconnects": []
+        },
+        "worker": 0
+      },
+      {
+        "stage": "ramp",
+        "class": "server_close",
+        "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+        "diagnostics": {
+          "hasEverConnected": false,
+          "isWebSocketConnected": false,
+          "connectionCount": 0,
+          "connectionRetries": 3,
+          "wsAttempts": 4,
+          "wsOpens": 0,
+          "wsCloseCount": 3,
+          "lastCloseCode": 1006,
+          "lastCloseReason": "",
+          "lastCloseWasClean": false,
+          "lastSocketErrorCode": null,
+          "lastSocketErrorMessage": "",
+          "serverDisconnects": []
+        },
+        "worker": 0
+      },
+      {
+        "stage": "subscription",
+        "class": "server_close",
+        "message": "subscription produced no first result in 30 s",
+        "key": "curve2000",
+        "diagnostics": {
+          "hasEverConnected": true,
+          "isWebSocketConnected": false,
+          "connectionCount": 1,
+          "connectionRetries": 4,
+          "wsAttempts": 4,
+          "wsOpens": 1,
+          "wsCloseCount": 3,
+          "lastCloseCode": 1006,
+          "lastCloseReason": "",
+          "lastCloseWasClean": false,
+          "lastSocketErrorCode": null,
+          "lastSocketErrorMessage": "",
+          "serverDisconnects": []
+        }
+      }
+    ]
+  }
+}

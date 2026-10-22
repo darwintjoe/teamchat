@@ -1,0 +1,25 @@
+Cross-tenant verification — 2026-10-22T00:50:05.375Z
+deployment: https://benevolent-crocodile-386.convex.cloud
+site:       https://benevolent-crocodile-386.convex.site
+run id:     mvitq00z1470
+
+cloud:   https://benevolent-crocodile-386.convex.cloud
+site:    https://benevolent-crocodile-386.convex.site
+run id:  mvitq00z1470
+
+PASS  A API key reading a B message gets 404, byte-identical to an unknown id — 404 message_not_found, no existence oracle
+PASS  A API key resolving B externalRefs gets 404 for task, group and user — task/group/user all 404
+PASS  A provisioning into a B group is rejected and leaves no user on either side — 404 not_found; B membership 1 unchanged
+PASS  A API key posting into a B group gets 404 group_not_found — 404 group_not_found
+PASS  A admin cannot list B webhooks/deliveries, and A's own list contains none of B — B had 1 hook(s) and 1 delivery row(s); A saw neither
+PASS  A cannot mutate B webhook state — still active
+PASS  Host A widget token resolves only host A's support group — usr_mgl53bza669x -> grp_4vp4sm54m2vm
+PASS  Host A widget session cannot read B's support group through standalone queries — 4 standalone reads refused by accountState
+PASS  A token signed for host A is refused when presented as host B — selector switched, kid not found on host B
+PASS  B's own widget host still works while A is refused (fixture is real) — usr_oa3oh1td4nw0 -> grp_61ga89awiczr
+cleanup org_2reg77azto0r: removed=true rows=19
+cleanup org_zhia2ur4fjds: removed=true rows=31
+
+note: 7 client refusal(s) were reported as Convex's production "Server Error";
+      the call still failed closed, and no data crossed the boundary.
+checks: 10 passed, 0 failed

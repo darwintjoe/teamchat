@@ -1,0 +1,271 @@
+{
+  "ranAt": "2026-10-21T06:25:37.809Z",
+  "deployment": "https://benevolent-crocodile-386.convex.cloud",
+  "production": true,
+  "sessionsRequested": 8000,
+  "sessionsConnectedAfterRamp": 7841,
+  "rampSeconds": 280.8,
+  "holdSeconds": 45,
+  "atHoldStart": {
+    "readyByKey": {},
+    "connectedSessions": 7841,
+    "disconnectEvents": 0,
+    "disconnectSamples": []
+  },
+  "atHoldEnd": {
+    "readyByKey": {},
+    "connectedSessions": 7841,
+    "disconnectEvents": 0,
+    "disconnectSamples": []
+  },
+  "perWorker": [
+    {
+      "worker": 0,
+      "attempted": 1334,
+      "connected": 1333,
+      "failures": 1,
+      "failuresByClass": {
+        "timeout": 1
+      },
+      "samples": [
+        {
+          "stage": "ramp",
+          "class": "timeout",
+          "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+          "hasEverConnected": false,
+          "disconnects": []
+        }
+      ]
+    },
+    {
+      "worker": 1,
+      "attempted": 1334,
+      "connected": 1300,
+      "failures": 34,
+      "failuresByClass": {
+        "timeout": 34
+      },
+      "samples": [
+        {
+          "stage": "ramp",
+          "class": "timeout",
+          "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+          "hasEverConnected": false,
+          "disconnects": []
+        },
+        {
+          "stage": "ramp",
+          "class": "timeout",
+          "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+          "hasEverConnected": false,
+          "disconnects": []
+        },
+        {
+          "stage": "ramp",
+          "class": "timeout",
+          "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+          "hasEverConnected": false,
+          "disconnects": []
+        },
+        {
+          "stage": "ramp",
+          "class": "timeout",
+          "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+          "hasEverConnected": false,
+          "disconnects": []
+        },
+        {
+          "stage": "ramp",
+          "class": "timeout",
+          "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+          "hasEverConnected": false,
+          "disconnects": []
+        }
+      ]
+    },
+    {
+      "worker": 2,
+      "attempted": 1333,
+      "connected": 1265,
+      "failures": 68,
+      "failuresByClass": {
+        "timeout": 68
+      },
+      "samples": [
+        {
+          "stage": "ramp",
+          "class": "timeout",
+          "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+          "hasEverConnected": false,
+          "disconnects": []
+        },
+        {
+          "stage": "ramp",
+          "class": "timeout",
+          "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+          "hasEverConnected": false,
+          "disconnects": []
+        },
+        {
+          "stage": "ramp",
+          "class": "timeout",
+          "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+          "hasEverConnected": false,
+          "disconnects": []
+        },
+        {
+          "stage": "ramp",
+          "class": "timeout",
+          "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+          "hasEverConnected": false,
+          "disconnects": []
+        },
+        {
+          "stage": "ramp",
+          "class": "timeout",
+          "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+          "hasEverConnected": false,
+          "disconnects": []
+        }
+      ]
+    },
+    {
+      "worker": 3,
+      "attempted": 1333,
+      "connected": 1321,
+      "failures": 12,
+      "failuresByClass": {
+        "timeout": 12
+      },
+      "samples": [
+        {
+          "stage": "ramp",
+          "class": "timeout",
+          "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+          "hasEverConnected": false,
+          "disconnects": []
+        },
+        {
+          "stage": "ramp",
+          "class": "timeout",
+          "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+          "hasEverConnected": false,
+          "disconnects": []
+        },
+        {
+          "stage": "ramp",
+          "class": "timeout",
+          "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+          "hasEverConnected": false,
+          "disconnects": []
+        },
+        {
+          "stage": "ramp",
+          "class": "timeout",
+          "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+          "hasEverConnected": false,
+          "disconnects": []
+        },
+        {
+          "stage": "ramp",
+          "class": "timeout",
+          "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+          "hasEverConnected": false,
+          "disconnects": []
+        }
+      ]
+    },
+    {
+      "worker": 4,
+      "attempted": 1333,
+      "connected": 1308,
+      "failures": 25,
+      "failuresByClass": {
+        "timeout": 25
+      },
+      "samples": [
+        {
+          "stage": "ramp",
+          "class": "timeout",
+          "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+          "hasEverConnected": false,
+          "disconnects": []
+        },
+        {
+          "stage": "ramp",
+          "class": "timeout",
+          "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+          "hasEverConnected": false,
+          "disconnects": []
+        },
+        {
+          "stage": "ramp",
+          "class": "timeout",
+          "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+          "hasEverConnected": false,
+          "disconnects": []
+        },
+        {
+          "stage": "ramp",
+          "class": "timeout",
+          "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+          "hasEverConnected": false,
+          "disconnects": []
+        },
+        {
+          "stage": "ramp",
+          "class": "timeout",
+          "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+          "hasEverConnected": false,
+          "disconnects": []
+        }
+      ]
+    },
+    {
+      "worker": 5,
+      "attempted": 1333,
+      "connected": 1314,
+      "failures": 19,
+      "failuresByClass": {
+        "timeout": 19
+      },
+      "samples": [
+        {
+          "stage": "ramp",
+          "class": "timeout",
+          "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+          "hasEverConnected": false,
+          "disconnects": []
+        },
+        {
+          "stage": "ramp",
+          "class": "timeout",
+          "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+          "hasEverConnected": false,
+          "disconnects": []
+        },
+        {
+          "stage": "ramp",
+          "class": "timeout",
+          "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+          "hasEverConnected": false,
+          "disconnects": []
+        },
+        {
+          "stage": "ramp",
+          "class": "timeout",
+          "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+          "hasEverConnected": false,
+          "disconnects": []
+        },
+        {
+          "stage": "ramp",
+          "class": "timeout",
+          "message": "session did not receive its first result in 45000 ms (hasEverConnected=false)",
+          "hasEverConnected": false,
+          "disconnects": []
+        }
+      ]
+    }
+  ]
+}

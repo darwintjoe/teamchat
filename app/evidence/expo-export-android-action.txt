@@ -1,0 +1,11 @@
+Starting Metro Bundler
+
+Android Bundled 28894ms index.ts (735 modules)
+
+> android bundles (1):
+_expo/static/js/android/index-0ce2befb3207da4ca9c3e94c31867e9d.hbc (2.1MB)
+
+> Files (1):
+metadata.json (150B)
+
+Exported: .export-android-action-check

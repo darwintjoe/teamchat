@@ -1,0 +1,4 @@
+cd app/web
+npx tsc --noEmit
+
+Result: exit 0, no output (clean).

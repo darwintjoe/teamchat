@@ -1,0 +1,4 @@
+
+> teamchat-app@0.0.0 typecheck
+> tsc --noEmit
+

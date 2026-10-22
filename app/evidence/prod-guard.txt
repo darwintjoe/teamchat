@@ -1,0 +1,7 @@
+runAt: 2026-10-22T03:00:17.076Z
+deployment: benevolent-crocodile-386
+cloud: https://benevolent-crocodile-386.convex.cloud
+FAIL  SENDGRID_API_KEY is the placeholder
+buildInfo: channel=production echoOtp=false
+
+production guard: FAIL (1)

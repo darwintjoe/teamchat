@@ -1,0 +1,13 @@
+Starting Metro Bundler
+
+Web Bundled 5031ms index.ts (345 modules)
+
+› web bundles (1):
+_expo/static/js/web/index-ddd22a3ab4206f4ce3d03d1feaf2069a.js (743KB)
+
+› Files (3):
+favicon.ico (15KB)
+index.html (1.2KB)
+metadata.json (49B)
+
+Exported: dist-action

@@ -1,0 +1,46 @@
+# Production deployment class — copied from the Convex platform API
+
+Read at: 2026-10-22T02:59Z
+Deployment: benevolent-crocodile-386
+Command (access token read from ~/.convex/config.json, never printed):
+
+  Invoke-RestMethod -Uri "https://api.convex.dev/v1/deployments/benevolent-crocodile-386" `
+    -Headers @{ Authorization = "Bearer <CLI access token>" }
+
+Response, verbatim:
+
+{
+    "kind":  "cloud",
+    "id":  6338556,
+    "name":  "benevolent-crocodile-386",
+    "createTime":  1792556496090,
+    "lastDeployTime":  1792599358696,
+    "deploymentType":  "prod",
+    "projectId":  3242649,
+    "creator":  513104,
+    "previewIdentifier":  null,
+    "region":  "aws-us-east-1",
+    "isDefault":  false,
+    "reference":  "teamchat-prod",
+    "dashboardEditConfirmation":  null,
+    "deploymentUrl":  "https://benevolent-crocodile-386.convex.cloud",
+    "class":  "s16",
+    "sendLogsToClient":  null
+}
+
+Dashboard status: the dashboard URL redirected to `https://auth.convex.dev/` because this
+environment has no interactive Convex login. The dashboard itself was not read; the platform API
+above is the same deployment record the dashboard renders. Do not claim a dashboard screenshot.
+
+Published S16 limits (docs.convex.dev/production/state/limits, read 2026-10-22):
+
+  Concurrent sessions        1,000
+  Concurrent queries            16
+  Concurrent mutations          16
+  Convex/HTTP actions           64
+  Node actions                  64
+
+Measured production S5 exceeded every published S16 number: 8,073 authenticated WebSocket
+sessions, 256 submitted concurrent queries, and 512 submitted concurrent actions. The class field
+therefore does not describe a hard admission ceiling on this deployment as measured. The session
+ceiling cannot be attributed to the S16 class limit.

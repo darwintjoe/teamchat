@@ -1,0 +1,29 @@
+TeamChat web client — smoke-test evidence
+========================================
+
+Client: app/web (Next.js 16.4, React 19.1, Convex 1.47)
+Date:   2026-10-20
+URL:    http://localhost:3000
+
+Verified in the agent browser (Chromium)
+----------------------------------------
+- Demo banner on sign-in and workspace: "Demo build — not authentication..."
+- Email OTP sign-in: request code, read echoed code, submit; active account lands in the org
+  workspace.
+- Org creation and org switcher.
+- Flat group list with paths /org_.../grp_...; unread dot; markRead clears it.
+- Open group: live newest 15; older history loaded on demand in a separate query.
+- Send text; second browser tab received the message live.
+- Photo send end-to-end: upload ticket -> signed pending/ PUT -> confirmUpload -> send; rendered
+  <img> at 320 px; second tab received it live. No bytes through Convex.
+- Invite creation/redeem; connection request/accept; DM open, send, and live delivery; DM absent
+  from the group tree.
+- S3 dev config form: owner-only, secret never echoed back.
+- Offline route: seeded 120 messages, cache capped at 100, rendered with zero Convex requests.
+  Current page shows "100 messages" for the org root.
+
+Not clicked through
+-------------------
+- The local PIN overlay was implemented and typechecked; the mobile PIN flow was exercised.
+- The hover/focus unread count chip was implemented and typechecked; the dot path and the
+  backend on-demand count were exercised. The chip itself was not hovered in the browser.

@@ -1,0 +1,31 @@
+deployment: https://adventurous-squirrel-356.convex.cloud
+run id:     mvgvksge
+
+PASS  A1 action send creates exactly one task in the same mutation — task_ei54f8colf6i open, one task, zero events
+PASS  A1b discussion mode creates no task; flagType is action-only — discussion has no task; approval flag persisted
+PASS  A2 rendered message carries the viewer's task card — card status open, canClaim=true for an exact member
+PASS  A3 senderMayClose is materialised, not re-derived — stored true before and after the sender became provisioned
+PASS  C1 non-member cannot claim — non-member refused
+PASS  C2 shadow, bot and provisioned accounts cannot claim — shadow, bot, provisioned refused
+PASS  C3 ancestor manager may close but may not claim — claim refused, close succeeded, selfClosed=false
+PASS  C4 concurrent claims produce exactly one winner and one event — winner=usr_z9kenqt6rkvn, 7 refused, one claimed event
+PASS  C5 claim refuses claimed, done, closed and archived tasks — claimed, done, closed, archived all refused
+PASS  T1 separation of duties refuses a claimant with another eligible closer — claimant refused; sender closed with selfClosed=false
+PASS  T2 self-close is permitted only when the assignee is the sole eligible closer — sole-closer claim closed itself and recorded selfClosed=true
+PASS  T3 reopen returns a done task to the same claimant — reopened to usr_z9kenqt6rkvn, reason sender_review
+PASS  T4 exactly one typed event per transition — claimed → done (reassign refused) → reopened, one event each
+PASS  F1 forward writes actor/from/to and keeps the task claimed — usr_z9kenqt6rkvn → usr_ti1hgwkhy61v, status still claimed
+PASS  F2 self-forward is refused — current holder cannot forward to itself
+PASS  F3 reassign writes forwarded with actor ≠ from and leaves status claimed — actor alice: usr_ti1hgwkhy61v → usr_z9kenqt6rkvn
+PASS  D1 DM lifecycle: claim, done, reopen, done, close — both participants act as owners; 5 typed events
+PASS  D2 a DM participant can archive a DM task — DM peer archived; audit retained
+PASS  R1 rollup covers the group and descendants but never DMs — own + child included, DM excluded, counts.open=2, chronological
+PASS  R2 archived tasks are audit-only and excluded from the rollup — excluded from counts/list; archived filter refused; audit retained
+PASS  R3 hiding a closed task keeps status/count but drops it from the default list — status closed, archivedAt set, no event, default list drops it, count stays 1
+PASS  R4 my tasks / tasks I raised are indexed queues — myTasks=2 claimed, raised=11 open
+PASS  I1 edit is allowed while open and refused after claim — open edit stamped editedAt; claimed edit refused
+PASS  I2 action messages cannot be deleted (discussion messages still can) — action delete refused; discussion soft-delete still works
+PASS  I3 assignableMembers excludes inactive accounts — shadow excluded, active members listed
+PASS  I4 audit is chronological and read-gated — 5 events, chronological, non-member refused
+
+26 passed, 0 failed

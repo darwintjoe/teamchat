@@ -1,0 +1,20 @@
+Widget shell demo probe — 2026-10-21
+
+Bootstrap (host page):
+GET http://localhost:4310/api/widget-bootstrap
+{"hostAppPublicId":"hap_vov1g39s97o7","convexUrl":"https://adventurous-squirrel-356.convex.cloud","widgetOrigin":"http://localhost:4311","widgetUrl":"http://localhost:4311/widget/shell?host=hap_vov1g39s97o7"}
+
+Hardened iframe URL:
+GET http://localhost:4311/widget/shell?host=hap_vov1g39s97o7
+status: 200
+Content-Security-Policy: frame-ancestors http://localhost:4310
+X-Frame-Options: (absent)
+body: 342-byte widget shell loading ./widget.css and ./widget.js
+
+Unknown host:
+GET http://localhost:4311/widget/shell?host=hap_missing
+status: 404
+
+The shell is served by the widget origin so relative asset URLs resolve; the CSP names the host
+origin as the only allowed ancestor. Convex also exposes the same route at
+https://adventurous-squirrel-356.convex.site/widget/shell for header-level verification.

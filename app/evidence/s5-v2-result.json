@@ -1,0 +1,855 @@
+{
+  "ranAt": "2026-10-20T05:49:36.441Z",
+  "deployment": "https://adventurous-squirrel-356.convex.cloud",
+  "region": "aws-us-east-1",
+  "methodology": {
+    "generatorProcesses": 4,
+    "sessionsPerScenario": 10000,
+    "freshFleetPerScenario": true,
+    "t0": "send mutation return in the master process",
+    "t1": "messages.listLive subscription callback in the generator process",
+    "clock": "performance.timeOrigin + performance.now(); sub-ms skew clamped to 0",
+    "combinedBurst": "256 one-shot queries + 512 messages.send across 8 action users + one fan-out, one target epoch"
+  },
+  "sessionRamp": {
+    "target": 10000,
+    "bestConnected": 8268,
+    "runs": [
+      {
+        "scenario": "curve400",
+        "requested": 10000,
+        "connected": 8167,
+        "shortfall": 1833,
+        "rampSeconds": 266.4,
+        "failuresByClass": {
+          "ramp:timeout": 1833
+        }
+      },
+      {
+        "scenario": "curve500",
+        "requested": 10000,
+        "connected": 8013,
+        "shortfall": 1987,
+        "rampSeconds": 263.2,
+        "failuresByClass": {
+          "ramp:timeout": 1987
+        }
+      },
+      {
+        "scenario": "curve1000",
+        "requested": 10000,
+        "connected": 8268,
+        "shortfall": 1732,
+        "rampSeconds": 290.9,
+        "failuresByClass": {
+          "ramp:timeout": 1732
+        }
+      },
+      {
+        "scenario": "curve2000",
+        "requested": 10000,
+        "connected": 8024,
+        "shortfall": 1976,
+        "rampSeconds": 280.7,
+        "failuresByClass": {
+          "ramp:timeout": 1976
+        }
+      },
+      {
+        "scenario": "curve4000",
+        "requested": 10000,
+        "connected": 7986,
+        "shortfall": 2014,
+        "rampSeconds": 186.6,
+        "failuresByClass": {
+          "ramp:timeout": 2014
+        }
+      },
+      {
+        "scenario": "curve8000",
+        "requested": 10000,
+        "connected": 8040,
+        "shortfall": 1960,
+        "rampSeconds": 196.6,
+        "failuresByClass": {
+          "ramp:timeout": 1960
+        }
+      },
+      {
+        "scenario": "fanout40",
+        "requested": 10000,
+        "connected": 8044,
+        "shortfall": 1956,
+        "rampSeconds": 252.4,
+        "failuresByClass": {
+          "ramp:timeout": 1956
+        }
+      },
+      {
+        "scenario": "sequential",
+        "requested": 10000,
+        "connected": 8057,
+        "shortfall": 1943,
+        "rampSeconds": 188.1,
+        "failuresByClass": {
+          "ramp:timeout": 1943
+        }
+      }
+    ],
+    "note": "Every scenario ramped a fresh fleet to the 10,000 target. The deployment refused collection of new sockets around 8.0-8.3k in every run; all ramp failures were 20 s first-result timeouts with hasEverConnected=false."
+  },
+  "curve": {
+    "points": [
+      {
+        "requestedViewers": 400,
+        "assignedViewers": 400,
+        "subscribedViewers": 400,
+        "connectedSessions": 8166,
+        "subscribeSeconds": 0.9,
+        "expected": 400,
+        "received": 400,
+        "missing": 0,
+        "coverage": 1,
+        "n": 400,
+        "p50": 974.49,
+        "p95": 1852.14,
+        "p99": 2003.33,
+        "max": 2018.99
+      },
+      {
+        "requestedViewers": 500,
+        "assignedViewers": 500,
+        "subscribedViewers": 500,
+        "connectedSessions": 8011,
+        "subscribeSeconds": 1,
+        "expected": 500,
+        "received": 500,
+        "missing": 0,
+        "coverage": 1,
+        "n": 500,
+        "p50": 1218.24,
+        "p95": 2409.4,
+        "p99": 2483.41,
+        "max": 2500.86
+      },
+      {
+        "requestedViewers": 1000,
+        "assignedViewers": 1000,
+        "subscribedViewers": 1000,
+        "connectedSessions": 8268,
+        "subscribeSeconds": 1,
+        "expected": 1000,
+        "received": 1000,
+        "missing": 0,
+        "coverage": 1,
+        "n": 1000,
+        "p50": 2569.62,
+        "p95": 4681.19,
+        "p99": 4920.35,
+        "max": 5019.45
+      },
+      {
+        "requestedViewers": 2000,
+        "assignedViewers": 2000,
+        "subscribedViewers": 2000,
+        "connectedSessions": 8024,
+        "subscribeSeconds": 1.6,
+        "expected": 2000,
+        "received": 2000,
+        "missing": 0,
+        "coverage": 1,
+        "n": 2000,
+        "p50": 5063.09,
+        "p95": 9501.41,
+        "p99": 9900.19,
+        "max": 9995.31
+      },
+      {
+        "requestedViewers": 4000,
+        "assignedViewers": 4000,
+        "subscribedViewers": 4000,
+        "connectedSessions": 7986,
+        "subscribeSeconds": 2.3,
+        "expected": 4000,
+        "received": 4000,
+        "missing": 0,
+        "coverage": 1,
+        "n": 4000,
+        "p50": 9879.2,
+        "p95": 19125.77,
+        "p99": 19817.35,
+        "max": 20174.82
+      },
+      {
+        "requestedViewers": 8000,
+        "assignedViewers": 8000,
+        "subscribedViewers": 8000,
+        "connectedSessions": 8040,
+        "subscribeSeconds": 4.1,
+        "expected": 8000,
+        "received": 8000,
+        "missing": 0,
+        "coverage": 1,
+        "n": 8000,
+        "p50": 20127.54,
+        "p95": 38219.6,
+        "p99": 39783.35,
+        "max": 40442.25
+      }
+    ],
+    "linearFitMsPerViewer": 4.7852,
+    "thresholdUnder2sP95Viewers": 427,
+    "largestMeasuredUnder2s": {
+      "viewers": 400,
+      "p50": 974.49,
+      "p95": 1852.14,
+      "p99": 2003.33
+    }
+  },
+  "combined": {
+    "at4000": {
+      "targetEpoch": 1792470417965.0461,
+      "query": {
+        "concurrency": 256,
+        "calls": 256,
+        "errors": 0,
+        "n": 256,
+        "p50": 328.9,
+        "p95": 345.61,
+        "p99": 349.34,
+        "max": 350.01
+      },
+      "action": {
+        "concurrency": 512,
+        "users": 8,
+        "errors": 0,
+        "n": 512,
+        "p50": 1612.95,
+        "p95": 2646.39,
+        "p99": 2759.8,
+        "max": 2853.95
+      },
+      "fanout": {
+        "desiredViewers": 4000,
+        "subscribedViewers": 4000,
+        "connectedSessions": 7986,
+        "received": 4000,
+        "missing": 0,
+        "coverage": 1,
+        "sendReturnDebtMs": 369.27,
+        "n": 4000,
+        "p50": 9958.77,
+        "p95": 19181.27,
+        "p99": 19903.61,
+        "max": 20434.64
+      }
+    },
+    "at8000": {
+      "targetEpoch": 1792473288670.781,
+      "query": {
+        "concurrency": 256,
+        "calls": 256,
+        "errors": 0,
+        "n": 256,
+        "p50": 298.82,
+        "p95": 314.1,
+        "p99": 777.17,
+        "max": 1023.47
+      },
+      "action": {
+        "concurrency": 512,
+        "users": 8,
+        "errors": 0,
+        "n": 512,
+        "p50": 1624.36,
+        "p95": 2757.93,
+        "p99": 2878.53,
+        "max": 2920.83
+      },
+      "fanout": {
+        "desiredViewers": 8000,
+        "subscribedViewers": 8000,
+        "connectedSessions": 8040,
+        "received": 8000,
+        "missing": 0,
+        "coverage": 1,
+        "sendReturnDebtMs": 378.77,
+        "n": 8000,
+        "p50": 19230.15,
+        "p95": 37954.29,
+        "p99": 39684.45,
+        "max": 40225.1
+      }
+    }
+  },
+  "sequential": {
+    "query": {
+      "concurrency": 1,
+      "calls": 256,
+      "errors": 0,
+      "wallMs": 74639.8,
+      "n": 256,
+      "p50": 274.97,
+      "p95": 342.02,
+      "p99": 753.72,
+      "max": 801.6
+    },
+    "action": {
+      "concurrency": 1,
+      "calls": 512,
+      "errors": 0,
+      "wallMs": 165518.8,
+      "n": 512,
+      "p50": 308.62,
+      "p95": 388.5,
+      "p99": 572.86,
+      "max": 881.98
+    },
+    "fanout": {
+      "desiredViewers": 4000,
+      "subscribedViewers": 4000,
+      "connectedSessions": 8057,
+      "subscribeSeconds": 2.2,
+      "expected": 4000,
+      "received": 4000,
+      "missing": 0,
+      "coverage": 1,
+      "n": 4000,
+      "p50": 10058.16,
+      "p95": 19191.64,
+      "p99": 19864.72,
+      "max": 20142.76
+    },
+    "totalWallMs": 263002.9
+  },
+  "fanout40": {
+    "groups": 40,
+    "viewersRequested": 8000,
+    "viewersSubscribed": 8000,
+    "connectedSessions": 8044,
+    "messagesSent": 40,
+    "startDebtMs": {
+      "n": 40,
+      "p50": 1175.88,
+      "p95": 1966.89,
+      "p99": 2053.68,
+      "max": 2053.68
+    },
+    "n": 8000,
+    "p50": 327.48,
+    "p95": 626.29,
+    "p99": 674.05,
+    "max": 835.02,
+    "perGroup": [
+      {
+        "key": "fanout-00",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 67.8,
+        "p95": 82.43,
+        "p99": 83.63,
+        "max": 83.87
+      },
+      {
+        "key": "fanout-01",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 92.22,
+        "p95": 122.67,
+        "p99": 126.72,
+        "max": 127.88
+      },
+      {
+        "key": "fanout-02",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 90.83,
+        "p95": 141.85,
+        "p99": 142.96,
+        "max": 143.15
+      },
+      {
+        "key": "fanout-03",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 153.28,
+        "p95": 167.09,
+        "p99": 168.59,
+        "max": 169.1
+      },
+      {
+        "key": "fanout-04",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 159.07,
+        "p95": 243.87,
+        "p99": 245.74,
+        "max": 246.92
+      },
+      {
+        "key": "fanout-05",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 222.9,
+        "p95": 251.89,
+        "p99": 256.05,
+        "max": 257.34
+      },
+      {
+        "key": "fanout-06",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 313.07,
+        "p95": 331.05,
+        "p99": 333.25,
+        "max": 365.05
+      },
+      {
+        "key": "fanout-07",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 341.72,
+        "p95": 377.07,
+        "p99": 378.04,
+        "max": 378.22
+      },
+      {
+        "key": "fanout-08",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 377.61,
+        "p95": 421.05,
+        "p99": 422.71,
+        "max": 423.18
+      },
+      {
+        "key": "fanout-09",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 42.06,
+        "p95": 381.86,
+        "p99": 383.68,
+        "max": 384.01
+      },
+      {
+        "key": "fanout-10",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 102.31,
+        "p95": 140.55,
+        "p99": 142.22,
+        "max": 142.57
+      },
+      {
+        "key": "fanout-11",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 300.92,
+        "p95": 317.3,
+        "p99": 318.14,
+        "max": 318.33
+      },
+      {
+        "key": "fanout-12",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 285.23,
+        "p95": 294.75,
+        "p99": 295.51,
+        "max": 295.71
+      },
+      {
+        "key": "fanout-13",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 322.55,
+        "p95": 345.27,
+        "p99": 347.28,
+        "max": 347.61
+      },
+      {
+        "key": "fanout-14",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 367.61,
+        "p95": 410.03,
+        "p99": 413.6,
+        "max": 414.17
+      },
+      {
+        "key": "fanout-15",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 507.63,
+        "p95": 532.15,
+        "p99": 534.12,
+        "max": 535.6
+      },
+      {
+        "key": "fanout-16",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 508.81,
+        "p95": 550.04,
+        "p99": 551.87,
+        "max": 552.26
+      },
+      {
+        "key": "fanout-17",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 525.96,
+        "p95": 542.4,
+        "p99": 543.67,
+        "max": 544.77
+      },
+      {
+        "key": "fanout-18",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 517.22,
+        "p95": 543.11,
+        "p99": 545.18,
+        "max": 545.66
+      },
+      {
+        "key": "fanout-19",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 514.16,
+        "p95": 542.68,
+        "p99": 545.48,
+        "max": 546.03
+      },
+      {
+        "key": "fanout-20",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 39.29,
+        "p95": 134.65,
+        "p99": 138.26,
+        "max": 141.64
+      },
+      {
+        "key": "fanout-21",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 222.41,
+        "p95": 241.77,
+        "p99": 243.22,
+        "max": 835.02
+      },
+      {
+        "key": "fanout-22",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 296.55,
+        "p95": 313.02,
+        "p99": 314.36,
+        "max": 314.69
+      },
+      {
+        "key": "fanout-23",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 295.73,
+        "p95": 436.72,
+        "p99": 438.26,
+        "max": 438.68
+      },
+      {
+        "key": "fanout-24",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 422.72,
+        "p95": 508,
+        "p99": 509.68,
+        "max": 510.08
+      },
+      {
+        "key": "fanout-25",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 489.7,
+        "p95": 560.92,
+        "p99": 562.81,
+        "max": 720.98
+      },
+      {
+        "key": "fanout-26",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 543.53,
+        "p95": 577.02,
+        "p99": 579.41,
+        "max": 579.87
+      },
+      {
+        "key": "fanout-27",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 602.72,
+        "p95": 632.07,
+        "p99": 634.38,
+        "max": 634.91
+      },
+      {
+        "key": "fanout-28",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 621.62,
+        "p95": 651.38,
+        "p99": 657.49,
+        "max": 658.27
+      },
+      {
+        "key": "fanout-29",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 659.63,
+        "p95": 681.02,
+        "p99": 683.29,
+        "max": 684
+      },
+      {
+        "key": "fanout-30",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 35.14,
+        "p95": 680.63,
+        "p99": 683.92,
+        "max": 684.29
+      },
+      {
+        "key": "fanout-31",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 97.39,
+        "p95": 139.03,
+        "p99": 140.62,
+        "max": 141.75
+      },
+      {
+        "key": "fanout-32",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 139.08,
+        "p95": 164.07,
+        "p99": 165.75,
+        "max": 166.23
+      },
+      {
+        "key": "fanout-33",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 222.64,
+        "p95": 240.98,
+        "p99": 324.01,
+        "max": 581.41
+      },
+      {
+        "key": "fanout-34",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 390.97,
+        "p95": 422.88,
+        "p99": 424.87,
+        "max": 425.51
+      },
+      {
+        "key": "fanout-35",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 400.75,
+        "p95": 421.65,
+        "p99": 423.48,
+        "max": 423.88
+      },
+      {
+        "key": "fanout-36",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 424.23,
+        "p95": 444.38,
+        "p99": 445.51,
+        "max": 501.73
+      },
+      {
+        "key": "fanout-37",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 418.42,
+        "p95": 453.93,
+        "p99": 456.33,
+        "max": 456.62
+      },
+      {
+        "key": "fanout-38",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 432.84,
+        "p95": 457.24,
+        "p99": 458.55,
+        "max": 458.76
+      },
+      {
+        "key": "fanout-39",
+        "expected": 200,
+        "received": 200,
+        "missing": 0,
+        "n": 200,
+        "p50": 430.02,
+        "p95": 467.8,
+        "p99": 468.92,
+        "max": 469.1
+      }
+    ]
+  },
+  "notes": [
+    "8,000 viewers in one group is unstable: two attempts shed sockets during subscription setup (4,692 assigned / 6,242 ready in the first attempt; 3,942 assigned / 5,338 ready in the second), while the third held 8,000/8,000. The two collapsed attempts used 30-second no-first-result subscription timeouts; they are classified as timeout in this report even though the older logs say unknown.",
+    "8,000 viewers spread over 40 groups of 200 delivered in 626 ms p95, so total viewer count is not the binding constraint - concentration in one group is.",
+    "Sequential baseline: queries and actions one at a time at the same 8k fleet, then one 4,000-viewer fan-out.",
+    "The 512-action burst uses eight cached users, so each user issues 64 concurrent sends; the latency includes per-sender membership-row contention."
+  ],
+  "failures": {
+    "byClass": {
+      "ramp:timeout": 15401
+    },
+    "perScenario": [
+      {
+        "scenario": "curve400",
+        "total": 1833,
+        "byClass": {
+          "ramp:timeout": 1833
+        }
+      },
+      {
+        "scenario": "curve500",
+        "total": 1987,
+        "byClass": {
+          "ramp:timeout": 1987
+        }
+      },
+      {
+        "scenario": "curve1000",
+        "total": 1732,
+        "byClass": {
+          "ramp:timeout": 1732
+        }
+      },
+      {
+        "scenario": "curve2000",
+        "total": 1976,
+        "byClass": {
+          "ramp:timeout": 1976
+        }
+      },
+      {
+        "scenario": "curve4000",
+        "total": 2014,
+        "byClass": {
+          "ramp:timeout": 2014
+        }
+      },
+      {
+        "scenario": "curve8000",
+        "total": 1960,
+        "byClass": {
+          "ramp:timeout": 1960
+        }
+      },
+      {
+        "scenario": "fanout40",
+        "total": 1956,
+        "byClass": {
+          "ramp:timeout": 1956
+        }
+      },
+      {
+        "scenario": "sequential",
+        "total": 1943,
+        "byClass": {
+          "ramp:timeout": 1943
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,41 @@
+deployment: https://adventurous-squirrel-356.convex.cloud
+storage:    https://pixels-mel-norfolk-reprints.trycloudflare.com
+run id:     mvhgxn13
+
+PASS  R1 host app registration is org-admin only — outsider refused at register and listForOrg
+PASS  R2 private key material is refused at registration — d is never stored
+PASS  R3 origins must be bare origins and support group must be in the org — path origins and cross-org support groups refused
+PASS  R4 stored keys are public only — kid_mvhgxn13 · ES256
+PASS  E1 kid is resolved before anything else — unknown kid refused
+PASS  E2 signature is checked against the stored public key — forged signature refused
+PASS  E3 issuer must match the host app — iss mismatch refused
+PASS  E4 audience must match the host app — aud mismatch refused
+PASS  E5 expiry and token lifetime are bounded — expired, future-issued and >300s tokens refused
+PASS  E6 required claims are enforced — jti and sub required
+PASS  E7 alg is tied to the stored key — header alg cannot downgrade/upgrade the key
+PASS  E8 jti replay is refused — same jti accepted once
+PASS  E9 iframe origin allowlist is enforced and audited — origin refused and logged
+PASS  E10 inactive host app refuses every exchange — isActive=false is a hard stop
+PASS  E11 key validity windows are enforced — notBefore and notAfter enforced
+PASS  E12 key rotation keeps both kids valid — kid2_mvhgxn13 accepted while kid_mvhgxn13 remains valid
+PASS  S1 exchange creates a shadow with a public identity only — usr_grph1gg2wt1k · no _id in me/conversation
+PASS  S2 same externalUserId resolves the same shadow even if email changes — identity key is hostAppId + externalUserId
+PASS  S3 same email with a different external id is a different shadow — usr_grph1gg2wt1k != usr_00u0xfoqc7ll
+PASS  S4 a shadow cannot sign in to the standalone app — OTP sign-in refused before a code is issued
+PASS  S5 shadow is confined to widget-only reads and writes — groups.listMine, messages.listLive, actionInbox.rollup, actionInbox.myTasks, unread.hasUnread, connections.list, messages.send, groups.createDm
+PASS  A1 widget sends are forced to Action mode and audited — task task_xjllyzaon65w · mode action · override logged
+PASS  A2 the ticket is an Action task with senderMayClose=false — task_xjllyzaon65w · support_ticket · senderMayClose=false
+PASS  A3 later widget messages thread under the same ticket — one ticket, replies are by_parent
+PASS  A4 widget has no edit or delete surface — no widget edit/delete; generic edit refuses shadow
+PASS  A5 a shadow cannot claim its own ticket — claim requires an active agent
+PASS  A6 done ticket reply reopens the same claimant with customer_reply — same ticket, reason=customer_reply
+PASS  A7 closed ticket reply opens a new ticket — new ticket task_i21kppk9now6
+PASS  U1 widget uploads are blocked by default — opt-in is off; denial logged
+PASS  U2 per-host size and MIME limits are enforced — MIME and size outside the host policy refused
+PASS  U3 opted-in upload is org-scoped end to end — att_t790yvj4x1ky · org scope · signed read 512B
+PASS  U4 per-shadow upload rate limit is enforced — third request in the fixed window refused
+PASS  P1 public config is unauthenticated, branded and free of internal ids — name, origins, branding, uploads flag only
+PASS  P2 host app admin never returns private key material — 1 host app(s), public JWKs only
+PASS  E13 exchange per-IP rate limit stops a burst — per-IP exchange limiter engaged
+
+35 passed, 0 failed

@@ -1,0 +1,9 @@
+runAt: 2026-10-20T05:28:52.942Z
+deployment: https://adventurous-squirrel-356.convex.cloud
+accepted: 20
+firstDeniedAt: 21
+denial: [Request ID: f91babe152a47ea6] Server Error
+Uncaught Error: Too many sign-in codes requested from this network. Try again in 568 second(s).
+ ""
+passed: 1
+failed: 0

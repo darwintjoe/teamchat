@@ -1,0 +1,8 @@
+runAt: 2026-10-21T04:45:00.503Z
+mode: runtime
+deployment: https://benevolent-crocodile-386.convex.cloud
+reference:  benevolent-crocodile-386
+refusal: ✖ Failed to run function "auth/demo:buildInfo":
+Error: [Request ID: fc0ef8b5c2bb772c] Server Error
+Uncaught Error: [CR-16] The echoed-OTP demo stub is enabled, but this deployment is marked production (TEAMCHAT_BUILD_CHANNEL=production). Refusing: a demo build must never authenticate real users.
+passed: 1
