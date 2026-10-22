@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TeamChat — Work chat that makes work accountable</title>
+<style>
+  :root{
+    --ink:#10231f;
+    --deep:#0b1f1a;
+    --deep-2:#12332b;
+    --paper:#f7f2e8;
+    --paper-2:#efe7d8;
+    --white:#fffdf8;
+    --muted:#5f6f69;
+    --line:#d9d0bf;
+    --mint:#7ee2b8;
+    --mint-dark:#0f766e;
+    --amber:#f5b84b;
+    --amber-dark:#9a5b06;
+    --coral:#ef7b64;
+    --blue:#4c7dd8;
+    --shadow:0 18px 50px rgba(16,35,31,.10);
+    --radius:18px;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    color:var(--ink);
+    background:
+      radial-gradient(circle at 8% 4%, rgba(126,226,184,.20), transparent 28rem),
+      radial-gradient(circle at 92% 16%, rgba(245,184,75,.18), transparent 26rem),
+      var(--paper);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+
+  a{color:inherit}
+  .page{max-width:1180px;margin:0 auto;padding:28px 22px 56px}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    color:#f9fff9;
+    background:
+      radial-gradient(circle at 82% 22%, rgba(126,226,184,.18), transparent 22rem),
+      radial-gradient(circle at 15% 120%, rgba(245,184,75,.16), transparent 24rem),
+      linear-gradient(135deg,var(--deep),var(--deep-2));
+    border-radius:28px;
+    padding:38px 42px 34px;
+    box-shadow:var(--shadow);
+  }
+  .hero::after{
+    content:"";
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+    background-size:34px 34px;
+    pointer-events:none;
+    mask-image:linear-gradient(to bottom, rgba(0,0,0,.7), transparent 75%);
+  }
+  .hero > *{position:relative;z-index:1}
+
+  .topline{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:-.6px;font-size:23px}
+  .brand-mark{
+    width:42px;height:42px;border-radius:13px;display:grid;place-items:center;
+    background:linear-gradient(145deg,var(--mint),#37b98a);
+    color:var(--deep);font-size:23px;font-weight:900;
+    box-shadow:0 10px 24px rgba(126,226,184,.22);
+  }
+  .edition{
+    font-size:11px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;
+    color:#b8d6c8;border:1px solid rgba(255,255,255,.18);
+    border-radius:999px;padding:7px 12px;background:rgba(255,255,255,.05);
+  }
+
+  h1{
+    font-size:clamp(36px,5.4vw,70px);
+    line-height:.98;
+    letter-spacing:-2.8px;
+    margin:28px 0 14px;
+    max-width:900px;
+    font-weight:900;
+  }
+  h1 .accent{color:var(--mint)}
+  .hero-lede{
+    max-width:760px;margin:0;
+    font-size:clamp(15px,1.5vw,19px);
+    color:#c7d9d0;line-height:1.55;
+  }
+  .hero-lede strong{color:#fff}
+
+  .hero-grid{
+    display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;
+    margin-top:28px;
+  }
+  .hero-stat{
+    border:1px solid rgba(255,255,255,.13);
+    background:rgba(255,255,255,.055);
+    border-radius:14px;padding:14px 16px;
+    backdrop-filter:blur(8px);
+  }
+  .hero-stat b{display:block;color:#fff;font-size:15px;letter-spacing:-.2px}
+  .hero-stat span{display:block;color:#a9c4b7;font-size:12.5px;margin-top:2px}
+  .hero-stat .num{color:var(--amber);font-size:22px;font-weight:900;line-height:1;display:block;margin-bottom:6px}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{margin-top:26px}
+  .section-head{display:flex;align-items:end;justify-content:space-between;gap:18px;margin:0 2px 12px}
+  .kicker{
+    display:inline-flex;align-items:center;gap:9px;
+    font-size:11px;font-weight:900;letter-spacing:1.7px;text-transform:uppercase;
+    color:var(--mint-dark);margin-bottom:4px;
+  }
+  .kicker .n{
+    width:22px;height:22px;border-radius:7px;display:grid;place-items:center;
+    background:var(--ink);color:#fff;font-size:10px;letter-spacing:0;
+  }
+  h2{font-size:clamp(24px,3vw,36px);line-height:1.08;letter-spacing:-1.1px;margin:0;font-weight:900}
+  .section-note{color:var(--muted);font-size:13px;max-width:360px;text-align:right}
+
+  .card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:0 8px 26px rgba(16,35,31,.045);
+  }
+  .pad{padding:20px}
+
+  /* ---------- PROBLEM ---------- */
+  .problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .problem{
+    padding:18px 18px 16px;position:relative;overflow:hidden;
+    border-top:4px solid var(--coral);
+  }
+  .problem:nth-child(2){border-top-color:var(--amber)}
+  .problem:nth-child(3){border-top-color:var(--blue)}
+  .problem .big{
+    font-size:31px;line-height:1;font-weight:900;letter-spacing:-1.5px;
+    color:var(--ink);margin-bottom:7px;
+  }
+  .problem h3{font-size:14px;margin:0 0 5px;letter-spacing:-.1px}
+  .problem p{margin:0;color:var(--muted);font-size:12.5px;line-height:1.45}
+  .problem .quote{
+    margin-top:11px;padding-top:10px;border-top:1px dashed var(--line);
+    font-size:12px;color:var(--ink);font-weight:600;
+  }
+
+  /* ---------- ACTION FLOW ---------- */
+  .flow-card{padding:22px 20px;background:linear-gradient(180deg,#fffdf8,#fbf6ec)}
+  .flow{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:0;
+    align-items:stretch;
+  }
+  .step{
+    position:relative;padding:15px 14px 13px;
+    border:1px solid var(--line);background:#fff;
+  }
+  .step:first-child{border-radius:14px 0 0 14px}
+  .step:last-child{border-radius:0 14px 14px 0}
+  .step + .step{border-left:0}
+  .step:not(:last-child)::after{
+    content:"";
+    position:absolute;right:-7px;top:50%;width:14px;height:14px;
+    background:#fff;border-top:1px solid var(--line);border-right:1px solid var(--line);
+    transform:translateY(-50%) rotate(45deg);
+    z-index:2;
+  }
+  .step .tag{font-size:10px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+  .step .name{font-size:15px;font-weight:800;margin:2px 0 3px;letter-spacing:-.2px}
+  .step .desc{font-size:11.5px;color:var(--muted);line-height:1.35}
+  .step.action{background:#fff8e8;border-color:#e9c47f}
+  .step.action .tag{color:var(--amber-dark)}
+  .step.done{background:#eefaf4;border-color:#bfe6d4}
+  .step.done .tag{color:var(--mint-dark)}
+  .flow-foot{
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+    margin-top:12px;padding-top:11px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:12px;
+  }
+  .flow-foot strong{color:var(--ink)}
+
+  /* ---------- FEATURES ---------- */
+  .feature-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .feature{padding:17px 16px 15px;position:relative}
+  .feature .ico{
+    width:36px;height:36px;border-radius:10px;display:grid;place-items:center;
+    background:#e9f7f0;color:var(--mint-dark);margin-bottom:10px;
+    border:1px solid #cbe9da;
+  }
+  .feature:nth-child(2n) .ico{background:#fff4dd;color:var(--amber-dark);border-color:#efd3a2}
+  .feature:nth-child(3n) .ico{background:#edf2ff;color:#385ca8;border-color:#cfdbf7}
+  .feature svg{width:19px;height:19px;display:block}
+  .feature h3{font-size:13.5px;margin:0 0 4px;letter-spacing:-.1px}
+  .feature p{margin:0;font-size:11.8px;color:var(--muted);line-height:1.42}
+
+  /* ---------- COMPARISON ---------- */
+  .compare-wrap{overflow-x:auto;border-radius:var(--radius)}
+  table{width:100%;border-collapse:separate;border-spacing:0;font-size:12.5px;min-width:760px}
+  th,td{padding:11px 13px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+  thead th{
+    background:var(--ink);color:#fff;font-size:11px;letter-spacing:.7px;text-transform:uppercase;
+    border-bottom:0;
+  }
+  thead th:first-child{border-radius:12px 0 0 0}
+  thead th:last-child{border-radius:0 12px 0 0;background:var(--mint-dark)}
+  tbody tr:nth-child(even) td{background:#fbf7ee}
+  tbody tr:last-child td{border-bottom:0}
+  td:first-child{font-weight:700;width:19%}
+  td:last-child{background:#f0faf5;font-weight:600}
+  tbody tr:nth-child(even) td:last-child{background:#eaf7f0}
+  .yes{color:var(--mint-dark);font-weight:800}
+  .no{color:#a04a3b;font-weight:700}
+  .mid{color:var(--amber-dark);font-weight:700}
+
+  /* ---------- STATUS ---------- */
+  .status{
+    display:grid;grid-template-columns:1.05fr 1.95fr;gap:0;overflow:hidden;
+    border:1px solid #e4c681;background:#fff8e8;
+  }
+  .status-left{
+    background:linear-gradient(145deg,#f9d78c,var(--amber));
+    padding:22px;display:flex;flex-direction:column;justify-content:center;
+  }
+  .status-left .label{font-size:10px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;color:#6f4308}
+  .status-left h2{font-size:28px;margin:5px 0 6px;letter-spacing:-1px;color:#3b2608}
+  .status-left p{margin:0;font-size:12.5px;color:#62430e;line-height:1.45}
+  .status-right{padding:18px 22px;display:grid;grid-template-columns:1fr 1fr;gap:8px 18px}
+  .status-item{display:flex;gap:8px;align-items:flex-start;font-size:12px;color:#57431d;line-height:1.4}
+  .status-item b{color:#2e230d}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--mint-dark);margin-top:6px;flex:0 0 7px}
+  .dot.warn{background:#b56a08}
+
+  /* ---------- TRY IT ---------- */
+  .try{
+    background:linear-gradient(135deg,var(--deep),var(--deep-2));
+    color:#f5fff9;border-radius:24px;padding:28px 30px;
+    box-shadow:var(--shadow);overflow:hidden;position:relative;
+  }
+  .try::before{
+    content:"";position:absolute;right:-80px;top:-100px;width:300px;height:300px;border-radius:50%;
+    background:radial-gradient(circle,rgba(126,226,184,.20),transparent 65%);
+  }
+  .try .kicker{color:var(--mint)}
+  .try h2{color:#fff}
+  .try .section-note{color:#b7cfc3}
+  .try-grid{display:grid;grid-template-columns:1.02fr 1.35fr;gap:18px;margin-top:18px;position:relative;z-index:1}
+  .try-steps{display:flex;flex-direction:column;gap:10px}
+  .try-step{display:flex;gap:11px;align-items:flex-start}
+  .try-step .num{
+    width:26px;height:26px;border-radius:50%;display:grid;place-items:center;flex:0 0 26px;
+    background:var(--mint);color:var(--deep);font-weight:900;font-size:12px;
+  }
+  .try-step b{display:block;font-size:13px;color:#fff}
+  .try-step span{display:block;font-size:12px;color:#b9d2c6;line-height:1.4}
+  .try-note{
+    margin-top:13px;padding:11px 13px;border-radius:11px;
+    background:rgba(245,184,75,.13);border:1px solid rgba(245,184,75,.32);
+    color:#f4d79e;font-size:11.5px;line-height:1.45;
+  }
+  .code-card{
+    background:#071510;border:1px solid rgba(255,255,255,.14);
+    border-radius:14px;padding:15px 16px;
+  }
+  .code-card .code-title{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    font-size:10px;font-weight:900;letter-spacing:1.3px;text-transform:uppercase;color:#8fb8a5;
+    margin-bottom:7px;
+  }
+  .code-card .code-title span:last-child{color:var(--amber);letter-spacing:.2px;text-transform:none;font-weight:600}
+  pre{
+    margin:0 0 12px;padding:11px 12px;border-radius:9px;
+    background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.09);
+    overflow-x:auto;color:#d7f7e7;
+    font:12px/1.55 "Cascadia Code","SFMono-Regular",Consolas,"Liberation Mono",monospace;
+    white-space:pre;
+  }
+  pre:last-child{margin-bottom:0}
+  pre .c{color:#7ba58f}
+  pre .p{color:var(--amber)}
+
+  /* ---------- SCENARIOS ---------- */
+  .scenario-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .scenario{padding:17px 16px 15px}
+  .scenario .badge{
+    display:inline-block;font-size:9.5px;font-weight:900;letter-spacing:1px;text-transform:uppercase;
+    padding:4px 8px;border-radius:999px;background:#e9f7f0;color:var(--mint-dark);margin-bottom:8px;
+  }
+  .scenario:nth-child(2) .badge{background:#fff4dd;color:var(--amber-dark)}
+  .scenario:nth-child(3) .badge{background:#edf2ff;color:#385ca8}
+  .scenario:nth-child(4) .badge{background:#fdeeea;color:#a04a3b}
+  .scenario h3{font-size:14px;margin:0 0 5px}
+  .scenario p{margin:0;font-size:11.8px;color:var(--muted);line-height:1.45}
+
+  /* ---------- FOOTER ---------- */
+  .footer{
+    margin-top:24px;display:flex;align-items:center;justify-content:space-between;gap:18px;
+    flex-wrap:wrap;padding:16px 4px 0;border-top:1px solid var(--line);
+    color:var(--muted);font-size:12px;
+  }
+  .footer b{color:var(--ink)}
+  .footer a{color:var(--mint-dark);font-weight:700;text-decoration:none;border-bottom:1px solid rgba(15,118,110,.35)}
+  .footer .warn{color:#a04a3b;font-weight:700}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .hero{padding:28px 24px}
+    .hero-grid{grid-template-columns:1fr 1fr}
+    .problem-grid{grid-template-columns:1fr}
+    .feature-grid{grid-template-columns:1fr 1fr}
+    .try-grid{grid-template-columns:1fr}
+    .scenario-grid{grid-template-columns:1fr 1fr}
+    .status{grid-template-columns:1fr}
+    .status-right{grid-template-columns:1fr}
+    .flow{grid-template-columns:1fr;gap:8px}
+    .step, .step:first-child, .step:last-child{border-radius:12px;border:1px solid var(--line)}
+    .step + .step{border-left:1px solid var(--line)}
+    .step:not(:last-child)::after{display:none}
+    .section-note{text-align:left}
+  }
+  @media (max-width:560px){
+    .page{padding:14px 12px 36px}
+    .hero{border-radius:20px}
+    .hero-grid,.feature-grid,.scenario-grid{grid-template-columns:1fr}
+    .section-head{display:block}
+    .section-note{margin-top:6px}
+    .try{padding:22px 18px;border-radius:18px}
+    .status-left h2{font-size:24px}
+  }
+
+  /* ---------- PRINT ---------- */
+  @page{size:A4;margin:10mm}
+  @media print{
+    body{background:#fff;font-size:11px}
+    .page{max-width:none;padding:0}
+    .hero,.try{box-shadow:none;border-radius:14px}
+    .card,.status,.try{break-inside:avoid}
+    section{break-inside:auto;margin-top:16px}
+    .feature,.problem,.scenario,.step{break-inside:avoid}
+    .hero{padding:24px}
+    h1{font-size:44px}
+    .try{padding:20px}
+    pre{font-size:9.5px}
+    .footer{margin-top:14px}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ================= HERO ================= -->
+  <header class="hero">
+    <div class="topline">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">T</div>
+        <span>TeamChat</span>
+      </div>
+      <div class="edition">Product overview &amp; 5-minute demo</div>
+    </div>
+
+    <h1>Work chat that makes work <span class="accent">accountable.</span></h1>
+    <p class="hero-lede">
+      TeamChat looks like a normal messaging app — one-to-one chats, groups, photos, files.
+      The difference is that <strong>a message can become a task with one owner, a clear lifecycle,
+      and an audit trail.</strong>
+    </p>
+
+    <div class="hero-grid">
+      <div class="hero-stat">
+        <span class="num">1</span>
+        <b>One owner per request</b>
+        <span>First person to claim it gets it. No “someone else is handling it.”</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num">0</span>
+        <b>Lost handovers</b>
+        <span>Forward, reassign, reopen, close — every move is recorded.</span>
+      </div>
+      <div class="hero-stat">
+        <span class="num">5 min</span>
+        <b>To try the demo</b>
+        <span>Web first, then scan a QR code to open it on your phone.</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= PROBLEM ================= -->
+  <section aria-labelledby="problem-title">
+    <div class="section-head">
+      <div>
+        <div class="kicker"><span class="n">01</span> The gap</div>
+        <h2 id="problem-title">A message is not a finished job.</h2>
+      </div>
+      <p class="section-note">Where work gets lost between “we talked about it” and “it got done.”</p>
+    </div>
+
+    <div class="problem-grid">
+      <article class="card problem">
+        <div class="big">“Someone”</div>
+        <h3>Diffused ownership</h3>
+        <p>A request lands in a group. Everyone sees it, so nobody owns it. It slides under the next twenty messages.</p>
+        <div class="quote">“I thought someone else was handling it.”</div>
+      </article>
+
+      <article class="card problem">
+        <div class="big">Where?</div>
+        <h3>Scattered history</h3>
+        <p>When a customer or manager asks what happened, the answer is spread across chat, screenshots, and memory.</p>
+        <div class="quote">“Can you send me the whole thread?”</div>
+      </article>
+
+      <article class="card problem">
+        <div class="big">Who?</div>
+        <h3>Personal support channels</h3>
+        <p>Staff use personal WhatsApp for customers. When they leave, the relationship and the record leave too.</p>
+        <div class="quote">“The number is in his phone, not ours.”</div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= HOW IT WORKS ================= -->
+  <section aria-labelledby="flow-title">
+    <div class="section-head">
+      <div>
+        <div class="kicker"><span class="n">02</span> One clear path</div>
+        <h2 id="flow-title">From message to finished work.</h2>
+      </div>
+      <p class="section-note">The task lifecycle is visible to the whole team, not hidden in someone’s memory.</p>
+    </div>
+
+    <div class="card flow-card">
+      <div class="flow" role="list" aria-label="Task lifecycle">
+        <div class="step" role="listitem">
+          <div class="tag">Mode 01</div>
+          <div class="name">Discussion</div>
+          <div class="desc">Normal chat. Ideas, questions, announcements.</div>
+        </div>
+        <div class="step action" role="listitem">
+          <div class="tag">Mode 02</div>
+          <div class="name">Action</div>
+          <div class="desc">The message becomes a task card in the Action Inbox.</div>
+        </div>
+        <div class="step action" role="listitem">
+          <div class="tag">First tap</div>
+          <div class="name">Claim</div>
+          <div class="desc">Like grabbing a ringing office phone. One person wins.</div>
+        </div>
+        <div class="step done" role="listitem">
+          <div class="tag">Owner</div>
+          <div class="name">Mark done</div>
+          <div class="desc">The claimant says the work is complete.</div>
+        </div>
+        <div class="step done" role="listitem">
+          <div class="tag">Review</div>
+          <div class="name">Close</div>
+          <div class="desc">A manager reviews and closes — with an audit record.</div>
+        </div>
+      </div>
+      <div class="flow-foot">
+        <span><strong>Forward</strong> · pass the ball &nbsp; <strong>Reassign</strong> · handle a departure &nbsp; <strong>Reopen</strong> · send work back</span>
+        <span>Every state change writes an audit event.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FEATURES ================= -->
+  <section aria-labelledby="features-title">
+    <div class="section-head">
+      <div>
+        <div class="kicker"><span class="n">03</span> What you get</div>
+        <h2 id="features-title">Chat built for work, not just talk.</h2>
+      </div>
+      <p class="section-note">A familiar messaging surface with accountability underneath.</p>
+    </div>
+
+    <div class="feature-grid">
+      <article class="card feature">
+        <div class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 9 9 0 0 1-4-.9L3 21l1.9-5.4a8.5 8.5 0 1 1 16.1-4.1Z"/><path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01"/></svg>
+        </div>
+        <h3>Normal chat</h3>
+        <p>One-to-one and group messages, photos, video, audio files, documents, replies, edit and delete.</p>
+      </article>
+
+      <article class="card feature">
+        <div class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4.5 13H11l-1 9 8.5-11H12l1-9Z"/></svg>
+        </div>
+        <h3>Action mode</h3>
+        <p>Turn any message into a claimable task. One owner, one status, no duplicate work.</p>
+      </article>
+
+      <article class="card feature">
+        <div class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"/><path d="M4 9h16M8 13h8M8 16h5"/></svg>
+        </div>
+        <h3>Action Inbox</h3>
+        <p>All tasks, my tasks, tasks I raised, a review queue, and a permanent audit panel.</p>
+      </article>
+
+      <article class="card feature">
+        <div class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16v9H8l-4 4V6Z"/><path d="M8 10h8M8 13h5"/></svg>
+        </div>
+        <h3>Support widget</h3>
+        <p>Put a chat bubble inside your own site or app. Customer messages become claimable tickets.</p>
+      </article>
+
+      <article class="card feature">
+        <div class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 7v5c0 5 3.4 8 8 9 4.6-1 8-4 8-9V7l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <h3>Accountability</h3>
+        <p>Single-claim tasks, separation of duties, typed audit events, and no silent deletion.</p>
+      </article>
+
+      <article class="card feature">
+        <div class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4 4 0 1 1 .6-7.95A5.5 5.5 0 0 1 18.4 11 3.5 3.5 0 0 1 18 18H7Z"/></svg>
+        </div>
+        <h3>Your own storage</h3>
+        <p>Connect an S3-compatible bucket. Files go straight there — TeamChat never relays the bytes.</p>
+      </article>
+
+      <article class="card feature">
+        <div class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12h8M12 8v8"/><rect x="3" y="3" width="18" height="18" rx="4"/></svg>
+        </div>
+        <h3>Open API + webhooks</h3>
+        <p>Provision staff, create tasks, and push events into an ERP or another business system.</p>
+      </article>
+
+      <article class="card feature">
+        <div class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg>
+        </div>
+        <h3>Web, mobile, offline</h3>
+        <p>Web and Expo mobile clients. Read the newest 100 cached messages without a connection.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= COMPARISON ================= -->
+  <section aria-labelledby="compare-title">
+    <div class="section-head">
+      <div>
+        <div class="kicker"><span class="n">04</span> The honest comparison</div>
+        <h2 id="compare-title">Where TeamChat fits.</h2>
+      </div>
+      <p class="section-note">Not a WhatsApp replacement. Not yet a full Slack replacement.</p>
+    </div>
+
+    <div class="card compare-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">&nbsp;</th>
+            <th scope="col">WhatsApp</th>
+            <th scope="col">Slack</th>
+            <th scope="col">TeamChat</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Main purpose</td>
+            <td>Casual and business chat</td>
+            <td>Team chat for office work</td>
+            <td>Work chat plus tracked tasks</td>
+          </tr>
+          <tr>
+            <td>Task ownership</td>
+            <td><span class="no">None built in</span></td>
+            <td><span class="mid">Add-ons, not core</span></td>
+            <td><span class="yes">First claim wins</span></td>
+          </tr>
+          <tr>
+            <td>Audit trail</td>
+            <td>No work audit</td>
+            <td>Message history</td>
+            <td><span class="yes">Every task transition</span></td>
+          </tr>
+          <tr>
+            <td>Customer support</td>
+            <td>Personal chat or separate desk</td>
+            <td>Usually a separate helpdesk</td>
+            <td><span class="yes">Embedded widget + tickets</span></td>
+          </tr>
+          <tr>
+            <td>Data storage</td>
+            <td>WhatsApp / Meta</td>
+            <td>Slack</td>
+            <td><span class="yes">Your own S3-compatible bucket</span></td>
+          </tr>
+          <tr>
+            <td>Business integration</td>
+            <td>Limited; Business API extra</td>
+            <td><span class="yes">Strong app ecosystem</span></td>
+            <td><span class="yes">Open API + webhooks</span></td>
+          </tr>
+          <tr>
+            <td>Calls &amp; voice notes</td>
+            <td><span class="yes">Yes</span></td>
+            <td><span class="yes">Yes</span></td>
+            <td><span class="no">Not in this version</span></td>
+          </tr>
+          <tr>
+            <td>Very large live groups</td>
+            <td><span class="yes">Yes</span></td>
+            <td><span class="yes">Yes</span></td>
+            <td><span class="mid">Pilot cap ~300 members</span></td>
+          </tr>
+          <tr>
+            <td>Best for</td>
+            <td>Everyone, everyday chat</td>
+            <td>Desk-based teams</td>
+            <td>Frontline, franchise, support</td>
+          </tr>
+          <tr>
+            <td>Maturity</td>
+            <td><span class="yes">Extremely mature</span></td>
+            <td><span class="yes">Extremely mature</span></td>
+            <td><span class="mid">Working MVP / pilot</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= STATUS ================= -->
+  <section aria-labelledby="status-title">
+    <div class="status card">
+      <div class="status-left">
+        <div class="label">Current status</div>
+        <h2 id="status-title">Early, but working.</h2>
+        <p>TeamChat is a pilot-ready MVP, not a finished commercial app. Try the demo with fake data first.</p>
+      </div>
+      <div class="status-right">
+        <div class="status-item"><span class="dot"></span><span><b>Working:</b> web, mobile, chat, Action mode, audit, API, widget</span></div>
+        <div class="status-item"><span class="dot"></span><span><b>Live:</b> cloud backend for demos and small pilots</span></div>
+        <div class="status-item"><span class="dot warn"></span><span><b>Demo-only login:</b> the OTP is shown on screen; it is not real authentication</span></div>
+        <div class="status-item"><span class="dot warn"></span><span><b>Not yet:</b> voice notes, voice or video calls, deep group hierarchy</span></div>
+        <div class="status-item"><span class="dot warn"></span><span><b>Pilot limits:</b> about 300 members per group and 200 simultaneous live viewers</span></div>
+        <div class="status-item"><span class="dot warn"></span><span><b>No public sign-up</b> and no app-store listing yet</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TRY IT ================= -->
+  <section class="try" aria-labelledby="try-title">
+    <div class="section-head">
+      <div>
+        <div class="kicker"><span class="n">05</span> Try it</div>
+        <h2 id="try-title">Five minutes. Then your phone.</h2>
+      </div>
+      <p class="section-note">Start with the web demo. Use the mobile app second.</p>
+    </div>
+
+    <div class="try-grid">
+      <div class="try-steps">
+        <div class="try-step">
+          <div class="num">1</div>
+          <div><b>Open the web demo</b><span>Run the three commands on the right, then open <strong>http://localhost:3000</strong>.</span></div>
+        </div>
+        <div class="try-step">
+          <div class="num">2</div>
+          <div><b>Sign in with any email</b><span>The login code appears on screen. This is a demo build — do not use real customer data.</span></div>
+        </div>
+        <div class="try-step">
+          <div class="num">3</div>
+          <div><b>Create an organisation</b><span>Name it, create a group, and send a normal Discussion message.</span></div>
+        </div>
+        <div class="try-step">
+          <div class="num">4</div>
+          <div><b>Switch to Action</b><span>Send a second message. Open its task card. Claim it. Mark it done. Open Action Inbox.</span></div>
+        </div>
+        <div class="try-step">
+          <div class="num">5</div>
+          <div><b>Open it on your phone</b><span>Run the mobile commands, install Expo Go, and scan the QR code.</span></div>
+        </div>
+        <div class="try-note">
+          <strong>Important:</strong> create the organisation on web first. Mobile can chat, claim, and mark done, but it cannot create an organisation or send invites yet.
+        </div>
+      </div>
+
+      <div class="code-card">
+        <div class="code-title"><span>Web demo</span><span>PowerShell</span></div>
+        <pre><span class="c"># 1. Start the web app</span>
+cd C:\workspace\TeamChat\app\web
+npm install
+npm run dev
+
+<span class="c"># 2. Open in your browser</span>
+<span class="p">http://localhost:3000</span></pre>
+
+        <div class="code-title"><span>Mobile demo</span><span>second terminal</span></div>
+        <pre>cd C:\workspace\TeamChat\app\mobile
+npm install
+copy .env.example .env
+npx expo start --tunnel
+
+<span class="c"># Install Expo Go on your phone</span>
+<span class="c"># Scan the QR code shown in the terminal</span></pre>
+
+        <div class="code-title"><span>Two-person test</span><span>same Wi-Fi</span></div>
+        <pre><span class="c"># Faster than tunnel when phone and PC share Wi-Fi</span>
+npx expo start</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SCENARIOS ================= -->
+  <section aria-labelledby="scenarios-title">
+    <div class="section-head">
+      <div>
+        <div class="kicker"><span class="n">06</span> Pick a scenario</div>
+        <h2 id="scenarios-title">Start with the smallest useful test.</h2>
+      </div>
+      <p class="section-note">Do not migrate the whole company on day one.</p>
+    </div>
+
+    <div class="scenario-grid">
+      <article class="card scenario">
+        <div class="badge">Easiest · 5 min</div>
+        <h3>Solo demo</h3>
+        <p>One person. One organisation. Send a message, claim a task, mark it done, read the audit.</p>
+      </article>
+
+      <article class="card scenario">
+        <div class="badge">Team · 15 min</div>
+        <h3>Two people</h3>
+        <p>Create an invite link, open a private browser window, sign in as a second user, and claim the same task.</p>
+      </article>
+
+      <article class="card scenario">
+        <div class="badge">Frontline · phone</div>
+        <h3>Mobile</h3>
+        <p>Run Expo, scan the QR code, send a message, claim a task, then read cached messages offline.</p>
+      </article>
+
+      <article class="card scenario">
+        <div class="badge">Advanced · pilot</div>
+        <h3>Real pilot</h3>
+        <p>One team, one group, one real workflow. Needs real email delivery, storage, and operator setup.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= CTA ================= -->
+  <footer class="footer">
+    <div>
+      <b>TeamChat</b> — WhatsApp is messaging for casual chat. TeamChat is messaging for work.
+      <br>
+      <span class="warn">Demo build: use fake data only. The on-screen code is not authentication.</span>
+    </div>
+    <div>
+      <a href="https://github.com/darwintjoe/teamchat" target="_blank" rel="noopener">github.com/darwintjoe/teamchat</a>
+      &nbsp;·&nbsp; Start with one team, one group, one workflow.
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
